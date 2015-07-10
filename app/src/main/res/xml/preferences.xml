@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="pref_showTimeLines"
+        android:summary="TODO Summary Show Time Lines"
+        android:title="TODO Title Show Time Lines"></CheckBoxPreference>
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="pref_showTempLines"
+        android:summary="TODO Summary Show Temp Lines"
+        android:title="TODO Title Show Temp Lines"></CheckBoxPreference>
+</PreferenceScreen>

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:minWidth="40dp" android:minHeight="40dp" android:updatePeriodMillis="3600000"
+    android:initialKeyguardLayout="@layout/weather_widget"
+    android:initialLayout="@layout/weather_widget"
+    android:minHeight="40dp"
+    android:minWidth="40dp"
     android:previewImage="@drawable/example_appwidget_preview"
-    android:initialLayout="@layout/weather_widget" android:resizeMode="horizontal|vertical"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="3600000"
     android:widgetCategory="home_screen"
-    android:initialKeyguardLayout="@layout/weather_widget"></appwidget-provider>
+    android:configure="tgd.mindless.drone.weatherwidgetnumberone.WidgetConfig"></appwidget-provider>
