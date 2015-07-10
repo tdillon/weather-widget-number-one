@@ -1,7 +1,6 @@
 package tgd.mindless.drone.weatherwidgetnumberone;
 
 
-
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
@@ -15,7 +14,6 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.format.DateFormat;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 import android.widget.Toast;
@@ -38,151 +36,91 @@ import java.util.Locale;
  */
 public class WeatherWidget extends AppWidgetProvider {
 
+    private static final String TAG = "class WeatherWidget";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // There may be multiple widgets active, so update all of them
+
+        android.util.Log.v(TAG, "onUpdate");
+
         final int N = appWidgetIds.length;
         for (int i = 0; i < N; i++) {
             updateAppWidget(context, appWidgetManager, appWidgetIds[i]);
         }
-
 
         new MyAsyncTask(context).execute("https://api.forecast.io/forecast/c5f42d85c93f3a489363a8f410a78b57/39.3061,-81.3664");
     }
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        android.util.Log.v(TAG, "onAppWidgetOptionsChanged");
 
-        Toast.makeText(context, "onAppWidgetOptionsChanged: min-width: " + String.valueOf(newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)) + " xdpi: " + String.valueOf(metrics.xdpi), Toast.LENGTH_LONG).show();
+        //DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+
+        //Toast.makeText(context, "onAppWidgetOptionsChanged: min-width: " + String.valueOf(newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)) + " xdpi: " + String.valueOf(metrics.xdpi), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onEnabled(Context context) {
+        android.util.Log.v(TAG, "onEnabled");
+
         // Enter relevant functionality for when the first widget is created
     }
 
     @Override
     public void onDisabled(Context context) {
+        android.util.Log.v(TAG, "onDisabled");
         // Enter relevant functionality for when the last widget is disabled
     }
+
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
+        android.util.Log.v(TAG, "updateAppWidget  appWidgetId: " + String.valueOf(appWidgetId));
+
+
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
-        views.setTextViewText(R.id.tvUpdateTime, DateFormat.getTimeFormat(context).format(new Date()) );
+        views.setTextViewText(R.id.tvUpdateTime, DateFormat.getTimeFormat(context).format(new Date()));
+/*
+            Paint paint = new Paint();
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(Color.RED);
+            paint.setTextSize(16);
+            paint.setAntiAlias(true);
+            paint.setTypeface(Typeface.MONOSPACE);
+    //
+            Bitmap bmp = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+            Canvas c = new Canvas(bmp);
+            c.drawRect(5, 5, 80, 70, paint);
+            c.drawCircle(2, 2, 5, paint);
+    //        //c.drawText("foo", 0, 0, paint);
+    //
+            views.setImageViewBitmap(R.id.ivGraph, bmp);
 
-        Paint paint = new Paint();
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.RED);
-        paint.setTextSize(16);
-        paint.setAntiAlias(true);
-        paint.setTypeface(Typeface.MONOSPACE);
-//
-        Bitmap bmp = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(bmp);
-        c.drawRect(5, 5, 80, 70, paint);
-        c.drawCircle(2, 2, 5, paint);
-//        //c.drawText("foo", 0, 0, paint);
-//
-        views.setImageViewBitmap(R.id.ivGraph, bmp);
-
+    */
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
-    class WeatherClass {
-        Float latitude;
-        CurrentClass currently;
-        HourlyClass hourly;
-        MinutelyClass minutely;
-        DailyClass daily;
-
-        public WeatherClass() {
-        }
-
-        class CurrentClass {
-            float temperature;
-            Long time;
-
-            public CurrentClass() {
-            }
-        }
-
-        class DailyClass {
-            DailyDataClass[] data;
-
-            DailyClass() {
-            }
-
-            class DailyDataClass {
-                Float cloudCover;
-                Float precipIntensity;
-                Float precipIntensityMax;
-                Long precipIntensityMaxTime;
-                Float precipProbability;
-                Long sunriseTime;
-                Long sunsetTime;
-                Float temperatureMax;
-                Long temperatureMaxTime;
-                Float temperatureMin;
-                Long temperatureMinTime;
-                Long time;
-
-                DailyDataClass() {
-                }
-            }
-        }
-
-        class HourlyClass {
-            HourlyDataClass[] data;
-
-            public HourlyClass() {
-            }
-
-            class HourlyDataClass {
-                float cloudCover;
-                float precipIntensity;
-                float precipProbability;
-                float temperature;
-                long time;
-
-                public HourlyDataClass() {
-                }
-            }
-
-        }
-
-        class MinutelyClass {
-            MinutelyDataClass[] data;
-
-            public MinutelyClass() {
-            }
-
-            class MinutelyDataClass {
-                Long time;
-
-                public MinutelyDataClass() {
-                }
-            }
-        }
-    }
 
     public static class MyAsyncTask extends AsyncTask<String, Void, WeatherClass> {
 
+        private static final String TAG = "class MyAsyncTask";
         Context context;
 
         public MyAsyncTask(Context context) {
+            android.util.Log.v(TAG, "constructor");
             Toast.makeText(context, "asynctask ctor", Toast.LENGTH_LONG).show();
             this.context = context;
         }
 
         @Override
         protected WeatherClass doInBackground(String... params) {
+            android.util.Log.v(TAG, "doInBackground");
+
             WeatherClass wc = null;
             byte[] ba = new byte[10];
             HttpURLConnection urlConnection = null;
@@ -244,7 +182,7 @@ public class WeatherWidget extends AppWidgetProvider {
                 paint.setTextSize(fontSize);
 
                 Rect bounds = new Rect();
-                paint.getTextBounds("0123456789SuMoTuWeThFrSa", 0,24,bounds);
+                paint.getTextBounds("0123456789SuMoTuWeThFrSa", 0, 24, bounds);
 
 
                 int width = manager.getAppWidgetOptions(appWidgetIds[i]).getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
@@ -281,9 +219,22 @@ public class WeatherWidget extends AppWidgetProvider {
                     cal.setTimeInMillis(d.time * 1000);
                     int hour = cal.get(Calendar.HOUR_OF_DAY);
                     if (hour % 4 == 0) {
-                        c.drawText(hour == 0 ? cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US).substring(0, 2) : String.valueOf(cal.get(Calendar.HOUR_OF_DAY)), j * hSpacing, py , paint);
+                        c.drawText(hour == 0 ? cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US).substring(0, 2) : String.valueOf(cal.get(Calendar.HOUR_OF_DAY)), j * hSpacing, py, paint);
                     }
                 }
+
+
+                //draw horizontal line for every 5 degrees
+                //for (var i = 0, j = (i * 5 + (5 - tempMin % 5)), temp = tempMin + j, y = this.bottom - this.tempScale * j; temp < tempMax; j = (++i * 5 + (5 - tempMin % 5)), temp = tempMin + j, y = this.bottom - this.tempScale * j) {
+                paint.setTextAlign(Paint.Align.LEFT);
+                int k = 0;
+                for (float l = (k * 5 + (5 - minTemp % 5)), temp = minTemp + l, y = py - (py / (maxTemp - minTemp)) * l; temp < maxTemp; l = (++k * 5 + (5 - minTemp % 5)), temp = minTemp + l, y = py - (py / (maxTemp - minTemp)) * l) {
+                    Toast.makeText(context, String.format("k: %1$d   l: %2$f   temp: %3$f   y: %4$f   py: %5$f   minT: %6$f   maxT: %7$f", k, l, temp, y, py, minTemp, maxTemp), Toast.LENGTH_LONG).show();
+                    c.drawLine(0, y, px, y, paint);
+                    c.drawText(String.valueOf((int) temp), 0, y + bounds.height() / 2, paint);
+                }
+                paint.setTextAlign(Paint.Align.CENTER);
+
                 views.setImageViewBitmap(R.id.ivGraph, bmp);
 
 
