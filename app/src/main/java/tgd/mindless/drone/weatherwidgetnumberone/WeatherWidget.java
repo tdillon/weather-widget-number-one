@@ -8,32 +8,14 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.Typeface;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
-
-import com.google.gson.Gson;
-
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 
 /**
@@ -46,10 +28,10 @@ public class WeatherWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 //BUG onUpdate is called even though a configuration activity is defined google code issue #3696
-        android.util.Log.v(TAG, "onUpdate");
+        android.util.Log.v(TAG, "onUpdate:   appWidgetIds.length: " + String.valueOf(appWidgetIds.length));
 
         final int N = appWidgetIds.length;
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < N; ++i) {
             updateAppWidget(context, appWidgetManager, appWidgetIds[i]);
         }
 
@@ -87,7 +69,7 @@ public class WeatherWidget extends AppWidgetProvider {
 
 
         for (int i = 0; i < appWidgetIds.length; ++i) {
-            SharedPreferences sharedPref = context.getSharedPreferences("prefs_" + String.valueOf(appWidgetIds[i]), Context.MODE_PRIVATE);
+            SharedPreferences sharedPref = context.getSharedPreferences(WidgetConfigPreferences.getSharedPreferenceName(appWidgetIds[i]), Context.MODE_PRIVATE);
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
 
             int width = manager.getAppWidgetOptions(appWidgetIds[i]).getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
@@ -104,20 +86,18 @@ public class WeatherWidget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 
-        android.util.Log.v(TAG, "updateAppWidget  appWidgetId: " + String.valueOf(appWidgetId));
+        Log.v(TAG, "updateAppWidget  appWidgetId: " + String.valueOf(appWidgetId));
 
-
-        // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
         views.setTextViewText(R.id.tvUpdateTime, DateFormat.getTimeFormat(context).format(new Date()));
 
-
         Intent intent = new Intent(context, WidgetConfig.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent, 0);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
+        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent, PendingIntent.FLAG_UPDATE_CURRENT);
         views.setOnClickPendingIntent(R.id.ivGraph, pendingIntent);
 
-        // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 

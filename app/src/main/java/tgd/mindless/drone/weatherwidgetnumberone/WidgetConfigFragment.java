@@ -4,12 +4,8 @@ import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 
 /**
@@ -33,7 +29,7 @@ public class WidgetConfigFragment extends PreferenceFragment {
         Log.v(TAG, "onCreate   ID: " + String.valueOf(mAppWidgetId));
 
         PreferenceManager localPrefs = getPreferenceManager();
-        localPrefs.setSharedPreferencesName("prefs_" + String.valueOf(mAppWidgetId));
+        localPrefs.setSharedPreferencesName(WidgetConfigPreferences.getSharedPreferenceName(mAppWidgetId));
         addPreferencesFromResource(R.xml.preferences);
     }
 }

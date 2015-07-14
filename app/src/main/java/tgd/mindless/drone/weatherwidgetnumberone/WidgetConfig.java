@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 
 public class WidgetConfig extends Activity {
@@ -29,6 +30,8 @@ public class WidgetConfig extends Activity {
         setContentView(R.layout.widget_config);
         findViewById(R.id.btnDone).setOnClickListener(mOnClickListener);
 
+
+
         // Find the widget id from the intent.
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -42,6 +45,8 @@ public class WidgetConfig extends Activity {
             finish();
         }
 
+        ((TextView)findViewById(R.id.tvFoo)).setText("Widget ID: " + String.valueOf(mAppWidgetId));
+
         Log.v(TAG, "onCreate   ID: " + String.valueOf(mAppWidgetId));
     }
 
@@ -49,16 +54,6 @@ public class WidgetConfig extends Activity {
         public void onClick(View v) {
             Log.v(TAG, "OnClickListener id: " + String.valueOf(mAppWidgetId));
 
-
-
-            final Context context = WidgetConfig.this;
-
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
-            //boolean showTimeLines = sharedPref.getBoolean("prefs_" + String.valueOf(mAppWidgetId), true);
-            boolean showTimeLines = sharedPref.getBoolean("pref_showTimeLines", true);
-            Log.v(TAG, "OnClickListener preference: " + String.valueOf(showTimeLines));
-
-            //WeatherWidget.updateAppWidget(context, AppWidgetManager.getInstance(context), mAppWidgetId);
             Intent resultValue = new Intent();
             resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,mAppWidgetId);
             setResult(RESULT_OK, resultValue);

@@ -53,7 +53,21 @@ public class AsyncWeatherDAO extends AsyncTask<String, Void, WeatherClass> {
     @Override
     protected void onPostExecute(WeatherClass wc) {
         //TODO store data in DAO.  can i send ACTION_APPWIDGET_UPDATE or OPTIONS_CHANGED or MY_CUSTOM_INTENT intent back to widget for redraw?
-        WeatherWidget.onDataReturned(context,wc);  //TODO what if the config called the dao?
+        if (wc != null) {
+            //save to cache
+        } else {
+            //get from cache
+        }
+
+        WeatherWidget.onDataReturned(context, wc);  //TODO what if the config called the dao?
+    }
+
+    private WeatherClass getCache() {
+        return null;
+    }
+
+    private void setCache(WeatherClass wc) {
+    
     }
 
 }
