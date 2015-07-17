@@ -31,7 +31,6 @@ public class WidgetConfig extends Activity {
         findViewById(R.id.btnDone).setOnClickListener(mOnClickListener);
 
 
-
         // Find the widget id from the intent.
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
@@ -45,19 +44,23 @@ public class WidgetConfig extends Activity {
             finish();
         }
 
-        ((TextView)findViewById(R.id.tvFoo)).setText("Widget ID: " + String.valueOf(mAppWidgetId));
+        ((TextView) findViewById(R.id.tvFoo)).setText("Widget ID: " + String.valueOf(mAppWidgetId));
 
         Log.v(TAG, "onCreate   ID: " + String.valueOf(mAppWidgetId));
     }
 
-    View.OnClickListener mOnClickListener = new View.OnClickListener(){
+    View.OnClickListener mOnClickListener = new View.OnClickListener() {
         public void onClick(View v) {
             Log.v(TAG, "OnClickListener id: " + String.valueOf(mAppWidgetId));
 
             Intent resultValue = new Intent();
-            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,mAppWidgetId);
+            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
             setResult(RESULT_OK, resultValue);
             finish();
+
+            Context context = v.getContext();
+            AsyncWeatherDAO.setConfigComplete(context, mAppWidgetId);
+            WeatherWidget.onConfigured(context, mAppWidgetId);  //TODO only get new data if lat/lon have changed
         }
     };
 

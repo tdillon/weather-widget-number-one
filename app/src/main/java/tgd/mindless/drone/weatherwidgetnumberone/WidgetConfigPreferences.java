@@ -14,4 +14,12 @@ public class WidgetConfigPreferences {
     public static final String getSharedPreferenceName(int appWidgetId) {
         return SHARED_PREFERENCE_PREFIX + String.valueOf(appWidgetId);
     }
+
+
+    //TODO do these have to be prefixed with pref_ ??  can i use xml somehow to abstract this out?
+    public static final String LATITUDE = "pref_latitude";
+    public static final String LONGITUDE = "pref_longitude";
+
+    public static final String RAW_WEATHER_JSON = "pref_raw_data";
+    public static final String WIDGET_CONFIG_COMPLETE = "pref_config_complete";
 }
