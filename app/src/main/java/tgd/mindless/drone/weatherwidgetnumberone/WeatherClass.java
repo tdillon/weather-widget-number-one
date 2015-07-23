@@ -31,17 +31,17 @@ class WeatherClass {
             Float cloudCover;
             Float precipIntensity;
             Float precipIntensityMax;
-            Long precipIntensityMaxTime;
-            Float precipProbability;
+            long precipIntensityMaxTime;
+            float precipProbability;
             Long sunriseTime;
             Long sunsetTime;
-            Float temperatureMax;
-            Long temperatureMaxTime;
-            Float temperatureMin;
-            Long temperatureMinTime;
-            Long time;
+            float temperatureMax;
+            long temperatureMaxTime;
+            float temperatureMin;
+            long temperatureMinTime;
+            long time;
 
-            DailyDataClass() {
+            public DailyDataClass() {
             }
         }
     }

@@ -120,6 +120,12 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
         return wc;
     }
 
+    public static WeatherClass getDummyWeather(Context context) {
+        Gson g = new Gson();
+        Log.v(TAG, "getDummyWeather   " + context.getResources().getString(R.string.sample_weather_data));
+        return g.fromJson(context.getResources().getString(R.string.sample_weather_data), WeatherClass.class);
+    }
+
     private static String getLatLon(Context context, int appWidgetId) {
         SharedPreferences localPrefs = context.getSharedPreferences(WidgetConfigPreferences.getSharedPreferenceName(appWidgetId), Context.MODE_PRIVATE);
         return localPrefs.getString(WidgetConfigPreferences.LATITUDE, "") + ',' + localPrefs.getString(WidgetConfigPreferences.LONGITUDE, "");

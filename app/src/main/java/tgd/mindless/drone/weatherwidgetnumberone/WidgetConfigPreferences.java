@@ -22,4 +22,8 @@ public class WidgetConfigPreferences {
 
     public static final String RAW_WEATHER_JSON = "pref_raw_data";
     public static final String WIDGET_CONFIG_COMPLETE = "pref_config_complete";
+    public static final String TEMP_WIDTH = "pref_temp_width";
+    public static final String PRECIP_WIDTH = "pref_precip_width";
+    public static final String TYPE = "pref_type";
+    public static final String TEMP_LINE_COLOR = "pref_temp_line_color";
 }

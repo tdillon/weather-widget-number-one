@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:defaultValue="@string/widget_type_hourly"
+        android:dialogTitle="DIAG Title"
+        android:entries="@array/widget_type_entries"
+        android:entryValues="@array/widget_type_entries"
+        android:key="pref_type"
+        android:title="Widget Type" />
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="pref_showTimeLines"
@@ -20,4 +27,19 @@
         android:key="pref_longitude"
         android:summary="Longitude SUMMARY"
         android:title="Longitude TITLE" />
+    <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+        android:defaultValue="5"
+        android:key="pref_temp_width"
+        android:summary="Temperature Width SUMMARY"
+        android:title="Temperature Width TITLE" />
+    <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+        android:defaultValue="5"
+        android:key="pref_precip_width"
+        android:title="Precipitation Line Width" />
+    <PreferenceCategory android:title="Colors">
+        <tgd.mindless.drone.weatherwidgetnumberone.ColorPickerPreference
+            android:defaultValue="#FF000000"
+            android:key="pref_temp_line_color"
+            android:title="Temperature Line Color" />
+    </PreferenceCategory>
 </PreferenceScreen>

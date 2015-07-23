@@ -77,12 +77,16 @@ public class WeatherWidget extends AppWidgetProvider {
         }
     }
 
-    public static void onConfigured(Context context, int appWidgetId) {
+    public static void onConfigured(Context context, int appWidgetId, boolean locationChanged) {
         Log.v(TAG, "onConfigured:   widget id: " + appWidgetId);
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         setClickHandler(context, appWidgetManager, appWidgetId);
-        new AsyncWeatherDAO(context).execute(new Integer[] { appWidgetId});
+        if (locationChanged) {
+            new AsyncWeatherDAO(context).execute(new Integer[]{appWidgetId});
+        } else {
+            drawWidget(context, appWidgetId, appWidgetManager, AsyncWeatherDAO.getWeather(context, appWidgetId));
+        }
     }
 
     private static void drawWidget(Context context, int appWidgetId, AppWidgetManager appWidgetManager, WeatherClass weatherClass) {

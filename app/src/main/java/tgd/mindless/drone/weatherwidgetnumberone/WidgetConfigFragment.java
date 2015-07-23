@@ -9,6 +9,8 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import java.util.Map;
+
 
 /**
  * A placeholder fragment containing a simple view.
@@ -18,10 +20,17 @@ public class WidgetConfigFragment extends PreferenceFragment /*implements Shared
     private SharedPreferences.OnSharedPreferenceChangeListener listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             Log.v(TAG, "onSharedPreferenceChanged:   " + key);
-            if (key.equals(WidgetConfigPreferences.LATITUDE)) {
-                Preference connectionPref = findPreference(key);
-                // Set summary to be the user-description for the selected value
-                connectionPref.setSummary(sharedPreferences.getString(key, ""));
+            switch (key) {
+                case WidgetConfigPreferences.LATITUDE:
+                case WidgetConfigPreferences.LONGITUDE:
+                case WidgetConfigPreferences.TYPE:
+                case WidgetConfigPreferences.TEMP_LINE_COLOR:
+                    findPreference(key).setSummary(sharedPreferences.getString(key, ""));
+                    break;
+                case WidgetConfigPreferences.TEMP_WIDTH:
+                case WidgetConfigPreferences.PRECIP_WIDTH:
+                    findPreference(key).setSummary(String.valueOf(sharedPreferences.getInt(key, 0)));
+                    break;
             }
         }
     };
@@ -43,8 +52,15 @@ public class WidgetConfigFragment extends PreferenceFragment /*implements Shared
         localPrefs.setSharedPreferencesName(WidgetConfigPreferences.getSharedPreferenceName(mAppWidgetId));
         addPreferencesFromResource(R.xml.preferences);
 
-        //getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
         getPreferenceManager().getSharedPreferences().registerOnSharedPreferenceChangeListener(listener);
+
+        SharedPreferences sp = getPreferenceManager().getSharedPreferences();
+        findPreference(WidgetConfigPreferences.LATITUDE).setSummary(sp.getString(WidgetConfigPreferences.LATITUDE, "TODO"));
+        findPreference(WidgetConfigPreferences.LONGITUDE).setSummary(sp.getString(WidgetConfigPreferences.LONGITUDE, "TODO"));
+        findPreference(WidgetConfigPreferences.TEMP_WIDTH).setSummary(String.valueOf(sp.getInt(WidgetConfigPreferences.TEMP_WIDTH, 0)));
+        findPreference(WidgetConfigPreferences.PRECIP_WIDTH).setSummary(String.valueOf(sp.getInt(WidgetConfigPreferences.PRECIP_WIDTH, 0)));
+        findPreference(WidgetConfigPreferences.TYPE).setSummary(sp.getString(WidgetConfigPreferences.TYPE, "TODO"));
+        findPreference(WidgetConfigPreferences.TEMP_LINE_COLOR).setSummary(sp.getString(WidgetConfigPreferences.TEMP_LINE_COLOR, "TODO"));
     }
 /*
     @Override
