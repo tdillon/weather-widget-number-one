@@ -28,13 +28,13 @@ class WeatherClass {
         }
 
         class DailyDataClass {
-            Float cloudCover;
-            Float precipIntensity;
-            Float precipIntensityMax;
+            float cloudCover;
+            float precipIntensity;
+            float precipIntensityMax;
             long precipIntensityMaxTime;
             float precipProbability;
-            Long sunriseTime;
-            Long sunsetTime;
+            long sunriseTime;
+            long sunsetTime;
             float temperatureMax;
             long temperatureMaxTime;
             float temperatureMin;

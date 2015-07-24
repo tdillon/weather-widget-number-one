@@ -34,7 +34,7 @@ public class WidgetConfig extends Activity {
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             Log.v(TAG, "onSharedPreferenceChanged:   " + key);
 
-            if (key == WidgetConfigPreferences.LATITUDE || key == WidgetConfigPreferences.LONGITUDE) {
+            if (key.equals(WidgetConfigPreferences.LATITUDE) || key.equals(WidgetConfigPreferences.LONGITUDE)) {
                 locationChanged = true;
             } else {
                 float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 250, getResources().getDisplayMetrics());

@@ -24,11 +24,18 @@ public class WidgetConfigFragment extends PreferenceFragment /*implements Shared
                 case WidgetConfigPreferences.LATITUDE:
                 case WidgetConfigPreferences.LONGITUDE:
                 case WidgetConfigPreferences.TYPE:
+                case WidgetConfigPreferences.TEMP_DOT_COLOR:
                 case WidgetConfigPreferences.TEMP_LINE_COLOR:
+                case WidgetConfigPreferences.DAYLIGHT_COLOR:
+                case WidgetConfigPreferences.TEMP_FONT_COLOR:
+                case WidgetConfigPreferences.TIME_FONT_COLOR:
                     findPreference(key).setSummary(sharedPreferences.getString(key, ""));
                     break;
                 case WidgetConfigPreferences.TEMP_WIDTH:
                 case WidgetConfigPreferences.PRECIP_WIDTH:
+                case WidgetConfigPreferences.TEMP_LINE_WIDTH:
+                case WidgetConfigPreferences.TEMP_FONT_SIZE:
+                case WidgetConfigPreferences.TIME_FONT_SIZE:
                     findPreference(key).setSummary(String.valueOf(sharedPreferences.getInt(key, 0)));
                     break;
             }
@@ -59,8 +66,15 @@ public class WidgetConfigFragment extends PreferenceFragment /*implements Shared
         findPreference(WidgetConfigPreferences.LONGITUDE).setSummary(sp.getString(WidgetConfigPreferences.LONGITUDE, "TODO"));
         findPreference(WidgetConfigPreferences.TEMP_WIDTH).setSummary(String.valueOf(sp.getInt(WidgetConfigPreferences.TEMP_WIDTH, 0)));
         findPreference(WidgetConfigPreferences.PRECIP_WIDTH).setSummary(String.valueOf(sp.getInt(WidgetConfigPreferences.PRECIP_WIDTH, 0)));
+        findPreference(WidgetConfigPreferences.TEMP_LINE_WIDTH).setSummary(String.valueOf(sp.getInt(WidgetConfigPreferences.TEMP_LINE_WIDTH, 0)));
+        findPreference(WidgetConfigPreferences.TEMP_FONT_SIZE).setSummary(String.valueOf(sp.getInt(WidgetConfigPreferences.TEMP_FONT_SIZE, 0)));
+        findPreference(WidgetConfigPreferences.TIME_FONT_SIZE).setSummary(String.valueOf(sp.getInt(WidgetConfigPreferences.TIME_FONT_SIZE, 0)));
         findPreference(WidgetConfigPreferences.TYPE).setSummary(sp.getString(WidgetConfigPreferences.TYPE, "TODO"));
+        findPreference(WidgetConfigPreferences.TEMP_DOT_COLOR).setSummary(sp.getString(WidgetConfigPreferences.TEMP_DOT_COLOR, "TODO"));
         findPreference(WidgetConfigPreferences.TEMP_LINE_COLOR).setSummary(sp.getString(WidgetConfigPreferences.TEMP_LINE_COLOR, "TODO"));
+        findPreference(WidgetConfigPreferences.DAYLIGHT_COLOR).setSummary(sp.getString(WidgetConfigPreferences.DAYLIGHT_COLOR, "TODO"));
+        findPreference(WidgetConfigPreferences.TEMP_FONT_COLOR).setSummary(sp.getString(WidgetConfigPreferences.TEMP_FONT_COLOR, "TODO"));
+        findPreference(WidgetConfigPreferences.TIME_FONT_COLOR).setSummary(sp.getString(WidgetConfigPreferences.TIME_FONT_COLOR, "TODO"));
     }
 /*
     @Override

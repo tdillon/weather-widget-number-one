@@ -24,6 +24,13 @@ public class WidgetConfigPreferences {
     public static final String WIDGET_CONFIG_COMPLETE = "pref_config_complete";
     public static final String TEMP_WIDTH = "pref_temp_width";
     public static final String PRECIP_WIDTH = "pref_precip_width";
+    public static final String TEMP_LINE_WIDTH = "pref_temp_line_width";
+    public static final String TEMP_FONT_SIZE = "pref_temp_font_size";
+    public static final String TIME_FONT_SIZE = "pref_time_font_size";
     public static final String TYPE = "pref_type";
+    public static final String TEMP_DOT_COLOR = "pref_temp_dot_color";
     public static final String TEMP_LINE_COLOR = "pref_temp_line_color";
+    public static final String DAYLIGHT_COLOR = "pref_daylight_color";
+    public static final String TEMP_FONT_COLOR = "pref_temp_font_color";
+    public static final String TIME_FONT_COLOR = "pref_time_font_color";
 }

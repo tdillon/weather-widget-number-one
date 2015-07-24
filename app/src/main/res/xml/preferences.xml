@@ -2,7 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
         android:defaultValue="@string/widget_type_hourly"
-        android:dialogTitle="DIAG Title"
         android:entries="@array/widget_type_entries"
         android:entryValues="@array/widget_type_entries"
         android:key="pref_type"
@@ -10,36 +9,62 @@
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="pref_showTimeLines"
-        android:summary="TODO Summary Show Time Lines"
-        android:title="TODO Title Show Time Lines" />
+        android:summary="Only used on hourly widget."
+        android:title="Show Time Gridlines" />
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="pref_showTempLines"
-        android:summary="TODO Summary Show Temp Lines"
-        android:title="TODO Title Show Temp Lines" />
+        android:title="Show Temperature Gridlines" />
     <EditTextPreference
         android:defaultValue="39.3061"
         android:key="pref_latitude"
-        android:summary="Latitude SUMMARY"
-        android:title="Latitude TITLE" />
+        android:title="Latitude" />
     <EditTextPreference
         android:defaultValue="-81.3664"
         android:key="pref_longitude"
-        android:summary="Longitude SUMMARY"
-        android:title="Longitude TITLE" />
-    <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
-        android:defaultValue="5"
-        android:key="pref_temp_width"
-        android:summary="Temperature Width SUMMARY"
-        android:title="Temperature Width TITLE" />
-    <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
-        android:defaultValue="5"
-        android:key="pref_precip_width"
-        android:title="Precipitation Line Width" />
+        android:title="Longitude" />
+    <PreferenceCategory android:title="Sizes">
+        <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+            android:defaultValue="5"
+            android:key="pref_temp_width"
+            android:title="Temperature Dot Radius" />
+        <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+            android:defaultValue="5"
+            android:key="pref_temp_line_width"
+            android:title="Temperature Line Width" />
+        <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+            android:defaultValue="5"
+            android:key="pref_precip_width"
+            android:title="Precipitation Line Width" />
+        <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+            android:defaultValue="12"
+            android:key="pref_time_font_size"
+            android:title="Unit of Time Font Size" />
+        <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+            android:defaultValue="12"
+            android:key="pref_temp_font_size"
+            android:title="Temperature Font Size" />
+    </PreferenceCategory>
     <PreferenceCategory android:title="Colors">
         <tgd.mindless.drone.weatherwidgetnumberone.ColorPickerPreference
-            android:defaultValue="#FF000000"
+            android:defaultValue="#FFFFFFFF"
+            android:key="pref_temp_dot_color"
+            android:title="Temperature Dot Color" />
+        <tgd.mindless.drone.weatherwidgetnumberone.ColorPickerPreference
+            android:defaultValue="#FFFFFFFF"
             android:key="pref_temp_line_color"
             android:title="Temperature Line Color" />
+        <tgd.mindless.drone.weatherwidgetnumberone.ColorPickerPreference
+            android:defaultValue="#FFFFFF00"
+            android:key="pref_daylight_color"
+            android:title="Daylight Hours Color" />
+        <tgd.mindless.drone.weatherwidgetnumberone.ColorPickerPreference
+            android:defaultValue="#FFFFFFFF"
+            android:key="pref_temp_font_color"
+            android:title="Temperature Font Color" />
+        <tgd.mindless.drone.weatherwidgetnumberone.ColorPickerPreference
+            android:defaultValue="#FFFFFFFF"
+            android:key="pref_time_font_color"
+            android:title="Unit of Time Font Color" />
     </PreferenceCategory>
 </PreferenceScreen>
