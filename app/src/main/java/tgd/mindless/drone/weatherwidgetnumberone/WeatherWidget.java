@@ -10,87 +10,78 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import java.util.Date;
 
-
-/**
- * Implementation of App Widget functionality.
- */
 public class WeatherWidget extends AppWidgetProvider {
 
-    private static final String TAG = "class WeatherWidget";
+    private static final String CLASS_NAME = "WeatherWidget";
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Log.v(TAG, "onUpdate:   appWidgetIds.length: " + String.valueOf(appWidgetIds.length));
+        WidgetConfigPreferences.writeToFile(CLASS_NAME, "onUpdate", "# IDs: " + String.valueOf(appWidgetIds.length));
 
         //BUG onUpdate is called even though a configuration activity is defined google code issue #3696
         if (appWidgetIds.length == 1 && !AsyncWeatherDAO.getConfigComplete(context, appWidgetIds[0])) {
-            Log.v(TAG, "onUpdate:   widgetID: " + String.valueOf(appWidgetIds[0]) + " not configured");
+            WidgetConfigPreferences.writeToFile(CLASS_NAME, "onUpdate", "ID: " + String.valueOf(appWidgetIds[0]) + " not configured");
             return;
         }
 
-        final int N = appWidgetIds.length;
-        for (int i = 0; i < N; ++i) {
-            setClickHandler(context, appWidgetManager, appWidgetIds[i]);
+        for (int appWidgetId : appWidgetIds) {
+            setClickHandler(context, appWidgetManager, appWidgetId);
         }
 
-        AsyncWeatherDAO dao = new AsyncWeatherDAO(context);
-        Integer[][] appWidgetIdsGroupedByLatLon = dao.groupByLatLon(context, appWidgetIds);
+        Integer[][] appWidgetIdsGroupedByLatLon = AsyncWeatherDAO.groupByLatLon(context, appWidgetIds);
 
-        Log.v(TAG, "onUpdate:   " + appWidgetIdsGroupedByLatLon.length + " groups of lat/lons");
+        WidgetConfigPreferences.writeToFile(CLASS_NAME, "onUpdate", appWidgetIdsGroupedByLatLon.length + " groups of lat/lons");
         for (Integer[] appWidgetIdGroup : appWidgetIdsGroupedByLatLon) {
-            Log.v(TAG, "onUpdate:   execute group with " + appWidgetIdGroup.length + " widgets");
+            WidgetConfigPreferences.writeToFile(CLASS_NAME, "onUpdate", "execute group with " + appWidgetIdGroup.length + " widgets");
             new AsyncWeatherDAO(context).execute(appWidgetIdGroup);
         }
-        Log.v(TAG, "onUpdate:   done");
+        WidgetConfigPreferences.writeToFile(CLASS_NAME, "onUpdate", "done");
     }
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        Log.v(TAG, "onAppWidgetOptionsChanged");
-        drawWidget(context, appWidgetId, appWidgetManager, new AsyncWeatherDAO(context).getWeather(context, appWidgetId));
+        WidgetConfigPreferences.writeToFile(CLASS_NAME, "onAppWidgetOptionsChanged", "ID: " + appWidgetId);
+        drawWidget(context, appWidgetId, appWidgetManager, AsyncWeatherDAO.getWeather(context, appWidgetId));
     }
 
     @Override
     public void onEnabled(Context context) {
-        Log.v(TAG, "onEnabled");
-        // Enter relevant functionality for when the first widget is created
+        WidgetConfigPreferences.writeToFile(CLASS_NAME, "onEnabled", "");
     }
 
     @Override
     public void onDisabled(Context context) {
-        Log.v(TAG, "onDisabled");
-        // Enter relevant functionality for when the last widget is disabled
+        WidgetConfigPreferences.writeToFile(CLASS_NAME, "onDisabled", "");
     }
 
     public static void onDataReturned(Context context, WeatherClass wc, Integer[] appWidgetIds) {
-        Log.v(TAG, "onDataReturned:   widget ids: " + TextUtils.join(", ", appWidgetIds));
+        WidgetConfigPreferences.writeToFile(CLASS_NAME, "onDataReturned", "IDs: " + TextUtils.join(", ", appWidgetIds) + "  WeatherClass: " + wc.toString());
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
 
-        for (int i = 0; i < appWidgetIds.length; ++i) {
-            drawWidget(context, appWidgetIds[i], manager, wc);
+        for (int appWidgetId : appWidgetIds) {
+            drawWidget(context, appWidgetId, manager, wc);
         }
     }
 
     public static void onConfigured(Context context, int appWidgetId, boolean locationChanged) {
-        Log.v(TAG, "onConfigured:   widget id: " + appWidgetId);
+        WidgetConfigPreferences.writeToFile(CLASS_NAME, "onConfigured", "ID: " + appWidgetId + "   locationChanged: " + locationChanged);
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         setClickHandler(context, appWidgetManager, appWidgetId);
         if (locationChanged) {
-            new AsyncWeatherDAO(context).execute(new Integer[]{appWidgetId});
+            new AsyncWeatherDAO(context).execute(appWidgetId);
         } else {
             drawWidget(context, appWidgetId, appWidgetManager, AsyncWeatherDAO.getWeather(context, appWidgetId));
         }
     }
 
     private static void drawWidget(Context context, int appWidgetId, AppWidgetManager appWidgetManager, WeatherClass weatherClass) {
-        Log.v(TAG, "drawWidget:   widget id: " + appWidgetId);
+        WidgetConfigPreferences.writeToFile(CLASS_NAME, "drawWidget", "ID: " + appWidgetId);
 
         SharedPreferences sharedPref = context.getSharedPreferences(WidgetConfigPreferences.getSharedPreferenceName(appWidgetId), Context.MODE_PRIVATE);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
@@ -108,7 +99,7 @@ public class WeatherWidget extends AppWidgetProvider {
     }
 
     static void setClickHandler(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        Log.v(TAG, "setClickHandler  appWidgetId: " + String.valueOf(appWidgetId));
+        WidgetConfigPreferences.writeToFile(CLASS_NAME, "setClickHandler", "ID: " + appWidgetId);
 
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
 
@@ -121,5 +112,7 @@ public class WeatherWidget extends AppWidgetProvider {
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
+
 }
+
 

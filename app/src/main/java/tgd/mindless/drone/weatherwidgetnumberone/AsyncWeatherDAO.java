@@ -25,19 +25,19 @@ import java.util.Set;
 public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
 
     private static final String API_BASE_URL = "https://api.forecast.io/forecast/c5f42d85c93f3a489363a8f410a78b57/";
-    private static final String TAG = "class AsyncWeatherDAO";
+    private static final String TAG = "AsyncWeatherDAO";
     Context context;
     Integer[] mAppWidgetIds;
 
 
     public AsyncWeatherDAO(Context context) {
-        android.util.Log.v(TAG, "constructor");
+        WidgetConfigPreferences.writeToFile(TAG, "constructor", "");
         this.context = context;
     }
 
     @Override
     protected WeatherClass doInBackground(Integer... appWidgetIds) {
-        Log.v(TAG, "doInBackground");
+        WidgetConfigPreferences.writeToFile(TAG, "doInBackground", "IDs: " + TextUtils.join(", ", appWidgetIds));
 
         mAppWidgetIds = appWidgetIds;
 
@@ -55,6 +55,7 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
             }
 
             line = total.toString();
+            WidgetConfigPreferences.writeToFile(TAG, "doInBackground", "JSON: " + line);
 
             Gson g = new Gson();
             wc = g.fromJson(line, WeatherClass.class);
@@ -64,18 +65,18 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
                 localPrefs.edit().putString(WidgetConfigPreferences.RAW_WEATHER_JSON, line).apply();
             }
         } catch (Exception e) {
+            WidgetConfigPreferences.writeToFile(TAG, "doInBackground", "EXCEPTION: " + e.getMessage());
             return null;
         } finally {
             urlConnection.disconnect();
         }
-
-        Log.v(TAG, "doInBackground end");
 
         return wc;
     }
 
     @Override
     protected void onPostExecute(WeatherClass wc) {
+        WidgetConfigPreferences.writeToFile(TAG, "onPostExecute", "WeatherClass: " + wc.toString());
         WeatherWidget.onDataReturned(context, wc, mAppWidgetIds);
     }
 
@@ -95,11 +96,6 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
                 val.add(i);
                 latLonMap.put(latlon, val);
             }
-        }
-
-        Set<String> keys = latLonMap.keySet();
-        for (String key : keys) {
-            Log.v(TAG, "groupByLatLon   key: " + key + "   values: " + TextUtils.join(", ", latLonMap.get(key)));
         }
 
         Integer[][] retVal = new Integer[latLonMap.size()][];
@@ -122,7 +118,6 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
 
     public static WeatherClass getDummyWeather(Context context) {
         Gson g = new Gson();
-        Log.v(TAG, "getDummyWeather   " + context.getResources().getString(R.string.sample_weather_data));
         return g.fromJson(context.getResources().getString(R.string.sample_weather_data), WeatherClass.class);
     }
 
