@@ -55,7 +55,6 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
             }
 
             line = total.toString();
-            WidgetConfigPreferences.writeToFile(TAG, "doInBackground", "JSON: " + line);
 
             Gson g = new Gson();
             wc = g.fromJson(line, WeatherClass.class);
@@ -76,7 +75,16 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
 
     @Override
     protected void onPostExecute(WeatherClass wc) {
-        WidgetConfigPreferences.writeToFile(TAG, "onPostExecute", "WeatherClass: " + wc.toString());
+        if (wc == null) {
+            WidgetConfigPreferences.writeToFile(TAG, "onPostExecute", "WeatherClass is null");
+            //TODO what should i do here?  we didn't get new data.  should i return null or a previous good data?
+            wc = AsyncWeatherDAO.getWeather(context, mAppWidgetIds);
+            if (wc == null) {
+                WidgetConfigPreferences.writeToFile(TAG, "onPostExecute", "WeatherClass is null for all mAppWidgetIds");
+            }
+        } else {
+            WidgetConfigPreferences.writeToFile(TAG, "onPostExecute", "WeatherClass.length: " + wc.toString().length());
+        }
         WeatherWidget.onDataReturned(context, wc, mAppWidgetIds);
     }
 
@@ -106,6 +114,28 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
         }
 
         return retVal;
+    }
+
+    /**
+     * For now, get the first WeatherClass for any of the appWidgetIds.
+     * Later we could get the most recent WeatherClass.
+     * Otherwise returns null;
+     *
+     * @param context
+     * @param appWidgetIds
+     * @return
+     */
+    public static WeatherClass getWeather(Context context, Integer... appWidgetIds) {
+        WeatherClass wc = null;
+
+        for (int appWidgetId : appWidgetIds) {
+            wc = getWeather(context, appWidgetId);
+            if (wc != null) {
+                break;
+            }
+        }
+
+        return wc;
     }
 
     public static WeatherClass getWeather(Context context, int appWidgetId) {

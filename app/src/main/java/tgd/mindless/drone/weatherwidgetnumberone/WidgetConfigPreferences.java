@@ -8,9 +8,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.Date;
 
-/**
- * Created by Trisha on 7/14/2015.
- */
 public class WidgetConfigPreferences {
 
     /**
@@ -33,6 +30,7 @@ public class WidgetConfigPreferences {
     public static final String TEMP_WIDTH = "pref_temp_width";
     public static final String PRECIP_WIDTH = "pref_precip_width";
     public static final String TEMP_LINE_WIDTH = "pref_temp_line_width";
+    public static final String PRECIP_LINE_WIDTH = "pref_precip_line_width";
     public static final String TEMP_FONT_SIZE = "pref_temp_font_size";
     public static final String TIME_FONT_SIZE = "pref_time_font_size";
     public static final String TYPE = "pref_type";

@@ -35,6 +35,10 @@
         <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
             android:defaultValue="5"
             android:key="pref_precip_width"
+            android:title="Precipitation Dot Radius" />
+        <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+            android:defaultValue="5"
+            android:key="pref_precip_line_width"
             android:title="Precipitation Line Width" />
         <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
             android:defaultValue="12"

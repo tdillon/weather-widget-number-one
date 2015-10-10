@@ -1,8 +1,5 @@
 package tgd.mindless.drone.weatherwidgetnumberone;
 
-/**
- * Created by Trisha on 7/10/2015.
- */
 class WeatherClass {
     Float latitude;
     CurrentClass currently;

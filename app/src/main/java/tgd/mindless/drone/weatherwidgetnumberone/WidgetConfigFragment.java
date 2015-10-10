@@ -34,6 +34,7 @@ public class WidgetConfigFragment extends PreferenceFragment /*implements Shared
                 case WidgetConfigPreferences.TEMP_WIDTH:
                 case WidgetConfigPreferences.PRECIP_WIDTH:
                 case WidgetConfigPreferences.TEMP_LINE_WIDTH:
+                case WidgetConfigPreferences.PRECIP_LINE_WIDTH:
                 case WidgetConfigPreferences.TEMP_FONT_SIZE:
                 case WidgetConfigPreferences.TIME_FONT_SIZE:
                     findPreference(key).setSummary(String.valueOf(sharedPreferences.getInt(key, 0)));
@@ -67,6 +68,7 @@ public class WidgetConfigFragment extends PreferenceFragment /*implements Shared
         findPreference(WidgetConfigPreferences.TEMP_WIDTH).setSummary(String.valueOf(sp.getInt(WidgetConfigPreferences.TEMP_WIDTH, 0)));
         findPreference(WidgetConfigPreferences.PRECIP_WIDTH).setSummary(String.valueOf(sp.getInt(WidgetConfigPreferences.PRECIP_WIDTH, 0)));
         findPreference(WidgetConfigPreferences.TEMP_LINE_WIDTH).setSummary(String.valueOf(sp.getInt(WidgetConfigPreferences.TEMP_LINE_WIDTH, 0)));
+        findPreference(WidgetConfigPreferences.PRECIP_LINE_WIDTH).setSummary(String.valueOf(sp.getInt(WidgetConfigPreferences.PRECIP_LINE_WIDTH, 0)));
         findPreference(WidgetConfigPreferences.TEMP_FONT_SIZE).setSummary(String.valueOf(sp.getInt(WidgetConfigPreferences.TEMP_FONT_SIZE, 0)));
         findPreference(WidgetConfigPreferences.TIME_FONT_SIZE).setSummary(String.valueOf(sp.getInt(WidgetConfigPreferences.TIME_FONT_SIZE, 0)));
         findPreference(WidgetConfigPreferences.TYPE).setSummary(sp.getString(WidgetConfigPreferences.TYPE, "TODO"));

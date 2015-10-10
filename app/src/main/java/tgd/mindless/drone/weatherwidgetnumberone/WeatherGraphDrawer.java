@@ -46,6 +46,7 @@ final public class WeatherGraphDrawer {
         int tempWidth = sharedPref.getInt(WidgetConfigPreferences.TEMP_WIDTH, 1);
         int precipWidth = sharedPref.getInt(WidgetConfigPreferences.PRECIP_WIDTH, 1);
         int tempLineWidth = sharedPref.getInt(WidgetConfigPreferences.TEMP_LINE_WIDTH, 1);
+        int precipLineWidth = sharedPref.getInt(WidgetConfigPreferences.PRECIP_LINE_WIDTH, 1);
         String tempDotColor = sharedPref.getString(WidgetConfigPreferences.TEMP_DOT_COLOR, "TODO");
         String tempLineColor = sharedPref.getString(WidgetConfigPreferences.TEMP_LINE_COLOR, "TODO");
         String daylightColor = sharedPref.getString(WidgetConfigPreferences.DAYLIGHT_COLOR, "TODO");
@@ -198,6 +199,7 @@ final public class WeatherGraphDrawer {
         int tempWidth = sharedPref.getInt(WidgetConfigPreferences.TEMP_WIDTH, 1);
         int precipWidth = sharedPref.getInt(WidgetConfigPreferences.PRECIP_WIDTH, 1);
         int tempLineWidth = sharedPref.getInt(WidgetConfigPreferences.TEMP_LINE_WIDTH, 1);
+        int precipLineWidth = sharedPref.getInt(WidgetConfigPreferences.PRECIP_LINE_WIDTH, 1);
         String tempDotColor = sharedPref.getString(WidgetConfigPreferences.TEMP_DOT_COLOR, "TODO");
         String tempLineColor = sharedPref.getString(WidgetConfigPreferences.TEMP_LINE_COLOR, "TODO");
         String daylightColor = sharedPref.getString(WidgetConfigPreferences.DAYLIGHT_COLOR, "TODO");
@@ -218,7 +220,7 @@ final public class WeatherGraphDrawer {
         paint.getTextBounds("0123456789SuMoTuWeThFrSa", 0, 24, bounds);
 
         int paddingTop, paddingRight;
-        paddingRight = paddingTop = Math.max(tempWidth, precipWidth);
+        paddingRight = paddingTop = Math.max(tempWidth, precipWidth);  //TODO should this account for line and dot radius/widths?
         Log.v(TAG, "draw   color: " + tempLineColor + "   padding: " + String.valueOf(paddingTop));
 
         float maxTemp = Float.MIN_VALUE;
@@ -287,6 +289,8 @@ final public class WeatherGraphDrawer {
         dbzs.put(34f, Color.argb(255, 152, 84, 198));
         dbzs.put(69.9f, Color.argb(255, 253, 253, 253));
 
+
+        paint.setStrokeWidth(precipLineWidth);
         float prevTempY = 0, prevPrecY = -1, prevHourX = -1;
         int lastPrecipColor = Color.TRANSPARENT;
         int j = 0;

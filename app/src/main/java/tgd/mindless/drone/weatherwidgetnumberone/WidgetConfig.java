@@ -92,8 +92,9 @@ public class WidgetConfig extends Activity {
             finish();
 
             Context context = v.getContext();
+            boolean needDataUpdate = locationChanged || !AsyncWeatherDAO.getConfigComplete(context, mAppWidgetId);
             AsyncWeatherDAO.setConfigComplete(context, mAppWidgetId);
-            WeatherWidget.onConfigured(context, mAppWidgetId, locationChanged);  //TODO only get new data if lat/lon have changed
+            WeatherWidget.onConfigured(context, mAppWidgetId, needDataUpdate);  //TODO only get new data if lat/lon have changed
         }
     };
 

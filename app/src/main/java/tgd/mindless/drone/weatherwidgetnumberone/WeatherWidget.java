@@ -13,6 +13,7 @@ import android.text.format.DateFormat;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class WeatherWidget extends AppWidgetProvider {
@@ -60,7 +61,12 @@ public class WeatherWidget extends AppWidgetProvider {
     }
 
     public static void onDataReturned(Context context, WeatherClass wc, Integer[] appWidgetIds) {
-        WidgetConfigPreferences.writeToFile(CLASS_NAME, "onDataReturned", "IDs: " + TextUtils.join(", ", appWidgetIds) + "  WeatherClass: " + wc.toString());
+        if (wc == null) {
+            WidgetConfigPreferences.writeToFile(CLASS_NAME, "onDataReturned", "IDs: " + TextUtils.join(", ", appWidgetIds) + "  WeatherClass is null");
+            return;  //TODO what should the user see when we can get no data at all?
+        } else {
+            WidgetConfigPreferences.writeToFile(CLASS_NAME, "onDataReturned", "IDs: " + TextUtils.join(", ", appWidgetIds) + "  WeatherClass.length: " + wc.toString().length());
+        }
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
 
         for (int appWidgetId : appWidgetIds) {
@@ -68,14 +74,17 @@ public class WeatherWidget extends AppWidgetProvider {
         }
     }
 
-    public static void onConfigured(Context context, int appWidgetId, boolean locationChanged) {
-        WidgetConfigPreferences.writeToFile(CLASS_NAME, "onConfigured", "ID: " + appWidgetId + "   locationChanged: " + locationChanged);
+    public static void onConfigured(Context context, int appWidgetId, boolean needsDataUpdate) {
+        WidgetConfigPreferences.writeToFile(CLASS_NAME, "onConfigured", "ID: " + appWidgetId + "   needsDataUpdate: " + needsDataUpdate);
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         setClickHandler(context, appWidgetManager, appWidgetId);
-        if (locationChanged) {
+        if (needsDataUpdate) {
             new AsyncWeatherDAO(context).execute(appWidgetId);
         } else {
+            //TODO if cannot get API data, then this widget cannot draw.  need to be able to pull from other widget's data.
+            //TODO DAO should have a mapping of widgetIds and LAT/LON that it keeps track of.
+            //TODO currently DAO does not delete old data.
             drawWidget(context, appWidgetId, appWidgetManager, AsyncWeatherDAO.getWeather(context, appWidgetId));
         }
     }
@@ -85,7 +94,9 @@ public class WeatherWidget extends AppWidgetProvider {
 
         SharedPreferences sharedPref = context.getSharedPreferences(WidgetConfigPreferences.getSharedPreferenceName(appWidgetId), Context.MODE_PRIVATE);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
-        views.setTextViewText(R.id.tvUpdateTime, DateFormat.getTimeFormat(context).format(new Date()));
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(weatherClass.currently.time * 1000);
+        views.setTextViewText(R.id.tvUpdateTime, DateFormat.getTimeFormat(context).format(cal.getTime()));
 
         int width = appWidgetManager.getAppWidgetOptions(appWidgetId).getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
         int height = appWidgetManager.getAppWidgetOptions(appWidgetId).getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
