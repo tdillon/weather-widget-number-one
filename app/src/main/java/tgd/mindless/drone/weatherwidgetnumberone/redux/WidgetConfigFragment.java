@@ -1,15 +1,12 @@
-package tgd.mindless.drone.weatherwidgetnumberone;
+package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
-
-import java.util.Map;
 
 
 /**

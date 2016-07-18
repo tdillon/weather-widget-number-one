@@ -1,0 +1,9 @@
+Work in progress.
+View temperature and precipitation in same widget.
+Check back later.
+
+TODOs
+*  Update Store Listing (text, graphics)
+*  App Icon
+*  New location picker
+*  Improve lines

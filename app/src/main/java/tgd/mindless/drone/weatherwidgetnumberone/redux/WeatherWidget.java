@@ -1,4 +1,4 @@
-package tgd.mindless.drone.weatherwidgetnumberone;
+package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -14,7 +14,6 @@ import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import java.util.Calendar;
-import java.util.Date;
 
 public class WeatherWidget extends AppWidgetProvider {
 

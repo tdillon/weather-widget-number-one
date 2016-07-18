@@ -1,4 +1,4 @@
-package tgd.mindless.drone.weatherwidgetnumberone;
+package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;

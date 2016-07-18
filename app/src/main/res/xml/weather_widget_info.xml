@@ -8,4 +8,4 @@
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="3600000"
     android:widgetCategory="home_screen"
-    android:configure="tgd.mindless.drone.weatherwidgetnumberone.WidgetConfig"></appwidget-provider>
+    android:configure="tgd.mindless.drone.weatherwidgetnumberone.redux.WidgetConfig"></appwidget-provider>

@@ -24,49 +24,49 @@
         android:key="pref_longitude"
         android:title="Longitude" />
     <PreferenceCategory android:title="Sizes">
-        <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+        <tgd.mindless.drone.weatherwidgetnumberone.redux.NumberPickerPreference
             android:defaultValue="5"
             android:key="pref_temp_width"
             android:title="Temperature Dot Radius" />
-        <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+        <tgd.mindless.drone.weatherwidgetnumberone.redux.NumberPickerPreference
             android:defaultValue="5"
             android:key="pref_temp_line_width"
             android:title="Temperature Line Width" />
-        <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+        <tgd.mindless.drone.weatherwidgetnumberone.redux.NumberPickerPreference
             android:defaultValue="5"
             android:key="pref_precip_width"
             android:title="Precipitation Dot Radius" />
-        <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+        <tgd.mindless.drone.weatherwidgetnumberone.redux.NumberPickerPreference
             android:defaultValue="5"
             android:key="pref_precip_line_width"
             android:title="Precipitation Line Width" />
-        <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+        <tgd.mindless.drone.weatherwidgetnumberone.redux.NumberPickerPreference
             android:defaultValue="12"
             android:key="pref_time_font_size"
             android:title="Unit of Time Font Size" />
-        <tgd.mindless.drone.weatherwidgetnumberone.NumberPickerPreference
+        <tgd.mindless.drone.weatherwidgetnumberone.redux.NumberPickerPreference
             android:defaultValue="12"
             android:key="pref_temp_font_size"
             android:title="Temperature Font Size" />
     </PreferenceCategory>
     <PreferenceCategory android:title="Colors">
-        <tgd.mindless.drone.weatherwidgetnumberone.ColorPickerPreference
+        <tgd.mindless.drone.weatherwidgetnumberone.redux.ColorPickerPreference
             android:defaultValue="#FFFFFFFF"
             android:key="pref_temp_dot_color"
             android:title="Temperature Dot Color" />
-        <tgd.mindless.drone.weatherwidgetnumberone.ColorPickerPreference
+        <tgd.mindless.drone.weatherwidgetnumberone.redux.ColorPickerPreference
             android:defaultValue="#FFFFFFFF"
             android:key="pref_temp_line_color"
             android:title="Temperature Line Color" />
-        <tgd.mindless.drone.weatherwidgetnumberone.ColorPickerPreference
+        <tgd.mindless.drone.weatherwidgetnumberone.redux.ColorPickerPreference
             android:defaultValue="#FFFFFF00"
             android:key="pref_daylight_color"
             android:title="Daylight Hours Color" />
-        <tgd.mindless.drone.weatherwidgetnumberone.ColorPickerPreference
+        <tgd.mindless.drone.weatherwidgetnumberone.redux.ColorPickerPreference
             android:defaultValue="#FFFFFFFF"
             android:key="pref_temp_font_color"
             android:title="Temperature Font Color" />
-        <tgd.mindless.drone.weatherwidgetnumberone.ColorPickerPreference
+        <tgd.mindless.drone.weatherwidgetnumberone.redux.ColorPickerPreference
             android:defaultValue="#FFFFFFFF"
             android:key="pref_time_font_color"
             android:title="Unit of Time Font Color" />
