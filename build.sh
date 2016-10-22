@@ -1,6 +1,6 @@
 set -ev
 
-echo $TRAVIS_TAG
+echo "TAG: ("$TRAVIS_TAG")"
 
 ./gradlew assembleRelease
 
@@ -10,4 +10,6 @@ if [ "${TRAVIS_TAG}" != "" ]; then
   ls -la app/build/outputs/apk
   supply -v
   supply run -j gpdpapi.service_account.json -p tgd.mindless.drone.weatherwidgetnumberone.redux -b app/build/outputs/apk/app-release.apk
+else
+  echo "TAG is empty, not deploying to play store."
 fi
