@@ -9,7 +9,7 @@ if [ "${TRAVIS_TAG}" != "" ]; then
   /usr/local/android-sdk/build-tools/23.0.3/zipalign -v 4 app/build/outputs/apk/app-release-unsigned.apk app/build/outputs/apk/app-release.apk
   ls -la app/build/outputs/apk
   supply -v
-  supply run -j gpdpapi.service_account.json -p tgd.mindless.drone.weatherwidgetnumberone.redux -b app/build/outputs/apk/app-release.apk
+  supply run -j "Google Play Android Developer-5d5bd2dcc1bd.json" -p tgd.mindless.drone.weatherwidgetnumberone.redux -b app/build/outputs/apk/app-release.apk
 else
   echo "TAG is empty, not deploying to play store."
 fi
