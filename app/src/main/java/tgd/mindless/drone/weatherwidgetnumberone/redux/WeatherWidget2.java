@@ -3,11 +3,9 @@ package tgd.mindless.drone.weatherwidgetnumberone.redux;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.text.format.Time;
 import android.widget.RemoteViews;
 
 import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
