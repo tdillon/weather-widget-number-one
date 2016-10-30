@@ -3,7 +3,12 @@ package tgd.mindless.drone.weatherwidgetnumberone.redux;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.text.format.Time;
 import android.widget.RemoteViews;
+
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Implementation of App Widget functionality.
@@ -14,10 +19,10 @@ public class WeatherWidget2 extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        CharSequence widgetText = WeatherWidget2ConfigureActivity.loadTitlePref(context, appWidgetId);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather_widget2);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+
+        views.setTextViewText(R.id.appwidget_text, DateFormat.getDateTimeInstance().format(new Date()));
 
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
