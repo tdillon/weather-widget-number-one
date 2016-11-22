@@ -19,11 +19,13 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import tgd.mindless.drone.weatherwidgetnumberone.redux.widget.Weather;
+
 final public class WeatherGraphDrawer {
 
     final static String TAG = "WeatherGraphDrawer";
 
-    static public Bitmap draw(WeatherClass wc, float px, float py, SharedPreferences sharedPref, DisplayMetrics dm) {
+    static public Bitmap draw(Weather wc, float px, float py, SharedPreferences sharedPref, DisplayMetrics dm) {
         Log.v(TAG, "draw");
 
         Bitmap bmp;
@@ -39,7 +41,7 @@ final public class WeatherGraphDrawer {
         return bmp;
     }
 
-    private static Bitmap drawDaily(WeatherClass wc, float px, float py, SharedPreferences sharedPref, DisplayMetrics dm) {
+    private static Bitmap drawDaily(Weather weather, float px, float py, SharedPreferences sharedPref, DisplayMetrics dm) {
 
         boolean showTimeLines = sharedPref.getBoolean("pref_showTimeLines", false);
         boolean showTempLines = sharedPref.getBoolean("pref_showTempLines", false);
@@ -73,7 +75,7 @@ final public class WeatherGraphDrawer {
         float maxTemp = Float.MIN_VALUE;
         float minTemp = Float.MAX_VALUE;
 
-        for (WeatherClass.DailyClass.DailyDataClass d : wc.daily.data) {  //CHANGE   can i add minTemp() and getMaxTemp to DailyClass and HourlyClass?
+        for (Weather.DataPoint d : weather.daily.data) {  //CHANGE   can i add minTemp() and getMaxTemp to DailyClass and HourlyClass?
             if (d.temperatureMax > maxTemp) {
                 maxTemp = d.temperatureMax;
             }
@@ -112,7 +114,7 @@ final public class WeatherGraphDrawer {
         }
         paint.setTextAlign(Paint.Align.CENTER);
 
-        float dayWidth = (px - paddingRight - maxTempTextWidth) / wc.daily.data.length;
+        float dayWidth = (px - paddingRight - maxTempTextWidth) / weather.daily.data.length;
         float halfDayWidth = dayWidth / 2;
 
         //http://radar.weather.gov/Legend/N0R/DMX_N0R_Legend_0.gif
@@ -138,7 +140,7 @@ final public class WeatherGraphDrawer {
         paint.setTextSize(timeFontSize);
         float prevMaxTempX = 0, prevMaxTempY = 0, prevMinTempX = 0, prevMinTempY = 0;
         int j = 0;
-        for (WeatherClass.DailyClass.DailyDataClass d : wc.daily.data) {  //CHANGE
+        for (Weather.DataPoint d : weather.daily.data) {  //CHANGE
             //TODO draw cloud cover rectangles
             paint.setColor(Color.parseColor(daylightColor));
             paint.setAlpha((int) ((1 - d.cloudCover) * 255));
@@ -226,7 +228,7 @@ final public class WeatherGraphDrawer {
         float maxTemp = Float.MIN_VALUE;
         float minTemp = Float.MAX_VALUE;
 
-        for (WeatherClass.HourlyClass.HourlyDataClass d : wc.hourly.data) {
+        for (WeatherClass.DataPoint d : wc.hourly.data) {
             if (d.temperature > maxTemp) {
                 maxTemp = d.temperature;
             }
@@ -294,7 +296,7 @@ final public class WeatherGraphDrawer {
         float prevTempY = 0, prevPrecY = -1, prevHourX = -1;
         int lastPrecipColor = Color.TRANSPARENT;
         int j = 0;
-        for (WeatherClass.HourlyClass.HourlyDataClass d : wc.hourly.data) {  //CHANGE
+        for (WeatherClass.DataPoint d : wc.hourly.data) {  //CHANGE
             //TODO draw cloud cover rectangles
             /*
             paint.setColor(Color.parseColor(daylightColor));

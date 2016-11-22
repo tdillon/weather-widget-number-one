@@ -1,26 +1,26 @@
-package tgd.mindless.drone.weatherwidgetnumberone.redux;
+package tgd.mindless.drone.weatherwidgetnumberone.redux.widget;
 
-public class WeatherClass {
+public class Weather {
     float latitude;
     float longitude;
     String timezone;
     int offset;
     DataPoint currently;
-    public DataBlock hourly;
-    public DataBlock daily;
+    DataBlock hourly;
+    DataBlock daily;
 
-    public WeatherClass() {
+    Weather() {
     }
 
     public class DataBlock {
-        public DataPoint[] data;
+        DataPoint[] data;
 
-        public DataBlock() {
+        DataBlock() {
         }
     }
 
     public class DataPoint {
-        public long time;
+        long time;
         float cloudCover;
         float precipIntensity;
         float precipIntensityMax;
@@ -29,12 +29,13 @@ public class WeatherClass {
         long sunriseTime;
         long sunsetTime;
         float temperature;
-        public float temperatureMax;
-        public long temperatureMaxTime;
+        float temperatureMax;
+        long temperatureMaxTime;
         float temperatureMin;
         long temperatureMinTime;
 
-        public DataPoint() {
+        DataPoint() {
         }
     }
 }
+

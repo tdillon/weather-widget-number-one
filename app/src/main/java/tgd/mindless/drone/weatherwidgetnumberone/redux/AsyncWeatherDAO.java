@@ -16,8 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tgd.mindless.drone.weatherwidgetnumberone.redux.widget.Weather;
 
-public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
+
+public class AsyncWeatherDAO extends AsyncTask<Integer, Void, Weather> {
 
     private static final String API_BASE_URL = "https://api.forecast.io/forecast/c5f42d85c93f3a489363a8f410a78b57/";
     private static final String TAG = "AsyncWeatherDAO";
@@ -31,12 +33,12 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
     }
 
     @Override
-    protected WeatherClass doInBackground(Integer... appWidgetIds) {
+    protected Weather doInBackground(Integer... appWidgetIds) {
         WidgetConfigPreferences.writeToFile(TAG, "doInBackground", "IDs: " + TextUtils.join(", ", appWidgetIds));
 
         mAppWidgetIds = appWidgetIds;
 
-        WeatherClass wc = null;
+        Weather wc = null;
         HttpURLConnection urlConnection = null;
         try {
             URL url = new URL(API_BASE_URL + getLatLon(context, appWidgetIds[0]));
@@ -52,7 +54,7 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
             line = total.toString();
 
             Gson g = new Gson();
-            wc = g.fromJson(line, WeatherClass.class);
+            wc = g.fromJson(line, Weather.class);
 
             for (int appWidgetId : appWidgetIds) {
                 SharedPreferences localPrefs = context.getSharedPreferences(WidgetConfigPreferences.getSharedPreferenceName(appWidgetId), Context.MODE_PRIVATE);
@@ -69,7 +71,7 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
     }
 
     @Override
-    protected void onPostExecute(WeatherClass wc) {
+    protected void onPostExecute(Weather wc) {
         if (wc == null) {
             WidgetConfigPreferences.writeToFile(TAG, "onPostExecute", "WeatherClass is null");
             //TODO what should i do here?  we didn't get new data.  should i return null or a previous good data?
@@ -120,8 +122,8 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
      * @param appWidgetIds
      * @return
      */
-    public static WeatherClass getWeather(Context context, Integer... appWidgetIds) {
-        WeatherClass wc = null;
+    public static Weather getWeather(Context context, Integer... appWidgetIds) {
+        Weather wc = null;
 
         for (int appWidgetId : appWidgetIds) {
             wc = getWeather(context, appWidgetId);
@@ -133,17 +135,17 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, WeatherClass> {
         return wc;
     }
 
-    public static WeatherClass getWeather(Context context, int appWidgetId) {
+    public static Weather getWeather(Context context, int appWidgetId) {
         SharedPreferences localPrefs = context.getSharedPreferences(WidgetConfigPreferences.getSharedPreferenceName(appWidgetId), Context.MODE_PRIVATE);
         Gson g = new Gson();
-        WeatherClass wc = g.fromJson(localPrefs.getString(WidgetConfigPreferences.RAW_WEATHER_JSON, ""), WeatherClass.class);
+        Weather weather = g.fromJson(localPrefs.getString(WidgetConfigPreferences.RAW_WEATHER_JSON, ""), Weather.class);
 
-        return wc;
+        return weather;
     }
 
-    public static WeatherClass getDummyWeather(Context context) {
+    public static Weather getDummyWeather(Context context) {
         Gson g = new Gson();
-        return g.fromJson(context.getResources().getString(R.string.sample_weather_data), WeatherClass.class);
+        return g.fromJson(context.getResources().getString(R.string.sample_weather_data), Weather.class);
     }
 
     private static String getLatLon(Context context, int appWidgetId) {

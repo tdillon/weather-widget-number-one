@@ -6,14 +6,26 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.RemoteViews;
 
+import com.google.gson.Gson;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.Calendar;
+
+import tgd.mindless.drone.weatherwidgetnumberone.redux.widget.Drawer;
+import tgd.mindless.drone.weatherwidgetnumberone.redux.widget.Positionings;
+import tgd.mindless.drone.weatherwidgetnumberone.redux.widget.ThemesClass;
+import tgd.mindless.drone.weatherwidgetnumberone.redux.widget.Weather;
 
 public class WeatherWidget extends AppWidgetProvider {
 
@@ -45,7 +57,7 @@ public class WeatherWidget extends AppWidgetProvider {
 
     @Override
     public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
-        WidgetConfigPreferences.writeToFile(CLASS_NAME, "onAppWidgetOptionsChanged", "ID: " + appWidgetId);
+        Log.i("bundleWidth", String.valueOf(newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH)));
         drawWidget(context, appWidgetId, appWidgetManager, AsyncWeatherDAO.getWeather(context, appWidgetId));
     }
 
@@ -59,17 +71,17 @@ public class WeatherWidget extends AppWidgetProvider {
         WidgetConfigPreferences.writeToFile(CLASS_NAME, "onDisabled", "");
     }
 
-    public static void onDataReturned(Context context, WeatherClass wc, Integer[] appWidgetIds) {
-        if (wc == null) {
+    public static void onDataReturned(Context context, Weather weather, Integer[] appWidgetIds) {
+        if (weather == null) {
             WidgetConfigPreferences.writeToFile(CLASS_NAME, "onDataReturned", "IDs: " + TextUtils.join(", ", appWidgetIds) + "  WeatherClass is null");
             return;  //TODO what should the user see when we can get no data at all?
         } else {
-            WidgetConfigPreferences.writeToFile(CLASS_NAME, "onDataReturned", "IDs: " + TextUtils.join(", ", appWidgetIds) + "  WeatherClass.length: " + wc.toString().length());
+            WidgetConfigPreferences.writeToFile(CLASS_NAME, "onDataReturned", "IDs: " + TextUtils.join(", ", appWidgetIds) + "  WeatherClass.length: " + weather.toString().length());
         }
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
 
         for (int appWidgetId : appWidgetIds) {
-            drawWidget(context, appWidgetId, manager, wc);
+            drawWidget(context, appWidgetId, manager, weather);
         }
     }
 
@@ -88,22 +100,36 @@ public class WeatherWidget extends AppWidgetProvider {
         }
     }
 
-    private static void drawWidget(Context context, int appWidgetId, AppWidgetManager appWidgetManager, WeatherClass weatherClass) {
+    private static void drawWidget(Context context, int appWidgetId, AppWidgetManager appWidgetManager, Weather weather) {
         WidgetConfigPreferences.writeToFile(CLASS_NAME, "drawWidget", "ID: " + appWidgetId);
 
         SharedPreferences sharedPref = context.getSharedPreferences(WidgetConfigPreferences.getSharedPreferenceName(appWidgetId), Context.MODE_PRIVATE);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
         Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(weatherClass.currently.time * 1000);
+        //cal.setTimeInMillis(weather.currently.time * 1000);
         views.setTextViewText(R.id.tvUpdateTime, DateFormat.getTimeFormat(context).format(cal.getTime()));
 
         int width = appWidgetManager.getAppWidgetOptions(appWidgetId).getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+        int widthMAX = appWidgetManager.getAppWidgetOptions(appWidgetId).getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH);
         int height = appWidgetManager.getAppWidgetOptions(appWidgetId).getInt(AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT);
 
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, context.getResources().getDisplayMetrics());
         float py = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, context.getResources().getDisplayMetrics());
 
-        views.setImageViewBitmap(R.id.ivGraph, WeatherGraphDrawer.draw(weatherClass, px, py, sharedPref, context.getResources().getDisplayMetrics()));
+        Log.i("width", String.valueOf(width));
+        Log.i("widthMAX", String.valueOf(widthMAX));
+        Log.i("height", String.valueOf(height));
+        Log.i("px", String.valueOf(px));
+        Log.i("py", String.valueOf(py));
+        //views.setImageViewBitmap(R.id.ivGraph, WeatherGraphDrawer.draw(weatherClass, px, py, sharedPref, context.getResources().getDisplayMetrics()));
+
+        Gson g = new Gson();
+        try {
+            ThemesClass t = g.fromJson( new InputStreamReader( context.getAssets().open("themes.json")), ThemesClass.class);
+            views.setImageViewBitmap(R.id.ivGraph, (new Drawer(new Positionings(t, weather, px, py))).render());
+        } catch (Exception e) {
+            Log.i("not going to happen", "file not found themes.json 222");
+        }
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
