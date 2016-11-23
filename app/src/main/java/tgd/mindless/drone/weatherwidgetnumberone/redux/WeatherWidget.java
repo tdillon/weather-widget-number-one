@@ -41,10 +41,6 @@ public class WeatherWidget extends AppWidgetProvider {
             return;
         }
 
-        for (int appWidgetId : appWidgetIds) {
-            setClickHandler(context, appWidgetManager, appWidgetId);
-        }
-
         Integer[][] appWidgetIdsGroupedByLatLon = AsyncWeatherDAO.groupByLatLon(context, appWidgetIds);
 
         WidgetConfigPreferences.writeToFile(CLASS_NAME, "onUpdate", appWidgetIdsGroupedByLatLon.length + " groups of lat/lons");
@@ -89,7 +85,6 @@ public class WeatherWidget extends AppWidgetProvider {
         WidgetConfigPreferences.writeToFile(CLASS_NAME, "onConfigured", "ID: " + appWidgetId + "   needsDataUpdate: " + needsDataUpdate);
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-        setClickHandler(context, appWidgetManager, appWidgetId);
         if (needsDataUpdate) {
             new AsyncWeatherDAO(context).execute(appWidgetId);
         } else {
@@ -133,22 +128,6 @@ public class WeatherWidget extends AppWidgetProvider {
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
-
-    static void setClickHandler(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
-        WidgetConfigPreferences.writeToFile(CLASS_NAME, "setClickHandler", "ID: " + appWidgetId);
-
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
-
-        Intent intent = new Intent(context, WidgetConfig.class);
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE);
-        intent.setData(Uri.parse(intent.toUri(Intent.URI_INTENT_SCHEME)));
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setOnClickPendingIntent(R.id.ivGraph, pendingIntent);
-
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-    }
-
 }
 
 

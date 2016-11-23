@@ -28,14 +28,11 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, Weather> {
 
 
     public AsyncWeatherDAO(Context context) {
-        WidgetConfigPreferences.writeToFile(TAG, "constructor", "");
         this.context = context;
     }
 
     @Override
     protected Weather doInBackground(Integer... appWidgetIds) {
-        WidgetConfigPreferences.writeToFile(TAG, "doInBackground", "IDs: " + TextUtils.join(", ", appWidgetIds));
-
         mAppWidgetIds = appWidgetIds;
 
         Weather wc = null;

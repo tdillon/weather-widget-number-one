@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string-array name="widget_type_entries">
-        <item>@string/widget_type_hourly</item>
-        <item>@string/widget_type_daily</item>
-    </string-array>
-
-</resources>
