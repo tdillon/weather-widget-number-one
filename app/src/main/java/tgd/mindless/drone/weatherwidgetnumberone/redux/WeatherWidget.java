@@ -1,13 +1,9 @@
 package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
-import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -17,15 +13,8 @@ import android.widget.RemoteViews;
 
 import com.google.gson.Gson;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.Calendar;
-
-import tgd.mindless.drone.weatherwidgetnumberone.redux.widget.Drawer;
-import tgd.mindless.drone.weatherwidgetnumberone.redux.widget.Positionings;
-import tgd.mindless.drone.weatherwidgetnumberone.redux.widget.ThemesClass;
-import tgd.mindless.drone.weatherwidgetnumberone.redux.widget.Weather;
 
 public class WeatherWidget extends AppWidgetProvider {
 

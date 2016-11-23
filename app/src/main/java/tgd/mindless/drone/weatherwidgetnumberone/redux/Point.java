@@ -1,4 +1,4 @@
-package tgd.mindless.drone.weatherwidgetnumberone.redux.widget;
+package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
 class Point {
     float x;

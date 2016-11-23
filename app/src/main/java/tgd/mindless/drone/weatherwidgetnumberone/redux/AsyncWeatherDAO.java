@@ -3,7 +3,6 @@ package tgd.mindless.drone.weatherwidgetnumberone.redux;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import tgd.mindless.drone.weatherwidgetnumberone.redux.widget.Weather;
 
 
 public class AsyncWeatherDAO extends AsyncTask<Integer, Void, Weather> {

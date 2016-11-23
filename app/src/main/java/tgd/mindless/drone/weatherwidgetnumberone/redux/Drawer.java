@@ -1,24 +1,20 @@
-package tgd.mindless.drone.weatherwidgetnumberone.redux.widget;
+package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.Log;
 
 import com.google.gson.Gson;
 
-import java.util.Calendar;
-import java.util.Locale;
+class Drawer {
+    private Bitmap _bmp;
+    private Canvas _cvs;
+    private Positionings _pos;
+    private Paint paint;
 
-public class Drawer {
-    Bitmap _bmp;
-    Canvas _cvs;
-    Positionings _pos;
-    Paint paint;
-
-    public Drawer(Positionings pos) {
+    Drawer(Positionings pos) {
         _pos = pos;
 
         _bmp = Bitmap.createBitmap((int) _pos.widget.width, (int) _pos.widget.height, Bitmap.Config.ARGB_8888);
@@ -29,7 +25,7 @@ public class Drawer {
         paint.setAntiAlias(true);
     }
 
-    public Bitmap render() {
+    Bitmap render() {
         /*
          * Render Sequence:
          *  1) Widget background (background color w/opacity of entire widget)

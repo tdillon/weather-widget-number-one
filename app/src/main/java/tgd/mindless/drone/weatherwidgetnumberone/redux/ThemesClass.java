@@ -1,8 +1,8 @@
-package tgd.mindless.drone.weatherwidgetnumberone.redux.widget;
+package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ThemesClass {
+class ThemesClass {
     String name;
     ThemeType type;
     float fontSize;

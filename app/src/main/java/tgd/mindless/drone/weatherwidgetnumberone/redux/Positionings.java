@@ -1,22 +1,22 @@
-package tgd.mindless.drone.weatherwidgetnumberone.redux.widget;
+package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Positionings {
+class Positionings {
 
-    public Box widget;
-    public Box graph;
-    public Box timeBar;
-    public Box leftScale;
-    public Box rightScale;
-    public List<TimeSegment> timeSegments;
-    public Ranges ranges;
+    Box widget;
+    Box graph;
+    Box timeBar;
+    Box leftScale;
+    Box rightScale;
+    List<TimeSegment> timeSegments;
+    private Ranges ranges;
 
     //private _theme: Theme, private _data: ForecastIO, clientWidth: number, widgetRatio: number, devicePixelRatio: number, private getTextWidth: (text: string) => number
     //Theme, Data, clientWidth, Ratio, DevicePixelRatio, GetTextWidth()
     //Theme, Data, widgetWidth,WidgetHeight, DevicePixelRatio?, GetTextWidth()?
-    public Positionings(ThemesClass theme, Weather data, float widgetWidth, float widgetHeight) {
+    Positionings(ThemesClass theme, Weather data, float widgetWidth, float widgetHeight) {
         Weather.DataBlock db = (theme.type == ThemesClass.ThemeType.Daily ? data.daily : data.hourly);
 
         widget = new Box(0, widgetWidth, 0, widgetHeight);
@@ -76,7 +76,7 @@ public class Positionings {
                 */
         );
 
-        timeSegments = new ArrayList<TimeSegment>();
+        timeSegments = new ArrayList<>();
 
         int i = 0;
         float segWidth = graph.width / db.data.length;

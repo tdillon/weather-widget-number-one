@@ -1,6 +1,6 @@
-package tgd.mindless.drone.weatherwidgetnumberone.redux.widget;
+package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
-public class Weather {
+class Weather {
     float latitude;
     float longitude;
     String timezone;
@@ -12,14 +12,14 @@ public class Weather {
     Weather() {
     }
 
-    public class DataBlock {
+    class DataBlock {
         DataPoint[] data;
 
         DataBlock() {
         }
     }
 
-    public class DataPoint {
+    class DataPoint {
         long time;
         float cloudCover;
         float precipIntensity;
