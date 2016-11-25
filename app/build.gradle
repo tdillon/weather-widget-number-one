@@ -7,9 +7,9 @@ android {
     defaultConfig {
         applicationId "tgd.mindless.drone.weatherwidgetnumberone.redux"
         minSdkVersion 16
-        targetSdkVersion 22
-        versionCode 4
-        versionName "1.0.3"
+        targetSdkVersion 23
+        versionCode 5
+        versionName "2.0.0-alpha.1"
     }
     buildTypes {
         release {
@@ -21,6 +21,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:22.2.0'
-    compile files('libs/gson-2.3.1.jar')
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.google.code.gson:gson:2.8.0'
 }
