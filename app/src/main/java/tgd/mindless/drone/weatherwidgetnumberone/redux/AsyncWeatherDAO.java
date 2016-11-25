@@ -19,7 +19,6 @@ import java.util.Map;
 public class AsyncWeatherDAO extends AsyncTask<Integer, Void, Weather> {
 
     private static final String API_BASE_URL = "https://api.forecast.io/forecast/c5f42d85c93f3a489363a8f410a78b57/";
-    private static final String TAG = "AsyncWeatherDAO";
     Context context;
     Integer[] mAppWidgetIds;
 
@@ -55,7 +54,6 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, Weather> {
                 localPrefs.edit().putString(WidgetConfigPreferences.RAW_WEATHER_JSON, line).apply();
             }
         } catch (Exception e) {
-            WidgetConfigPreferences.writeToFile(TAG, "doInBackground", "EXCEPTION: " + e.getMessage());
             return null;
         } finally {
             urlConnection.disconnect();
@@ -67,14 +65,11 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, Weather> {
     @Override
     protected void onPostExecute(Weather wc) {
         if (wc == null) {
-            WidgetConfigPreferences.writeToFile(TAG, "onPostExecute", "WeatherClass is null");
             //TODO what should i do here?  we didn't get new data.  should i return null or a previous good data?
             wc = AsyncWeatherDAO.getWeather(context, mAppWidgetIds);
             if (wc == null) {
-                WidgetConfigPreferences.writeToFile(TAG, "onPostExecute", "WeatherClass is null for all mAppWidgetIds");
             }
         } else {
-            WidgetConfigPreferences.writeToFile(TAG, "onPostExecute", "WeatherClass.length: " + wc.toString().length());
         }
         WeatherWidget.onDataReturned(context, wc, mAppWidgetIds);
     }
@@ -121,6 +116,7 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, Weather> {
 
         for (int appWidgetId : appWidgetIds) {
             wc = getWeather(context, appWidgetId);
+            //wc = getDummyWeather(context);
             if (wc != null) {
                 break;
             }
@@ -143,8 +139,9 @@ public class AsyncWeatherDAO extends AsyncTask<Integer, Void, Weather> {
     }
 
     private static String getLatLon(Context context, int appWidgetId) {
-        SharedPreferences localPrefs = context.getSharedPreferences(WidgetConfigPreferences.getSharedPreferenceName(appWidgetId), Context.MODE_PRIVATE);
-        return localPrefs.getString(WidgetConfigPreferences.LATITUDE, "") + ',' + localPrefs.getString(WidgetConfigPreferences.LONGITUDE, "");
+        //SharedPreferences localPrefs = context.getSharedPreferences(WidgetConfigPreferences.getSharedPreferenceName(appWidgetId), Context.MODE_PRIVATE);
+        //return localPrefs.getString(WidgetConfigPreferences.LATITUDE, "") + ',' + localPrefs.getString(WidgetConfigPreferences.LONGITUDE, "");
+        return "39.3057716,-81.3990735";
     }
 
     public static void setConfigComplete(Context context, int appWidgetId) {

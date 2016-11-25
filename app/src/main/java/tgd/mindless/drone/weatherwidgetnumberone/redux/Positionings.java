@@ -1,5 +1,7 @@
 package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,9 @@ class Positionings {
     //Theme, Data, clientWidth, Ratio, DevicePixelRatio, GetTextWidth()
     //Theme, Data, widgetWidth,WidgetHeight, DevicePixelRatio?, GetTextWidth()?
     Positionings(ThemesClass theme, Weather data, float widgetWidth, float widgetHeight) {
+        Log.i("positionings const", "Positionings: " + data);
         Weather.DataBlock db = (theme.type == ThemesClass.ThemeType.Daily ? data.daily : data.hourly);
+        ranges = new Ranges(db, theme);
 
         widget = new Box(0, widgetWidth, 0, widgetHeight);
 

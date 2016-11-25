@@ -13,22 +13,29 @@ class TimeSegment {
     Box graphBox;
     Ranges ranges;
 
-    float unitsPerSecond;
-    float unitsPerDegree;
+    private float unitsPerSecond;
+    private float unitsPerDegree;
 
 
-    TimeSegment(
-            ThemesClass theme,
-            Weather.DataPoint data,
-            Box graphBox,
-            Box timeBarBox,
-            Ranges ranges) {
+    TimeSegment(ThemesClass theme, Weather.DataPoint data, Box graphBox, Box timeBarBox, Ranges ranges) {
+
         this.timeBarBox = timeBarBox;
         this.ranges = ranges;
         this.graphBox = graphBox;
         this.data = data;
 
+
+        int secondsPerSegment = (theme.type == ThemesClass.ThemeType.Daily ? 86400 : 3600);
+
+        unitsPerDegree = this.graphBox.height / (this.ranges.temperature != null ? this.ranges.temperature.max - this.ranges.temperature.min : 1);
+        unitsPerSecond = this.graphBox.width / secondsPerSegment;
+
         from = data.time;
+        to = from + secondsPerSegment;
+        //this.cloudCover = _data.cloudCover;
+        //this.windBearing = _data.windBearing;
+        //this.moonPhase = _data.moonPhase;
+
 
         //SETUP timeBarDisplay
         Calendar cal = Calendar.getInstance();
