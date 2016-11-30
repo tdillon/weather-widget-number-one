@@ -30,10 +30,10 @@ class Positionings {
         widget = new Box(0, widgetWidth, 0, widgetHeight);
 
         //TODO calc padding as done in demo
-        padding = new Box(0,0,0,0);
+        padding = new Box(0, 0, 0, 0);
 
         //TODO get all scales
-        getScales();
+        getTemperatureScale();
 
         //TODO for now assume this box contains all scales that are 'left'
         leftScale = new Box(
@@ -116,12 +116,7 @@ class Positionings {
     }
 
 
-
-
-    private void getScales() {
-        int leftMostScale = 0;
-
-        //TEMPERATURE
+    private void getTemperatureScale() {
         if (ranges.temperature != null) {
             float pxPerDeg = (this.widget.height - Math.max(padding.bottom, theme.fontSize) - padding.top) / (ranges.temperature.max - ranges.temperature.min);
 
@@ -131,7 +126,7 @@ class Positionings {
             Ranges.Range t = ranges.temperature;
 
             //TODO see if this math is correct java math !== javascript math
-            for (int i = (int)Math.ceil(t.min / 5d) * 5; i <= Math.floor(t.max / 5d) * 5; i += 5) {
+            for (int i = (int) Math.ceil(t.min / 5d) * 5; i <= Math.floor(t.max / 5d) * 5; i += 5) {
                 scaleTexts.add(i);
                 //TODO how do i "getTextWidth"?
                 if ((tempTextWidth = 50/*this.getTextWidth(i.toString())*/) > maxTextWidth) {
@@ -140,17 +135,14 @@ class Positionings {
             }
 
             Scale x = new Scale(ScaleType.Temperature,
-                ScalePosition.Left,
-                new Box(padding.top,
-                    widget.height - Math.max(padding.bottom, theme.fontSize),
-                    maxTextWidth,
-                    leftMostScale
-                ));
+                    ScalePosition.Left,
+                    new Box(0,maxTextWidth, padding.top,
+                            widget.height - Math.max(padding.bottom, theme.fontSize)
+                    ));
 
             scales.add(x);
 
-            for (Integer i :
-                    scaleTexts) {
+            for (Integer i : scaleTexts) {
                 x.items.add(new ScaleItem(i.toString(), new Point(x.box.center.x, padding.top + (ranges.temperature.max - i) * pxPerDeg)));
             }
         }
