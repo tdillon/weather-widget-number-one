@@ -51,8 +51,8 @@ class Drawer {
         renderLeftScaleBackground();    //4
         renderRightScaleBackground();   //5
         //this.renderCloudCover();             //6
-        this.renderTimeText();               //7
-        //this.renderScales();                 //8
+        renderTimeText();               //7
+        renderScales();                 //8
         for (ThemesClass.Property p : _theme.properties) {  //9
             renderProperty(p);
         }
@@ -101,6 +101,21 @@ class Drawer {
 
         for (TimeSegment ts : _pos.timeSegments) {
             _cvs.drawText(ts.timeBarDisplay, ts.timeBarBox.center.x, ts.timeBarBox.bottom, paint);
+        }
+    }
+
+
+    private void renderScales() {
+        paint.setColor(Color.WHITE);  //TODO set colors per theme
+        paint.setTextAlign(Paint.Align.CENTER);
+        paint.setTextSize(_pos.timeBar.height);
+
+        //textBaseline = 'middle'
+
+        for (Scale s : _pos.scales) {
+            for (ScaleItem i : s.items) {
+                _cvs.drawText(i.value, i.center.x, i.center.y, paint);
+            }
         }
     }
 
