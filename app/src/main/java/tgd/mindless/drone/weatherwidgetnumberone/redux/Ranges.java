@@ -38,7 +38,7 @@ class Ranges {
 
 
         for (ThemesClass.Property property : theme.properties) {
-            if (!pertinentOptions.containsKey(property.name)){
+            if (!pertinentOptions.containsKey(property.name)) {
                 continue;  //e.g., moonPhase
             }
             Range r = pertinentOptions.get(property.name);
@@ -54,6 +54,20 @@ class Ranges {
                     r.min = value;
                 }
             }
+        }
+
+        /*
+         * Pressure - The pressure scale will be centered (50%) at 1ATM.
+         * The scale will increase in .1" increments until the maximum deviation from 1ATM is captured.
+         * Whole number inches will be displayed and '-' will be displayed for each .1".
+         */
+        if (pressure != null) {
+            final float ATM = 1013.25f;  //1 ATM === 1013.25 mbar
+            //TODO revisit the MAX_DEVIATION calculation, specifically the Math.max(3, and comment 'at least 5 mbar'
+            final float MAX_DEVIATION = Math.max(3, Math.max(Math.abs(pressure.max - ATM), Math.abs(pressure.min - ATM)));  //Show at least 5 mbar +- 1ATM
+
+            pressure.max = ATM + MAX_DEVIATION;
+            pressure.min = ATM - MAX_DEVIATION;
         }
     }
 }
