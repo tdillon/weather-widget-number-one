@@ -116,7 +116,6 @@ class Drawer {
             for (ScaleItem i : s.items) {
                 paint.getTextBounds(i.value, 0, i.value.length(), r);
                 _cvs.drawText(i.value, i.center.x, i.center.y + r.height() / 2f, paint);
-                _cvs.drawLine(i.center.x, i.center.y, _pos.graph.right, i.center.y, paint);
             }
         }
     }
