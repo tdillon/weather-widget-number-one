@@ -1,2 +1,4 @@
-2.0.0-beta.2
+2.0.0-alpha.2
+Update travis-ci to only deploy when master is tagged. #23
+Add temperature scale. #16
 Add a readme file.  #43
