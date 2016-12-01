@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -106,15 +107,16 @@ class Drawer {
 
 
     private void renderScales() {
-        paint.setColor(Color.WHITE);  //TODO set colors per theme
+        paint.setColor(Color.WHITE);
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setTextSize(_pos.timeBar.height);
 
-        //textBaseline = 'middle'
-
+        Rect r = new Rect();
         for (Scale s : _pos.scales) {
             for (ScaleItem i : s.items) {
-                _cvs.drawText(i.value, i.center.x, i.center.y, paint);
+                paint.getTextBounds(i.value, 0, i.value.length(), r);
+                _cvs.drawText(i.value, i.center.x, i.center.y + r.height() / 2f, paint);
+                _cvs.drawLine(i.center.x, i.center.y, _pos.graph.right, i.center.y, paint);
             }
         }
     }
