@@ -36,6 +36,27 @@ class Weather {
 
         DataPoint() {
         }
+
+        float getValue(String propertyName) {
+            switch (propertyName) {
+                case "cloudCover":
+                    return cloudCover;
+                case "precipIntensity":
+                    return precipIntensity;
+                case "precipIntensityMax":
+                    return precipIntensityMax;
+                case "precipProbability":
+                    return precipProbability;
+                case "temperature":
+                    return temperature;
+                case "temperatureMax":
+                    return temperatureMax;
+                case "temperatureMin":
+                    return temperatureMin;
+                default:  //TODO throw exception?
+                    return -1;
+            }
+        }
     }
 }
 
