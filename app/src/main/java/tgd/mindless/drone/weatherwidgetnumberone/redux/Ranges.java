@@ -15,11 +15,11 @@ class Ranges {
         }
     }
 
-    Range temperature;
-    Range ozone;
-    Range pressure;
-    Range windSpeed;
-    Range precipAccumulation;
+    Range temperature = new Range(Integer.MAX_VALUE, Integer.MIN_VALUE);
+    Range ozone = new Range(Integer.MAX_VALUE, Integer.MIN_VALUE);
+    Range pressure = new Range(Integer.MAX_VALUE, Integer.MIN_VALUE);
+    Range windSpeed = new Range(Integer.MAX_VALUE, Integer.MIN_VALUE);
+    Range precipAccumulation = new Range(Integer.MAX_VALUE, Integer.MIN_VALUE);
 
     Ranges(Weather.DataBlock db, ThemesClass theme) {
 
@@ -42,9 +42,7 @@ class Ranges {
                 continue;  //e.g., moonPhase
             }
             Range r = pertinentOptions.get(property.name);
-            if (r == null) {
-                r = new Range(Integer.MAX_VALUE, Integer.MIN_VALUE);
-            }
+
             for (Weather.DataPoint dataPoint : db.data) {
                 float value = dataPoint.getValue(property.name);
                 if (value > r.max) {
@@ -55,6 +53,12 @@ class Ranges {
                 }
             }
         }
+
+        if (temperature.max == Integer.MIN_VALUE) temperature = null;
+        if (ozone.max == Integer.MIN_VALUE) ozone = null;
+        if (pressure.max == Integer.MIN_VALUE) pressure = null;
+        if (windSpeed.max == Integer.MIN_VALUE) windSpeed = null;
+        if (precipAccumulation.max == Integer.MIN_VALUE) precipAccumulation = null;
 
         /*
          * Pressure - The pressure scale will be centered (50%) at 1ATM.

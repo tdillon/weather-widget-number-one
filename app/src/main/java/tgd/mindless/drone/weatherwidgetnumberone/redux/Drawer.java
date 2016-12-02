@@ -26,6 +26,7 @@ class Drawer {
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
+        paint.setTextSize(pos.widget.height * theme.fontSize / 100);
     }
 
     Bitmap render() {
@@ -41,10 +42,6 @@ class Drawer {
          *  8) scales
          *  9) draw each weather property (dot&segment) for the entire time period //this will effect layering
          */
-
-        Gson g = new Gson();
-        ThemesClass t = g.fromJson("{  \"name\": \"Default\",  \"type\": 1,  \"cloudCoverage\": {    \"day\": -16776961,    \"night\": -16777216,    \"location\": 0  },  \"properties\": [    {      \"name\": \"temperatureMax\",      \"dot\": {        \"color\": -1,        \"size\": 5      },      \"segment\": {        \"color\": -1,        \"width\": 50,        \"padding\": 2      }    }  ]}", ThemesClass.class);
-        Log.i("themes", t.name + "  " + t.properties[0].name);
 
         renderWidgetBackground();       //1
         renderGraphBackground();        //2
@@ -81,7 +78,7 @@ class Drawer {
     }
 
     private void renderLeftScaleBackground() {
-        paint.setColor(Color.YELLOW);  //TODO pull from theme
+        paint.setColor(Color.DKGRAY);  //TODO pull from theme
 
         _cvs.drawRect(_pos.leftScale.left, _pos.leftScale.top, _pos.leftScale.right, _pos.leftScale.bottom, paint);
     }
@@ -98,7 +95,6 @@ class Drawer {
     private void renderTimeText() {
         paint.setColor(Color.WHITE);  //TODO set colors per theme
         paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(_pos.timeBar.height);
 
         for (TimeSegment ts : _pos.timeSegments) {
             _cvs.drawText(ts.timeBarDisplay, ts.timeBarBox.center.x, ts.timeBarBox.bottom, paint);
@@ -109,7 +105,6 @@ class Drawer {
     private void renderScales() {
         paint.setColor(Color.WHITE);
         paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(_pos.timeBar.height);
 
         Rect r = new Rect();
         for (Scale s : _pos.scales) {
@@ -121,9 +116,7 @@ class Drawer {
     }
 
     private void renderProperty(ThemesClass.Property p) {
-
         for (TimeSegment curSeg : _pos.timeSegments) {
-            curSeg.getTemperatureMax();
             paint.setColor(p.dot.color);
             _cvs.drawCircle(curSeg.getTemperatureMax().x, curSeg.getTemperatureMax().y, p.dot.size / 100 * _pos.widget.height, paint);
         }
