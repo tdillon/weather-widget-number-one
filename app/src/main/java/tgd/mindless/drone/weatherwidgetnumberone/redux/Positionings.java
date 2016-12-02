@@ -18,6 +18,8 @@ class Positionings {
     List<TimeSegment> timeSegments;
     private Ranges ranges;
     List<Scale> scales;
+    private float timeBarTextHeight;
+    private Paint paint;
 
     //private _theme: Theme, private _data: ForecastIO, clientWidth: number, widgetRatio: number, devicePixelRatio: number, private getTextWidth: (text: string) => number
     //Theme, Data, clientWidth, Ratio, DevicePixelRatio, GetTextWidth()
@@ -30,7 +32,7 @@ class Positionings {
 
         widget = new Box(0, widgetWidth, 0, widgetHeight);
 
-        Paint paint = new Paint();
+        paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
         paint.setTextSize(widget.height * theme.fontSize / 100);
@@ -38,15 +40,18 @@ class Positionings {
         //TODO get timeBar text height
         Rect r = new Rect();
         paint.getTextBounds("SuMoTuWeThFrSa0123456789", 0, 24, r);
-        float timeBarTextHeight = r.height();
+        timeBarTextHeight = r.height();
 
         //TODO calc padding as done in demo
         padding = new Box(0, 0, 0, 0);
 
+        //TODO get all scales
+        getTemperatureScale(); //TODO can getTemperatureScale just create leftScale since it is the only scale in the left? or does that break my scales abstraction?
+
         //TODO for now assume this box contains all scales that are 'left'
         leftScale = new Box(
                 widget.left,
-                50, //TODO width: this.scales.filter(s => s.position === ScalePosition.Left).reduce((a, b) => { if (b.box.left < a.min) { a.min = b.box.left; } if (b.box.right > a.max) { a.max = b.box.right; } return a; }, { min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER, get diff(): number { return this.max - this.min } }).diff,
+                scales.get(0).box.right, //TODO width: this.scales.filter(s => s.position === ScalePosition.Left).reduce((a, b) => { if (b.box.left < a.min) { a.min = b.box.left; } if (b.box.right > a.max) { a.max = b.box.right; } return a; }, { min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER, get diff(): number { return this.max - this.min } }).diff,
                 padding.top,
                 widget.bottom - timeBarTextHeight  //TODO factor in padding TODO bottom: this.widget.height - Math.max(padding.bottom, this._theme.fontSize)
         );
@@ -92,8 +97,6 @@ class Positionings {
                 */
         );
 
-        //TODO get all scales
-        getTemperatureScale();
 
         timeSegments = new ArrayList<>();
 
@@ -129,19 +132,19 @@ class Positionings {
 
     private void getTemperatureScale() {
         if (ranges.temperature != null) {
-            float pxPerDeg = graph.height / (ranges.temperature.max - ranges.temperature.min);
+            float pxPerDeg = (widget.bottom - Math.max(timeBarTextHeight, padding.bottom)) / (ranges.temperature.max - ranges.temperature.min);
 
             List<Integer> scaleTexts = new ArrayList<>();
             int maxTextWidth = Integer.MIN_VALUE;
-            int tempTextWidth;
             Ranges.Range t = ranges.temperature;
+            Rect r = new Rect();
 
             //TODO see if this math is correct java math !== javascript math
             for (int i = (int) Math.ceil(t.min / 5d) * 5; i <= Math.floor(t.max / 5d) * 5; i += 5) {
                 scaleTexts.add(i);
-                //TODO how do i "getTextWidth"?
-                if ((tempTextWidth = 50/*this.getTextWidth(i.toString())*/) > maxTextWidth) {
-                    maxTextWidth = tempTextWidth;
+                paint.getTextBounds(Integer.toString(i), 0, Integer.toString(i).length(), r);
+                if (r.width() > maxTextWidth) {
+                    maxTextWidth = r.width();
                 }
             }
 

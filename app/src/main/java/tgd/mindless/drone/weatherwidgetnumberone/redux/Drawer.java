@@ -78,7 +78,7 @@ class Drawer {
     }
 
     private void renderLeftScaleBackground() {
-        paint.setColor(Color.YELLOW);  //TODO pull from theme
+        paint.setColor(Color.DKGRAY);  //TODO pull from theme
 
         _cvs.drawRect(_pos.leftScale.left, _pos.leftScale.top, _pos.leftScale.right, _pos.leftScale.bottom, paint);
     }
