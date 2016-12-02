@@ -1,5 +1,7 @@
 package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -21,7 +23,6 @@ class Positionings {
     //Theme, Data, clientWidth, Ratio, DevicePixelRatio, GetTextWidth()
     //Theme, Data, widgetWidth,WidgetHeight, DevicePixelRatio?, GetTextWidth()?
     Positionings(ThemesClass theme, Weather data, float widgetWidth, float widgetHeight) {
-        Log.i("positionings const", "Positionings: " + data);
         Weather.DataBlock db = (theme.type == ThemesClass.ThemeType.Daily ? data.daily : data.hourly);
         this.theme = theme;
         ranges = new Ranges(db, theme);
@@ -29,23 +30,30 @@ class Positionings {
 
         widget = new Box(0, widgetWidth, 0, widgetHeight);
 
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setAntiAlias(true);
+        paint.setTextSize(widget.height * theme.fontSize / 100);
+
+        //TODO get timeBar text height
+        Rect r = new Rect();
+        paint.getTextBounds("SuMoTuWeThFrSa0123456789", 0, 24, r);
+        float timeBarTextHeight = r.height();
+
         //TODO calc padding as done in demo
         padding = new Box(0, 0, 0, 0);
-
-        //TODO get all scales
-        getTemperatureScale();
 
         //TODO for now assume this box contains all scales that are 'left'
         leftScale = new Box(
                 widget.left,
                 50, //TODO width: this.scales.filter(s => s.position === ScalePosition.Left).reduce((a, b) => { if (b.box.left < a.min) { a.min = b.box.left; } if (b.box.right > a.max) { a.max = b.box.right; } return a; }, { min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER, get diff(): number { return this.max - this.min } }).diff,
-                padding.top,  //top: padding.top,
-                widget.bottom * (1 - theme.fontSize / 100)  //TODO factor in padding TODO bottom: this.widget.height - Math.max(padding.bottom, this._theme.fontSize)
+                padding.top,
+                widget.bottom - timeBarTextHeight  //TODO factor in padding TODO bottom: this.widget.height - Math.max(padding.bottom, this._theme.fontSize)
         );
 
         //TODO for now assume this box contains all scales that are 'right'
         rightScale = new Box(
-                widget.right - 50,
+                widget.right - 50, //TODO factor text width of scales
                 widget.right,
                 padding.top,
                 leftScale.bottom
@@ -60,7 +68,7 @@ class Positionings {
         this.timeBar = new Box(
                 Math.max(leftScale.width, padding.left),
                 widget.width - Math.max(padding.right, rightScale.width),
-                widget.bottom * (1 - theme.fontSize / 100),
+                widget.bottom - timeBarTextHeight,
                 widget.bottom
                 /*
                 left: Math.max(this.leftScale.width, padding.left),
@@ -83,6 +91,9 @@ class Positionings {
                 bottom: this.widget.height - Math.max(this.timeBar.height, padding.bottom)
                 */
         );
+
+        //TODO get all scales
+        getTemperatureScale();
 
         timeSegments = new ArrayList<>();
 
@@ -118,7 +129,7 @@ class Positionings {
 
     private void getTemperatureScale() {
         if (ranges.temperature != null) {
-            float pxPerDeg = (this.widget.height - Math.max(padding.bottom, theme.fontSize) - padding.top) / (ranges.temperature.max - ranges.temperature.min);
+            float pxPerDeg = graph.height / (ranges.temperature.max - ranges.temperature.min);
 
             List<Integer> scaleTexts = new ArrayList<>();
             int maxTextWidth = Integer.MIN_VALUE;
@@ -134,16 +145,20 @@ class Positionings {
                 }
             }
 
-            Scale x = new Scale(ScaleType.Temperature,
+            Scale x = new Scale(
+                    ScaleType.Temperature,
                     ScalePosition.Left,
-                    new Box(0,maxTextWidth, padding.top,
+                    new Box(
+                            0,
+                            maxTextWidth,
+                            padding.top,
                             widget.height - Math.max(padding.bottom, theme.fontSize)
                     ));
 
             scales.add(x);
 
             for (Integer i : scaleTexts) {
-                x.items.add(new ScaleItem(i.toString(), new Point(x.box.center.x, padding.top + (ranges.temperature.max - i) * pxPerDeg)));
+                x.items.add(new ScaleItem(i.toString(), new Point(x.box.center.x, x.box.top + (ranges.temperature.max - i) * pxPerDeg)));
             }
         }
     }
