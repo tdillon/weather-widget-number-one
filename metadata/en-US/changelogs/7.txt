@@ -1,3 +1,4 @@
 2.0.0-alpha.3
 Text height and width. #45
 Ranges class. #22
+Padding. #17

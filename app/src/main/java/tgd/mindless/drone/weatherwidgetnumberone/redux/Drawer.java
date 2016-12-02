@@ -20,13 +20,13 @@ class Drawer {
         _pos = pos;
         _theme = theme;
 
-        _bmp = Bitmap.createBitmap((int) _pos.widget.width, (int) _pos.widget.height, Bitmap.Config.ARGB_8888);
+        _bmp = Bitmap.createBitmap((int) _pos.widget.getWidth(), (int) _pos.widget.getHeight(), Bitmap.Config.ARGB_8888);
         _cvs = new Canvas(_bmp);
 
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
-        paint.setTextSize(pos.widget.height * theme.fontSize / 100);
+        paint.setTextSize(pos.widget.getHeight() * theme.fontSize / 100);
     }
 
     Bitmap render() {
@@ -61,32 +61,32 @@ class Drawer {
     private void renderWidgetBackground() {
         paint.setColor(Color.RED);  //TODO pull from theme
 
-        _cvs.drawRect(_pos.widget.left, _pos.widget.top, _pos.widget.right, _pos.widget.bottom, paint);
+        _cvs.drawRect(_pos.widget.getLeft(), _pos.widget.getTop(), _pos.widget.getRight(), _pos.widget.getBottom(), paint);
     }
 
 
     private void renderGraphBackground() {
         paint.setColor(Color.BLUE);  //TODO pull from theme
 
-        _cvs.drawRect(_pos.graph.left, _pos.graph.top, _pos.graph.right, _pos.graph.bottom, paint);
+        _cvs.drawRect(_pos.graph.getLeft(), _pos.graph.getTop(), _pos.graph.getRight(), _pos.graph.getBottom(), paint);
     }
 
     private void renderTimeBackground() {
         paint.setColor(Color.GREEN);  //TODO pull from theme
 
-        _cvs.drawRect(_pos.timeBar.left, _pos.timeBar.top, _pos.timeBar.right, _pos.timeBar.bottom, paint);
+        _cvs.drawRect(_pos.timeBar.getLeft(), _pos.timeBar.getTop(), _pos.timeBar.getRight(), _pos.timeBar.getBottom(), paint);
     }
 
     private void renderLeftScaleBackground() {
         paint.setColor(Color.DKGRAY);  //TODO pull from theme
 
-        _cvs.drawRect(_pos.leftScale.left, _pos.leftScale.top, _pos.leftScale.right, _pos.leftScale.bottom, paint);
+        _cvs.drawRect(_pos.leftScale.getLeft(), _pos.leftScale.getTop(), _pos.leftScale.getRight(), _pos.leftScale.getBottom(), paint);
     }
 
     private void renderRightScaleBackground() {
         paint.setColor(Color.GRAY);  //TODO pull from theme
 
-        _cvs.drawRect(_pos.rightScale.left, _pos.rightScale.top, _pos.rightScale.right, _pos.rightScale.bottom, paint);
+        _cvs.drawRect(_pos.rightScale.getLeft(), _pos.rightScale.getTop(), _pos.rightScale.getRight(), _pos.rightScale.getBottom(), paint);
     }
 
     //TODO cloud cover render here
@@ -97,7 +97,7 @@ class Drawer {
         paint.setTextAlign(Paint.Align.CENTER);
 
         for (TimeSegment ts : _pos.timeSegments) {
-            _cvs.drawText(ts.timeBarDisplay, ts.timeBarBox.center.x, ts.timeBarBox.bottom, paint);
+            _cvs.drawText(ts.timeBarDisplay, ts.timeBarBox.getCenter().x, ts.timeBarBox.getBottom(), paint);
         }
     }
 
@@ -118,7 +118,7 @@ class Drawer {
     private void renderProperty(ThemesClass.Property p) {
         for (TimeSegment curSeg : _pos.timeSegments) {
             paint.setColor(p.dot.color);
-            _cvs.drawCircle(curSeg.getTemperatureMax().x, curSeg.getTemperatureMax().y, p.dot.size / 100 * _pos.widget.height, paint);
+            _cvs.drawCircle(curSeg.getTemperatureMax().x, curSeg.getTemperatureMax().y, p.dot.size / 100 * _pos.widget.getHeight(), paint);
         }
 
 //        let prevSeg: TimeSegment;

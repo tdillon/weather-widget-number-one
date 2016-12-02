@@ -3,6 +3,7 @@
 #2.0.0-alpha.3
 - Text height and width. [#45][45]
 - Ranges class. [#22][22]
+- Padding. [#17][17]
 
 #2.0.0-alpha.2
 - Add temperature scale. [#16][16]
@@ -21,6 +22,7 @@
 
 [14]: https://github.com/tdillon/weather-widget-number-one/issues/14
 [16]: https://github.com/tdillon/weather-widget-number-one/issues/16
+[17]: https://github.com/tdillon/weather-widget-number-one/issues/17
 [22]: https://github.com/tdillon/weather-widget-number-one/issues/22
 [23]: https://github.com/tdillon/weather-widget-number-one/issues/23
 [43]: https://github.com/tdillon/weather-widget-number-one/issues/43

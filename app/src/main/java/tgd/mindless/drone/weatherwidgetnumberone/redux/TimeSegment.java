@@ -27,8 +27,8 @@ class TimeSegment {
 
         int secondsPerSegment = (theme.type == ThemesClass.ThemeType.Daily ? 86400 : 3600);
 
-        unitsPerDegree = this.graphBox.height / (this.ranges.temperature != null ? this.ranges.temperature.max - this.ranges.temperature.min : 1);
-        unitsPerSecond = this.graphBox.width / secondsPerSegment;
+        unitsPerDegree = this.graphBox.getHeight() / (this.ranges.temperature != null ? this.ranges.temperature.max - this.ranges.temperature.min : 1);
+        unitsPerSecond = this.graphBox.getWidth() / secondsPerSegment;
 
         from = data.time;
         to = from + secondsPerSegment;
@@ -51,6 +51,6 @@ class TimeSegment {
     }
 
     Point getTemperatureMax() {
-        return (ranges.temperature != null ? new Point(graphBox.left + (data.temperatureMaxTime - from) * unitsPerSecond, graphBox.top + (ranges.temperature.max - data.temperatureMax) * unitsPerDegree) : null);
+        return (ranges.temperature != null ? new Point(graphBox.getLeft() + (data.temperatureMaxTime - from) * unitsPerSecond, graphBox.getTop() + (ranges.temperature.max - data.temperatureMax) * unitsPerDegree) : null);
     }
 }
