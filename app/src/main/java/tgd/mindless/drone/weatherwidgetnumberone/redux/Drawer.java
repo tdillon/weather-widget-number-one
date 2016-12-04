@@ -118,7 +118,7 @@ class Drawer {
     private void renderProperty(ThemesClass.Property p) {
         for (TimeSegment curSeg : _pos.timeSegments) {
             paint.setColor(p.dot.color);
-            _cvs.drawCircle(curSeg.getTemperatureMax().x, curSeg.getTemperatureMax().y, p.dot.size / 100 * _pos.widget.getHeight(), paint);
+            _cvs.drawCircle(curSeg.getTemperatureMax().x, curSeg.getTemperatureMax().y, p.dot.size / 200 * _pos.widget.getHeight(), paint);
         }
 
 //        let prevSeg: TimeSegment;

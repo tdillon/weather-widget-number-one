@@ -20,8 +20,20 @@ class Box {
         _bottom = bottom;
     }
 
-    void setLeft(float left){
+    void setLeft(float left) {
         _left = left;
+    }
+
+    void setRight(float right) {
+        _right = right;
+    }
+
+    void setTop(float top) {
+        _top = top;
+    }
+
+    void setBottom(float bottom) {
+        _bottom = bottom;
     }
 
     float getLeft() {
