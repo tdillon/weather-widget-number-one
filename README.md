@@ -1,5 +1,8 @@
 [![Build Status](https://travis-ci.org/tdillon/weather-widget-number-one.svg?branch=master)](https://travis-ci.org/tdillon/weather-widget-number-one)
 
+#2.0.0-alpha.4
+- Cloud cover. [#18][18]
+
 #2.0.0-alpha.3
 - Text height and width. [#45][45]
 - Ranges class. [#22][22]
@@ -23,6 +26,7 @@
 [14]: https://github.com/tdillon/weather-widget-number-one/issues/14
 [16]: https://github.com/tdillon/weather-widget-number-one/issues/16
 [17]: https://github.com/tdillon/weather-widget-number-one/issues/17
+[18]: https://github.com/tdillon/weather-widget-number-one/issues/18
 [22]: https://github.com/tdillon/weather-widget-number-one/issues/22
 [23]: https://github.com/tdillon/weather-widget-number-one/issues/23
 [43]: https://github.com/tdillon/weather-widget-number-one/issues/43

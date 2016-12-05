@@ -9,6 +9,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import java.util.List;
+
 class Drawer {
     private Bitmap _bmp;
     private Canvas _cvs;
@@ -48,7 +50,7 @@ class Drawer {
         renderTimeBackground();         //3
         renderLeftScaleBackground();    //4
         renderRightScaleBackground();   //5
-        //this.renderCloudCover();             //6
+        renderCloudCover();             //6
         renderTimeText();               //7
         renderScales();                 //8
         for (ThemesClass.Property p : _theme.properties) {  //9
@@ -59,14 +61,14 @@ class Drawer {
     }
 
     private void renderWidgetBackground() {
-        paint.setColor(Color.RED);  //TODO pull from theme
+        paint.setColor(Color.YELLOW);  //TODO pull from theme
 
         _cvs.drawRect(_pos.widget.getLeft(), _pos.widget.getTop(), _pos.widget.getRight(), _pos.widget.getBottom(), paint);
     }
 
 
     private void renderGraphBackground() {
-        paint.setColor(Color.BLUE);  //TODO pull from theme
+        paint.setColor(Color.RED);  //TODO pull from theme
 
         _cvs.drawRect(_pos.graph.getLeft(), _pos.graph.getTop(), _pos.graph.getRight(), _pos.graph.getBottom(), paint);
     }
@@ -89,7 +91,28 @@ class Drawer {
         _cvs.drawRect(_pos.rightScale.getLeft(), _pos.rightScale.getTop(), _pos.rightScale.getRight(), _pos.rightScale.getBottom(), paint);
     }
 
-    //TODO cloud cover render here
+    private void renderCloudCover() {
+        if (_theme.cloudCoverage != null) {
+            List<Box> location;
+            ThemesClass.CloudCoverageLocation x = _theme.cloudCoverage.location;
+
+            for (TimeSegment ts : _pos.timeSegments) {
+                paint.setColor(_theme.cloudCoverage.day);
+                paint.setAlpha(Math.round(255 * ts.getCloudCover()));  //[0-255]
+                location = (x == ThemesClass.CloudCoverageLocation.TIME_BAR ? ts.timeBarDaytimes : ts.graphDaytimes);
+                for (Box b : location) {
+                    _cvs.drawRect(b.getLeft(), b.getTop(), b.getRight(), b.getBottom(), paint);
+                }
+
+                paint.setColor(_theme.cloudCoverage.night);
+                paint.setAlpha(Math.round(255 * ts.getCloudCover()));  //[0-255]
+                location = (x == ThemesClass.CloudCoverageLocation.TIME_BAR ? ts.timeBarNighttimes : ts.graphNighttimes);
+                for (Box b : location) {
+                    _cvs.drawRect(b.getLeft(), b.getTop(), b.getRight(), b.getBottom(), paint);
+                }
+            }
+        }
+    }
 
 
     private void renderTimeText() {
