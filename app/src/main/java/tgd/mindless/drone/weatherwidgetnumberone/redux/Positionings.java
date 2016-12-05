@@ -2,7 +2,6 @@ package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,76 +31,105 @@ class Positionings {
 
         widget = new Box(0, widgetWidth, 0, widgetHeight);
 
+        //paint is used in text size calculations
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
-        paint.setTextSize(widget.height * theme.fontSize / 100);
+        paint.setTextSize(widget.getHeight() * theme.fontSize / 100);
 
-        //TODO get timeBar text height
+        //calculate the actual height of the time bar text, i.e., not "font size", but actual rendered size
         Rect r = new Rect();
         paint.getTextBounds("SuMoTuWeThFrSa0123456789", 0, 24, r);
         timeBarTextHeight = r.height();
 
-        //TODO calc padding as done in demo
-        padding = new Box(0, 0, 0, 0);
+
+        //TODO one way that may work to get correct padding is to do 2 passes, 1st pass with 0 padding, calc overhang from that pass, then set padding based on overhangs and recalculate all metrics
+        //HACK For now assume that the biggest dot is on the each perimeter of the graph when calculating padding.
+        float maxDotOverhang = Integer.MIN_VALUE, tempDotSize;
+        for (ThemesClass.Property p : theme.properties) {
+            if ((tempDotSize = widget.getHeight() * p.dot.size / 100) > maxDotOverhang) {
+                maxDotOverhang = tempDotSize;
+            }
+        }
+        maxDotOverhang /= 2;  //only radius can overhang
+
+        int leftScaleWidth = getMaxTextWidth(getTempScaleTexts());
+
+        padding = new Box(leftScaleWidth > maxDotOverhang ? 0 : maxDotOverhang - leftScaleWidth, maxDotOverhang, maxDotOverhang, timeBarTextHeight > maxDotOverhang ? 0 : maxDotOverhang - timeBarTextHeight);  //TODO get correct paddings
+        leftScale = new Box();
+        rightScale = new Box();
+        timeBar = new Box();
+        graph = new Box();
+
+        leftScale.setLeft(0);
+        leftScale.setRight(leftScaleWidth);
+
+        rightScale.setLeft(widget.getRight());  //TODO sum getWidth() of all right scales
+        rightScale.setRight(widget.getRight());
+
+        timeBar.setTop(widget.getBottom() - timeBarTextHeight);
+        timeBar.setBottom(widget.getBottom());
+
+        graph.setLeft(leftScale.getRight() + padding.getLeft());
+        graph.setRight(rightScale.getLeft() - padding.getRight());
+        graph.setTop(padding.getTop());
+        graph.setBottom(timeBar.getTop() - padding.getBottom());
+
+        leftScale.setTop(graph.getTop());
+        leftScale.setBottom(graph.getBottom());
+
+        rightScale.setTop(graph.getTop());
+        rightScale.setBottom(graph.getBottom());
+
+        timeBar.setLeft(graph.getLeft());
+        timeBar.setRight(graph.getRight());
+
+        /*
+         * Padding is defined as follows:
+         * The distance between the bounds of the "graph" and the nearest of the following: 1) edge of widget 2) border of timeBar, leftScale, or rightScale.
+         * Padding is needed to allow dots to be drawn on the graph so that they are not clipped by the bounds of the widget.
+         * Dots can be drawn on top of the timeBar, leftScale, or rightScale.
+         */
+
+        //padding
+        // -> left: (MAX_LEFT_DOT_OVERHANG > leftScale.width ? (MAX_LEFT_DOT_OVERHANG - leftScale.width) : 0)
+        // -> right: (MAX_RIGHT_DOT_OVERHANG > rightScale.width ? (MAX_RIGHT_DOT_OVERHANG - rightScale.width) : 0)
+        // -> top: MAX_TOP_DOT_OVERHANG
+        // -> bottom: (MAX_BOTTOM_DOT_OVERHANG > timeBar.height ? (MAX_BOTTOM_DOT_OVERHANG - timeBar.height) : 0)
+        //left scale
+        // -> left: 0
+        // -> right: text width of the items in the scale
+        // -> top: graph.top
+        // -> bottom: graph.bottom
+        //right scale
+        // -> left: text width of the items in the scales
+        // -> right: 0
+        // -> top: graph.top
+        // -> bottom: graph.bottom
+        //time bar
+        // -> left: graph.left
+        // -> right: graph.right
+        // -> top: widget.height - timeBarTextHeight
+        // -> bottom: widget.bottom
+        //graph
+        // -> left: leftScale.right + padding.left
+        // -> right: rightScale.left - padding.right
+        // -> top: padding.top
+        // -> bottom: timeBar.top - padding.bottom
+        /*
+         * MAX_(TOP|BOTTOM|LEFT|RIGHT)_DOT_OVERHANG
+         * for the (minimum|maximum) temperature (or other properties whose dot is at the (bottom|top) of the graph),
+         * the MAX_BOTTOM_DOT_OVERHANG will be the amount the dot extends the bounds of the graph minus the timeBar height (for bottom).
+         */
+
 
         //TODO get all scales
         getTemperatureScale(); //TODO can getTemperatureScale just create leftScale since it is the only scale in the left? or does that break my scales abstraction?
 
-        //TODO for now assume this box contains all scales that are 'left'
-        leftScale = new Box(
-                widget.left,
-                scales.get(0).box.right, //TODO width: this.scales.filter(s => s.position === ScalePosition.Left).reduce((a, b) => { if (b.box.left < a.min) { a.min = b.box.left; } if (b.box.right > a.max) { a.max = b.box.right; } return a; }, { min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER, get diff(): number { return this.max - this.min } }).diff,
-                padding.top,
-                widget.bottom - timeBarTextHeight  //TODO factor in padding TODO bottom: this.widget.height - Math.max(padding.bottom, this._theme.fontSize)
-        );
-
-        //TODO for now assume this box contains all scales that are 'right'
-        rightScale = new Box(
-                widget.right - 50, //TODO factor text width of scales
-                widget.right,
-                padding.top,
-                leftScale.bottom
-                /*
-                width: this.scales.filter(s => s.position === ScalePosition.Right).reduce((a, b) => { if (b.box.left < a.min) { a.min = b.box.left; } if (b.box.right > a.max) { a.max = b.box.right; } return a; }, { min: Number.MAX_SAFE_INTEGER, max: Number.MIN_SAFE_INTEGER, get diff(): number { return this.max - this.min } }).diff,
-                right: this.widget.width,
-                top: this.leftScale.top,
-                bottom: this.leftScale.bottom
-                */
-        );
-
-        this.timeBar = new Box(
-                Math.max(leftScale.width, padding.left),
-                widget.width - Math.max(padding.right, rightScale.width),
-                widget.bottom - timeBarTextHeight,
-                widget.bottom
-                /*
-                left: Math.max(this.leftScale.width, padding.left),
-                right: this.widget.width - Math.max(padding.right, this.rightScale.width),
-                top: this.widget.height - this._theme.fontSize,
-                bottom: this.widget.height
-                */
-        );
-
-
-        graph = new Box(
-                timeBar.left,
-                timeBar.right,
-                padding.top,
-                widget.bottom - Math.max(timeBar.height, padding.bottom)
-                /*
-                left: this.timeBar.left,
-                right: this.timeBar.right,
-                top: padding.top,
-                bottom: this.widget.height - Math.max(this.timeBar.height, padding.bottom)
-                */
-        );
-
-
         timeSegments = new ArrayList<>();
 
         int i = 0;
-        float segWidth = graph.width / db.data.length;
+        float segWidth = graph.getWidth() / db.data.length;
 
         for (Weather.DataPoint dp : db.data) {
 
@@ -116,23 +144,47 @@ class Positionings {
             timeSegments.add(new TimeSegment(
                     theme,
                     dp,
-                    new Box(graph.left + i * segWidth,
-                            graph.left + i * segWidth + segWidth,
-                            graph.top,
-                            graph.bottom),
-                    new Box(timeBar.left + i * segWidth,
-                            timeBar.left + i * segWidth + segWidth,
-                            timeBar.top,
-                            timeBar.bottom),
+                    new Box(graph.getLeft() + i * segWidth,
+                            graph.getLeft() + i * segWidth + segWidth,
+                            graph.getTop(),
+                            graph.getBottom()),
+                    new Box(timeBar.getLeft() + i * segWidth,
+                            timeBar.getLeft() + i * segWidth + segWidth,
+                            timeBar.getTop(),
+                            timeBar.getBottom()),
                     ranges));
             ++i;
         }
     }
 
+    private List<Integer> getTempScaleTexts() {
+        List<Integer> scaleTexts = new ArrayList<>();
+
+        //TODO see if this math is correct java math !== javascript math
+        for (int i = (int) Math.ceil(ranges.temperature.min / 5d) * 5; i <= Math.floor(ranges.temperature.max / 5d) * 5; i += 5) {
+            scaleTexts.add(i);
+        }
+
+        return scaleTexts;
+    }
+
+    private int getMaxTextWidth(List<Integer> scaleTexts) {
+        int maxTextWidth = Integer.MIN_VALUE;
+        Rect r = new Rect();
+
+        for (Integer i : scaleTexts) {
+            paint.getTextBounds(i.toString(), 0, i.toString().length(), r);
+            if (r.width() > maxTextWidth) {
+                maxTextWidth = r.width();
+            }
+        }
+
+        return maxTextWidth;
+    }
 
     private void getTemperatureScale() {
         if (ranges.temperature != null) {
-            float pxPerDeg = (widget.bottom - Math.max(timeBarTextHeight, padding.bottom)) / (ranges.temperature.max - ranges.temperature.min);
+            float pxPerDeg = (widget.getBottom() - Math.max(timeBarTextHeight, padding.getBottom())) / (ranges.temperature.max - ranges.temperature.min);
 
             List<Integer> scaleTexts = new ArrayList<>();
             int maxTextWidth = Integer.MIN_VALUE;
@@ -154,14 +206,14 @@ class Positionings {
                     new Box(
                             0,
                             maxTextWidth,
-                            padding.top,
-                            widget.height - Math.max(padding.bottom, theme.fontSize)
+                            padding.getTop(),
+                            widget.getHeight() - Math.max(padding.getBottom(), theme.fontSize)
                     ));
 
             scales.add(x);
 
             for (Integer i : scaleTexts) {
-                x.items.add(new ScaleItem(i.toString(), new Point(x.box.center.x, x.box.top + (ranges.temperature.max - i) * pxPerDeg)));
+                x.items.add(new ScaleItem(i.toString(), new Point(x.box.getCenter().x, x.box.getTop() + (ranges.temperature.max - i) * pxPerDeg)));
             }
         }
     }
