@@ -2,7 +2,6 @@ package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +43,7 @@ class Positionings {
         timeBarTextHeight = r.height();
 
 
+        //TODO one way that may work to get correct padding is to do 2 passes, 1st pass with 0 padding, calc overhang from that pass, then set padding based on overhangs and recalculate all metrics
         //HACK For now assume that the biggest dot is on the each perimeter of the graph when calculating padding.
         float maxDotOverhang = Integer.MIN_VALUE, tempDotSize;
         for (ThemesClass.Property p : theme.properties) {
@@ -160,6 +160,7 @@ class Positionings {
     private List<Integer> getTempScaleTexts() {
         List<Integer> scaleTexts = new ArrayList<>();
 
+        //TODO see if this math is correct java math !== javascript math
         for (int i = (int) Math.ceil(ranges.temperature.min / 5d) * 5; i <= Math.floor(ranges.temperature.max / 5d) * 5; i += 5) {
             scaleTexts.add(i);
         }
