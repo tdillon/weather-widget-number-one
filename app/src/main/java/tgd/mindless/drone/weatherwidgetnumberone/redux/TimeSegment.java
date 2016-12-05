@@ -1,11 +1,18 @@
 package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 
 class TimeSegment {
     long from;  //unix epoch begin of timesegment
     long to;  //unix epoch end of timesegment
+
+    List<Box> graphDaytimes;
+    List<Box> graphNighttimes;
+    List<Box> timeBarDaytimes;
+    List<Box> timeBarNighttimes;
 
     Weather.DataPoint data;
     String timeBarDisplay;
@@ -15,6 +22,7 @@ class TimeSegment {
 
     private float unitsPerSecond;
     private float unitsPerDegree;
+    private float _cloudCover;
 
 
     TimeSegment(ThemesClass theme, Weather.DataPoint data, Box graphBox, Box timeBarBox, Ranges ranges) {
@@ -32,7 +40,7 @@ class TimeSegment {
 
         from = data.time;
         to = from + secondsPerSegment;
-        //this.cloudCover = _data.cloudCover;
+        _cloudCover = data.cloudCover;
         //this.windBearing = _data.windBearing;
         //this.moonPhase = _data.moonPhase;
 
@@ -48,9 +56,41 @@ class TimeSegment {
             timeBarDisplay = new String[]{"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"}[cal.getTime().getDay()];
         }
 
+        float widthPerSecond = this.graphBox.getWidth() / secondsPerSegment;
+
+        graphDaytimes = new ArrayList<>();
+        graphNighttimes = new ArrayList<>();
+        timeBarDaytimes = new ArrayList<>();
+        timeBarNighttimes = new ArrayList<>();
+
+        if (data.sunsetTime < from || data.sunriseTime > to) {  //sunset before segment, or sunrise after segment
+            timeBarNighttimes.add(timeBarBox);
+            graphNighttimes.add(graphBox);
+        } else if (data.sunriseTime < from) {  //sunrise before segment, sunset during or after segment
+            timeBarDaytimes.add(new Box(timeBarBox.getLeft(), timeBarBox.getLeft() + (Math.min(data.sunsetTime, to) - from) * widthPerSecond, timeBarBox.getTop(), timeBarBox.getBottom()));
+            graphDaytimes.add(new Box(graphBox.getLeft(), graphBox.getLeft() + (Math.min(data.sunsetTime, to) - from) * widthPerSecond, graphBox.getTop(), graphBox.getBottom()));
+            if (data.sunsetTime < to) {  //sunset during segment
+                timeBarNighttimes.add(new Box(timeBarBox.getLeft() + (data.sunsetTime - from) * widthPerSecond, timeBarBox.getLeft() + (data.sunsetTime - from) * widthPerSecond + (to - data.sunsetTime) * widthPerSecond, timeBarBox.getTop(), timeBarBox.getBottom()));
+                graphNighttimes.add(new Box(graphBox.getLeft() + (data.sunsetTime - from) * widthPerSecond, graphBox.getLeft() + (data.sunsetTime - from) * widthPerSecond + (to - data.sunsetTime) * widthPerSecond, graphBox.getTop(), graphBox.getBottom()));
+            }
+        } else {  //sunrise during segment, sunset during or after segment
+            timeBarNighttimes.add(new Box(timeBarBox.getLeft(), timeBarBox.getLeft() + (data.sunriseTime - from) * widthPerSecond, timeBarBox.getTop(), timeBarBox.getBottom()));
+            graphNighttimes.add(new Box(graphBox.getLeft(), graphBox.getLeft() + (data.sunriseTime - from) * widthPerSecond, graphBox.getTop(), graphBox.getBottom()));
+            timeBarDaytimes.add(new Box(timeBarBox.getLeft() + (data.sunriseTime - from) * widthPerSecond, timeBarBox.getLeft() + (data.sunriseTime - from) * widthPerSecond + (Math.min(data.sunsetTime, to) - data.sunriseTime) * widthPerSecond, timeBarBox.getTop(), timeBarBox.getBottom()));
+            graphDaytimes.add(new Box(graphBox.getLeft() + (data.sunriseTime - from) * widthPerSecond, graphBox.getLeft() + (data.sunriseTime - from) * widthPerSecond + (Math.min(data.sunsetTime, to) - data.sunriseTime) * widthPerSecond, graphBox.getTop(), graphBox.getBottom()));
+            if (data.sunsetTime < to) {  //sunset during segment
+                timeBarNighttimes.add(new Box(timeBarBox.getLeft() + (data.sunsetTime - from) * widthPerSecond, timeBarBox.getLeft() + (data.sunsetTime - from) * widthPerSecond + (to - data.sunsetTime) * widthPerSecond, timeBarBox.getTop(), timeBarBox.getBottom()));
+                graphNighttimes.add(new Box(graphBox.getLeft() + (data.sunsetTime - from) * widthPerSecond, graphBox.getLeft() + (data.sunsetTime - from) * widthPerSecond + (to - data.sunsetTime) * widthPerSecond, graphBox.getTop(), graphBox.getBottom()));
+            }
+        }
+
     }
 
     Point getTemperatureMax() {
         return (ranges.temperature != null ? new Point(graphBox.getLeft() + (data.temperatureMaxTime - from) * unitsPerSecond, graphBox.getTop() + (ranges.temperature.max - data.temperatureMax) * unitsPerDegree) : null);
+    }
+
+    float getCloudCover() {
+        return _cloudCover;
     }
 }
