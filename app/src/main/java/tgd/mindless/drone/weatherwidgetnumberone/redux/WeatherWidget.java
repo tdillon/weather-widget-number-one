@@ -79,8 +79,8 @@ public class WeatherWidget extends AppWidgetProvider {
 
         Gson g = new Gson();
         try {
-            ThemesClass t = g.fromJson( new InputStreamReader( context.getAssets().open("themes.json")), ThemesClass.class);
-            views.setImageViewBitmap(R.id.ivGraph, (new Drawer(t, new Positionings(t, weather, px, py))).render());
+            ThemesClass[] t = g.fromJson(new InputStreamReader(context.getAssets().open("themes.json")), ThemesClass[].class);
+            views.setImageViewBitmap(R.id.ivGraph, (new Drawer(t[0], new Positionings(t[0], weather, px, py))).render());
         } catch (Exception e) {
             Log.i("not going to happen", "file not found themes.json 222");
             Log.e("themes.json", "drawWidget: ", e);

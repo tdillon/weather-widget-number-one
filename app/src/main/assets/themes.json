@@ -1,24 +1,50 @@
-{
-  "name": "Default",
-  "type": 1,
-  "fontSize": 5.0,
-  "cloudCoverage": {
-    "day": -16776961,
-    "night": -16777216,
-    "location": 0
-  },
-  "properties": [
-    {
-      "name": "temperatureMax",
-      "dot": {
-        "color": -1,
-        "size": 5.0
-      },
-      "segment": {
-        "color": -1,
-        "width": 50.0,
-        "padding": 2.0
+[
+  {
+    "name": "Default",
+    "type": 1,
+    "fontSize": 5.0,
+    "cloudCoverage": {
+      "day": -16776961,
+      "night": -16777216,
+      "location": 0
+    },
+    "properties": [
+      {
+        "name": "temperatureMax",
+        "dot": {
+          "color": -1,
+          "size": 5.0
+        },
+        "segment": {
+          "color": -1,
+          "width": 50.0,
+          "padding": 2.0
+        }
       }
-    }
-  ]
-}
+    ]
+  },
+  {
+    "name": "Default",
+    "type": 0,
+    "fontSize": 5.0,
+    "cloudCoverage": {
+      "day": -16776961,
+      "night": -16777216,
+      "location": 1
+    },
+    "properties": [
+      {
+        "name": "temperature",
+        "dot": {
+          "color": -1,
+          "size": 5.0
+        },
+        "segment": {
+          "color": -1,
+          "width": 50.0,
+          "padding": 2.0
+        }
+      }
+    ]
+  }
+]
