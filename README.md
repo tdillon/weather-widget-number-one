@@ -1,5 +1,8 @@
 [![Build Status](https://travis-ci.org/tdillon/weather-widget-number-one.svg?branch=master)](https://travis-ci.org/tdillon/weather-widget-number-one)
 
+#2.0.0-alpha.5
+- Widget configuration. [#54][54]
+
 #2.0.0-alpha.4
 - Cloud cover. [#18][18]
 
@@ -31,3 +34,4 @@
 [23]: https://github.com/tdillon/weather-widget-number-one/issues/23
 [43]: https://github.com/tdillon/weather-widget-number-one/issues/43
 [45]: https://github.com/tdillon/weather-widget-number-one/issues/45
+[54]: https://github.com/tdillon/weather-widget-number-one/issues/54

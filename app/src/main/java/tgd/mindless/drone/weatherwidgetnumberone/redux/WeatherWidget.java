@@ -16,6 +16,18 @@ import java.util.Calendar;
 
 public class WeatherWidget extends AppWidgetProvider {
 
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                int appWidgetId) {
+
+        CharSequence widgetText = WeatherWidgetConfigureActivity.loadTitlePref(context, appWidgetId);
+        // Construct the RemoteViews object
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.weather_widget);
+        views.setTextViewText(R.id.appwidget_text, widgetText);
+
+        // Instruct the widget manager to update the widget
+        appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         Integer[] newArray = new Integer[appWidgetIds.length];
