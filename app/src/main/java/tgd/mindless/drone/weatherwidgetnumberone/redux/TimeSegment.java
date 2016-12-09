@@ -96,6 +96,14 @@ class TimeSegment {
             case "temperatureMin":
                 p = (ranges.temperature != null ? new Point(graphBox.getLeft() + (data.temperatureMinTime - from) * unitsPerSecond, graphBox.getTop() + (ranges.temperature.max - data.temperatureMin) * unitsPerDegree) : null);
                 break;
+            case "temperature":
+                p = (ranges.temperature != null ?
+                        new Point(
+                                graphBox.getCenter().x,
+                                graphBox.getTop() + (ranges.temperature.max - data.temperature) * unitsPerDegree
+                        ) :
+                        null);
+                break;
             default:
                 p = null;
         }
