@@ -86,8 +86,21 @@ class TimeSegment {
 
     }
 
-    Point getTemperatureMax() {
-        return (ranges.temperature != null ? new Point(graphBox.getLeft() + (data.temperatureMaxTime - from) * unitsPerSecond, graphBox.getTop() + (ranges.temperature.max - data.temperatureMax) * unitsPerDegree) : null);
+    Point getPoint(String property) {
+        Point p;
+
+        switch (property) {
+            case "temperatureMax":
+                p = (ranges.temperature != null ? new Point(graphBox.getLeft() + (data.temperatureMaxTime - from) * unitsPerSecond, graphBox.getTop() + (ranges.temperature.max - data.temperatureMax) * unitsPerDegree) : null);
+                break;
+            case "temperatureMin":
+                p = (ranges.temperature != null ? new Point(graphBox.getLeft() + (data.temperatureMinTime - from) * unitsPerSecond, graphBox.getTop() + (ranges.temperature.max - data.temperatureMin) * unitsPerDegree) : null);
+                break;
+            default:
+                p = null;
+        }
+
+        return p;
     }
 
     float getCloudCover() {

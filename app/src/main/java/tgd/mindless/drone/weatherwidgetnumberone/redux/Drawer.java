@@ -139,9 +139,12 @@ class Drawer {
     }
 
     private void renderProperty(ThemesClass.Property p) {
+        Point point;
+
         for (TimeSegment curSeg : _pos.timeSegments) {
             paint.setColor(p.dot.color);
-            _cvs.drawCircle(curSeg.getTemperatureMax().x, curSeg.getTemperatureMax().y, p.dot.size / 200 * _pos.widget.getHeight(), paint);
+            point = curSeg.getPoint(p.name);
+            _cvs.drawCircle(point.x, point.y, p.dot.size / 200 * _pos.widget.getHeight(), paint);
         }
 
 //        let prevSeg: TimeSegment;

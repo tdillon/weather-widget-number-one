@@ -20,6 +20,19 @@
           "width": 50.0,
           "padding": 2.0
         }
+      },
+
+      {
+        "name": "temperatureMin",
+        "dot": {
+          "color": -16776961,
+          "size": 4.0
+        },
+        "segment": {
+          "color": -1,
+          "width": 50.0,
+          "padding": 2.0
+        }
       }
     ]
   },
