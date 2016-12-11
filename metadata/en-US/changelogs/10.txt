@@ -3,3 +3,4 @@ Temperature min real. #40
 Temperature real. #36
 Temperature feel. #35
 Temperature min feel. #39
+Temperature max feel. #37
