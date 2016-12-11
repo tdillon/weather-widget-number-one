@@ -127,6 +127,13 @@ class TimeSegment {
                                 graphBox.getTop() + (ranges.temperature.max - data.apparentTemperatureMin) * unitsPerDegree
                         ) : null);
                 break;
+            case "apparentTemperatureMax":
+                p = ((theme.type == ThemesClass.ThemeType.Daily && ranges.temperature != null) ?
+                        new Point(
+                                graphBox.getLeft() + (data.apparentTemperatureMaxTime - from) * unitsPerSecond,
+                                graphBox.getTop() + (ranges.temperature.max - data.apparentTemperatureMax) * unitsPerDegree
+                        ) : null);
+                break;
             default:
                 p = null;
         }
