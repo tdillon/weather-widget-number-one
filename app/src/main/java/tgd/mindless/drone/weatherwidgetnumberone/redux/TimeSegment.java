@@ -93,22 +93,39 @@ class TimeSegment {
 
         switch (property) {
             case "temperatureMax":
-                p = (ranges.temperature != null ? new Point(graphBox.getLeft() + (data.temperatureMaxTime - from) * unitsPerSecond, graphBox.getTop() + (ranges.temperature.max - data.temperatureMax) * unitsPerDegree) : null);
+                p = ((theme.type == ThemesClass.ThemeType.Daily && ranges.temperature != null) ?
+                        new Point(
+                                graphBox.getLeft() + (data.temperatureMaxTime - from) * unitsPerSecond,
+                                graphBox.getTop() + (ranges.temperature.max - data.temperatureMax) * unitsPerDegree
+                        ) : null);
                 break;
             case "temperatureMin":
-                p = (ranges.temperature != null ? new Point(graphBox.getLeft() + (data.temperatureMinTime - from) * unitsPerSecond, graphBox.getTop() + (ranges.temperature.max - data.temperatureMin) * unitsPerDegree) : null);
+                p = ((theme.type == ThemesClass.ThemeType.Daily && ranges.temperature != null) ?
+                        new Point(
+                                graphBox.getLeft() + (data.temperatureMinTime - from) * unitsPerSecond,
+                                graphBox.getTop() + (ranges.temperature.max - data.temperatureMin) * unitsPerDegree
+                        ) : null);
                 break;
             case "temperature":
                 p = ((theme.type == ThemesClass.ThemeType.Hourly && ranges.temperature != null) ?
-                        new Point(graphBox.getCenter().x,
-                                graphBox.getTop() + (ranges.temperature.max - data.temperature) * unitsPerDegree) :
-                        null);
+                        new Point(
+                                graphBox.getCenter().x,
+                                graphBox.getTop() + (ranges.temperature.max - data.temperature) * unitsPerDegree
+                        ) : null);
                 break;
             case "apparentTemperature":
                 p = ((theme.type == ThemesClass.ThemeType.Hourly && ranges.temperature != null) ?
-                        new Point(graphBox.getCenter().x,
-                                graphBox.getTop() + (ranges.temperature.max - data.apparentTemperature) * unitsPerDegree) :
-                        null);
+                        new Point(
+                                graphBox.getCenter().x,
+                                graphBox.getTop() + (ranges.temperature.max - data.apparentTemperature) * unitsPerDegree
+                        ) : null);
+                break;
+            case "apparentTemperatureMin":
+                p = ((theme.type == ThemesClass.ThemeType.Daily && ranges.temperature != null) ?
+                        new Point(
+                                graphBox.getLeft() + (data.apparentTemperatureMinTime - from) * unitsPerSecond,
+                                graphBox.getTop() + (ranges.temperature.max - data.apparentTemperatureMin) * unitsPerDegree
+                        ) : null);
                 break;
             default:
                 p = null;

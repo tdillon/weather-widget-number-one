@@ -34,6 +34,8 @@ class Weather {
         long temperatureMaxTime;
         float temperatureMin;
         long temperatureMinTime;
+        float apparentTemperatureMin;
+        long apparentTemperatureMinTime;
 
         DataPoint() {
         }
@@ -56,6 +58,8 @@ class Weather {
                     return temperatureMin;
                 case "apparentTemperature":
                     return apparentTemperature;
+                case "apparentTemperatureMin":
+                    return apparentTemperatureMin;
                 default:  //TODO throw exception?
                     return -1;
             }
