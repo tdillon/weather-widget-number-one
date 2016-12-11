@@ -50,7 +50,7 @@
         "name": "temperature",
         "dot": {
           "color": -1,
-          "size": 5.0
+          "size": 3.5
         },
         "segment": {
           "color": -1,
