@@ -20,6 +20,7 @@ class TimeSegment {
     Box graphBox;
     Ranges ranges;
 
+    private ThemesClass theme;
     private float unitsPerSecond;
     private float unitsPerDegree;
     private float _cloudCover;
@@ -27,6 +28,7 @@ class TimeSegment {
 
     TimeSegment(ThemesClass theme, Weather.DataPoint data, Box graphBox, Box timeBarBox, Ranges ranges) {
 
+        this.theme = theme;
         this.timeBarBox = timeBarBox;
         this.ranges = ranges;
         this.graphBox = graphBox;
@@ -95,6 +97,12 @@ class TimeSegment {
                 break;
             case "temperatureMin":
                 p = (ranges.temperature != null ? new Point(graphBox.getLeft() + (data.temperatureMinTime - from) * unitsPerSecond, graphBox.getTop() + (ranges.temperature.max - data.temperatureMin) * unitsPerDegree) : null);
+                break;
+            case "temperature":
+                p = ((theme.type == ThemesClass.ThemeType.Hourly || ranges != null) ?
+                        new Point(graphBox.getCenter().x,
+                                graphBox.getTop() + (ranges.temperature.max - data.temperature) * unitsPerDegree) :
+                        null);
                 break;
             default:
                 p = null;
