@@ -99,9 +99,15 @@ class TimeSegment {
                 p = (ranges.temperature != null ? new Point(graphBox.getLeft() + (data.temperatureMinTime - from) * unitsPerSecond, graphBox.getTop() + (ranges.temperature.max - data.temperatureMin) * unitsPerDegree) : null);
                 break;
             case "temperature":
-                p = ((theme.type == ThemesClass.ThemeType.Hourly || ranges != null) ?
+                p = ((theme.type == ThemesClass.ThemeType.Hourly && ranges.temperature != null) ?
                         new Point(graphBox.getCenter().x,
                                 graphBox.getTop() + (ranges.temperature.max - data.temperature) * unitsPerDegree) :
+                        null);
+                break;
+            case "apparentTemperature":
+                p = ((theme.type == ThemesClass.ThemeType.Hourly && ranges.temperature != null) ?
+                        new Point(graphBox.getCenter().x,
+                                graphBox.getTop() + (ranges.temperature.max - data.apparentTemperature) * unitsPerDegree) :
                         null);
                 break;
             default:

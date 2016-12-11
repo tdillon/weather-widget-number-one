@@ -29,6 +29,7 @@ class Weather {
         long sunriseTime;
         long sunsetTime;
         float temperature;
+        float apparentTemperature;
         float temperatureMax;
         long temperatureMaxTime;
         float temperatureMin;
@@ -53,6 +54,8 @@ class Weather {
                     return temperatureMax;
                 case "temperatureMin":
                     return temperatureMin;
+                case "apparentTemperature":
+                    return apparentTemperature;
                 default:  //TODO throw exception?
                     return -1;
             }

@@ -1,3 +1,4 @@
 2.0.0-alpha.6
 Temperature min real. #40
 Temperature real. #36
+Temperature feel. #35
