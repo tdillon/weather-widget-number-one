@@ -4,6 +4,7 @@
 - Temperature min real. [#40][40]
 - Temperature real. [#36][36]
 - Temperature feel. [#35][35]
+- Temperature min feel. [#39][39]
 
 #2.0.0-alpha.5
 - Widget configuration. [#54][54]
@@ -39,6 +40,7 @@
 [23]: https://github.com/tdillon/weather-widget-number-one/issues/23
 [35]: https://github.com/tdillon/weather-widget-number-one/issues/35
 [36]: https://github.com/tdillon/weather-widget-number-one/issues/36
+[39]: https://github.com/tdillon/weather-widget-number-one/issues/39
 [40]: https://github.com/tdillon/weather-widget-number-one/issues/40
 [43]: https://github.com/tdillon/weather-widget-number-one/issues/43
 [45]: https://github.com/tdillon/weather-widget-number-one/issues/45
