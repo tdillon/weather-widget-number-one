@@ -32,7 +32,9 @@ class ThemesClass {
     }
 
     enum CloudCoverageLocation {
+        @SerializedName("0")
         GRAPH,
+        @SerializedName("1")
         TIME_BAR
     }
 
