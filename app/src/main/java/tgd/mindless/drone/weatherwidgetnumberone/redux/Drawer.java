@@ -61,32 +61,32 @@ class Drawer {
     }
 
     private void renderWidgetBackground() {
-        paint.setColor(Color.YELLOW);  //TODO pull from theme
+        paint.setColor(Color.TRANSPARENT);  //TODO pull from theme
 
         _cvs.drawRect(_pos.widget.getLeft(), _pos.widget.getTop(), _pos.widget.getRight(), _pos.widget.getBottom(), paint);
     }
 
 
     private void renderGraphBackground() {
-        paint.setColor(Color.RED);  //TODO pull from theme
+        paint.setColor(Color.TRANSPARENT);  //TODO pull from theme
 
         _cvs.drawRect(_pos.graph.getLeft(), _pos.graph.getTop(), _pos.graph.getRight(), _pos.graph.getBottom(), paint);
     }
 
     private void renderTimeBackground() {
-        paint.setColor(Color.GREEN);  //TODO pull from theme
+        paint.setColor(Color.TRANSPARENT);  //TODO pull from theme
 
         _cvs.drawRect(_pos.timeBar.getLeft(), _pos.timeBar.getTop(), _pos.timeBar.getRight(), _pos.timeBar.getBottom(), paint);
     }
 
     private void renderLeftScaleBackground() {
-        paint.setColor(Color.DKGRAY);  //TODO pull from theme
+        paint.setColor(Color.TRANSPARENT);  //TODO pull from theme
 
         _cvs.drawRect(_pos.leftScale.getLeft(), _pos.leftScale.getTop(), _pos.leftScale.getRight(), _pos.leftScale.getBottom(), paint);
     }
 
     private void renderRightScaleBackground() {
-        paint.setColor(Color.GRAY);  //TODO pull from theme
+        paint.setColor(Color.TRANSPARENT);  //TODO pull from theme
 
         _cvs.drawRect(_pos.rightScale.getLeft(), _pos.rightScale.getTop(), _pos.rightScale.getRight(), _pos.rightScale.getBottom(), paint);
     }
