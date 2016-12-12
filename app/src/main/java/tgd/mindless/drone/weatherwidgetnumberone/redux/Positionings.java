@@ -133,13 +133,17 @@ class Positionings {
 
         for (Weather.DataPoint dp : db.data) {
 
-            //TODO add sunrise/sunset to hourly dp
-            /*if (_theme.widgetType === WidgetType.Hourly) {  //add sunrise sunset
-                //TODO need to get data[x] for the right day
-                let currentDay = _data.daily.data.reduce((prev, curr) => curr.time <= dp.time ? curr : prev);
+            if (theme.type == ThemesClass.ThemeType.Hourly) { //add sunrise & sunset to hourly data point for cloud coverage
+                Weather.DataPoint currentDay = data.daily.data[0];
+                for (Weather.DataPoint dpd : data.daily.data) {  //find the daily data point for the same day as 'dp'
+                    if (dpd.time > dp.time) {
+                        break;
+                    }
+                    currentDay = dpd;
+                }
                 dp.sunriseTime = currentDay.sunriseTime;
                 dp.sunsetTime = currentDay.sunsetTime;
-            }*/
+            }
 
             timeSegments.add(new TimeSegment(
                     theme,
