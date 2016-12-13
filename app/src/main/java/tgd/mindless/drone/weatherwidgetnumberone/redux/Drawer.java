@@ -144,7 +144,7 @@ class Drawer {
         for (TimeSegment curSeg : _pos.timeSegments) {
             paint.setColor(p.dot.color);
             point = curSeg.getPoint(p.name);
-            _cvs.drawCircle(point.x, point.y, p.dot.size / 200 * _pos.widget.getHeight(), paint);
+            _cvs.drawCircle(point.x, point.y, p.dot.size / 200 * curSeg.graphBox.getWidth(), paint);
         }
 
 //        let prevSeg: TimeSegment;

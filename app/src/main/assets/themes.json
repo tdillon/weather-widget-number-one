@@ -9,35 +9,12 @@
       "location": 0
     },
     "properties": [
-      {
-        "name": "temperatureMax",
-        "dot": {
-          "color": -1,
-          "size": 5.0
-        },
-        "segment": {
-          "color": -1,
-          "width": 50.0,
-          "padding": 2.0
-        }
-      },
-      {
-        "name": "temperatureMin",
-        "dot": {
-          "color": -16776961,
-          "size": 4.0
-        },
-        "segment": {
-          "color": -1,
-          "width": 50.0,
-          "padding": 2.0
-        }
-      },
+
       {
         "name": "apparentTemperatureMin",
         "dot": {
-          "color": -16776961,
-          "size": 3.0
+          "color": -6776961,
+          "size": 33.3
         },
         "segment": {
           "color": -10000,
@@ -49,10 +26,33 @@
         "name": "apparentTemperatureMax",
         "dot": {
           "color": -6776961,
-          "size": 3.0
+          "size": 33.3
         },
         "segment": {
           "color": -10000,
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },{
+        "name": "temperatureMax",
+        "dot": {
+          "color": -1,
+          "size": 50
+        },
+        "segment": {
+          "color": -1,
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
+      {
+        "name": "temperatureMin",
+        "dot": {
+          "color": -1,
+          "size": 50
+        },
+        "segment": {
+          "color": -1,
           "width": 50.0,
           "padding": 2.0
         }
@@ -73,7 +73,7 @@
         "name": "temperature",
         "dot": {
           "color": -1,
-          "size": 3.5
+          "size": 100.0
         },
         "segment": {
           "color": -1,
@@ -85,7 +85,7 @@
         "name": "apparentTemperature",
         "dot": {
           "color": -2324,
-          "size": 2
+          "size": 75
         },
         "segment": {
           "color": -1,

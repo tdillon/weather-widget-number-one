@@ -2,6 +2,7 @@
 
 #2.0.0-alpha.7
 - Hourly cloud cover. [#63][63]
+- Dot size. [#64][64]
 
 #2.0.0-alpha.6
 - Temperature min real. [#40][40]
@@ -51,3 +52,4 @@
 [45]: https://github.com/tdillon/weather-widget-number-one/issues/45
 [54]: https://github.com/tdillon/weather-widget-number-one/issues/54
 [63]: https://github.com/tdillon/weather-widget-number-one/issues/63
+[64]: https://github.com/tdillon/weather-widget-number-one/issues/64

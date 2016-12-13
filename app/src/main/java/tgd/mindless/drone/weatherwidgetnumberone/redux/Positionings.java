@@ -53,6 +53,9 @@ class Positionings {
         }
         maxDotOverhang /= 2;  //only radius can overhang
 
+        //HACK working on #64, for now zero out padding since it will be based on time segment width
+        maxDotOverhang = 0;
+
         int leftScaleWidth = getMaxTextWidth(getTempScaleTexts());
 
         padding = new Box(leftScaleWidth > maxDotOverhang ? 0 : maxDotOverhang - leftScaleWidth, maxDotOverhang, maxDotOverhang, timeBarTextHeight > maxDotOverhang ? 0 : maxDotOverhang - timeBarTextHeight);  //TODO get correct paddings
