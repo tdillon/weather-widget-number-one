@@ -13,7 +13,7 @@
       {
         "name": "windSpeed",
         "dot": {
-          "color": -6776961,
+          "color": -26368,
           "size": 33.3
         },
         "segment": {
@@ -84,7 +84,7 @@
       {
         "name": "windSpeed",
         "dot": {
-          "color": -1,
+          "color": -26368,
           "size": 50.0
         },
         "segment": {

@@ -1,5 +1,6 @@
 package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
+import android.graphics.Color;
 import android.util.Log;
 
 import java.util.ArrayList;
