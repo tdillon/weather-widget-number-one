@@ -40,6 +40,7 @@ class Weather {
         long apparentTemperatureMaxTime;
         float windSpeed;
         float visibility;
+        float ozone;
 
         DataPoint() {
         }
@@ -70,6 +71,8 @@ class Weather {
                     return windSpeed;
                 case "visibility":
                     return visibility;
+                case "ozone":
+                    return ozone;
                 default:  //TODO throw exception?
                     return -1;
             }
