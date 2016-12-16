@@ -1,5 +1,8 @@
 package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
+import android.graphics.Color;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -132,6 +135,13 @@ class TimeSegment {
                         new Point(
                                 graphBox.getLeft() + (data.apparentTemperatureMaxTime - from) * unitsPerSecond,
                                 graphBox.getTop() + (ranges.temperature.max - data.apparentTemperatureMax) * unitsPerDegree
+                        ) : null);
+                break;
+            case "windSpeed":
+                p = ((ranges.windSpeed != null) ?
+                        new Point(
+                                graphBox.getCenter().x,
+                                graphBox.getTop() + (ranges.windSpeed.max - data.windSpeed) * (graphBox.getHeight() / ranges.windSpeed.max)
                         ) : null);
                 break;
             default:
