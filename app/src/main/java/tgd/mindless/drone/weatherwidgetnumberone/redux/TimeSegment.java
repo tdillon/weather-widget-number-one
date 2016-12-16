@@ -144,6 +144,13 @@ class TimeSegment {
                                 graphBox.getTop() + (ranges.windSpeed.max - data.windSpeed) * (graphBox.getHeight() / ranges.windSpeed.max)
                         ) : null);
                 break;
+            case "visibility":
+                p = ((data.visibility != 0) ?
+                        new Point(
+                            graphBox.getCenter().x,
+                            graphBox.getTop() + (10 - data.visibility) * graphBox.getHeight() * .1f
+                        ) : null);
+                break;
             default:
                 p = null;
         }
