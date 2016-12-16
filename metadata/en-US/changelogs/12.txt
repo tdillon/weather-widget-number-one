@@ -2,3 +2,4 @@
 Wind speed. #42
 Visibility. #41
 Ozone. #29
+Moon. #28
