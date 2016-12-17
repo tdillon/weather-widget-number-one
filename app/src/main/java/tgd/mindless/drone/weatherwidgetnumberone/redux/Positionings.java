@@ -146,6 +146,15 @@ class Positionings {
                 }
                 dp.sunriseTime = currentDay.sunriseTime;
                 dp.sunsetTime = currentDay.sunsetTime;
+
+                //TODO add moonphase to midnight of hourly
+                /*
+                weatherData.hourly.data.forEach(h => {
+                  if (new Date(h.time * 1000).getUTCHours() + weatherData.offset === 0) {  //midnight
+                    h.moonPhase = weatherData.daily.data.find(d => d.time === h.time).moonPhase;  //add moonPhase to midnight hour
+                  }
+                });
+                 */
             }
 
             timeSegments.add(new TimeSegment(
