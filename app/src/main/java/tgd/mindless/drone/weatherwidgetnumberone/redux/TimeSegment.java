@@ -150,6 +150,12 @@ class TimeSegment {
                             graphBox.getCenter().x,
                             graphBox.getTop() + (10 - data.visibility) * graphBox.getHeight() * .1f
                         ) : null);
+            case "ozone":
+                p = ((ranges.ozone != null) ?
+                        new Point(
+                                graphBox.getCenter().x,
+                                graphBox.getTop() + (ranges.ozone.max - data.ozone) * (graphBox.getHeight() / (ranges.ozone.max - ranges.ozone.min))
+                        ) : null);
                 break;
             default:
                 p = null;
