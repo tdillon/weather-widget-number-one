@@ -9,7 +9,18 @@
       "location": 0
     },
     "properties": [
-
+      {
+        "name": "visibility",
+        "dot": {
+          "color": -40000,
+          "size": 33.3
+        },
+        "segment": {
+          "color": -10000,
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
       {
         "name": "windSpeed",
         "dot": {
@@ -81,6 +92,18 @@
       "location": 1
     },
     "properties": [
+      {
+        "name": "visibility",
+        "dot": {
+          "color": -40000,
+          "size": 40.0
+        },
+        "segment": {
+          "color": -10000,
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
       {
         "name": "windSpeed",
         "dot": {

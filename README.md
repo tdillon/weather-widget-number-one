@@ -2,6 +2,7 @@
 
 #2.0.0-alpha.8
 - Wind speed. [#42][42]
+- Visibility. [#41][41]
 
 #2.0.0-alpha.7
 - Hourly cloud cover. [#63][63]
@@ -51,6 +52,7 @@
 [37]: https://github.com/tdillon/weather-widget-number-one/issues/37
 [39]: https://github.com/tdillon/weather-widget-number-one/issues/39
 [40]: https://github.com/tdillon/weather-widget-number-one/issues/40
+[41]: https://github.com/tdillon/weather-widget-number-one/issues/41
 [42]: https://github.com/tdillon/weather-widget-number-one/issues/42
 [43]: https://github.com/tdillon/weather-widget-number-one/issues/43
 [45]: https://github.com/tdillon/weather-widget-number-one/issues/45
