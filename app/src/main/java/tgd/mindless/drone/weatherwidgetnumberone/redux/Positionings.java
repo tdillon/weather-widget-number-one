@@ -4,6 +4,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 class Positionings {
@@ -147,14 +148,12 @@ class Positionings {
                 dp.sunriseTime = currentDay.sunriseTime;
                 dp.sunsetTime = currentDay.sunsetTime;
 
-                //TODO add moonphase to midnight of hourly
-                /*
-                weatherData.hourly.data.forEach(h => {
-                  if (new Date(h.time * 1000).getUTCHours() + weatherData.offset === 0) {  //midnight
-                    h.moonPhase = weatherData.daily.data.find(d => d.time === h.time).moonPhase;  //add moonPhase to midnight hour
-                  }
-                });
-                 */
+                //TODO take into account timezone i.e., data.offset
+                Calendar cal = Calendar.getInstance();
+                cal.setTimeInMillis(dp.time * 1000);
+                if (cal.getTime().getHours() == 0) {  //midnight
+                    dp.moonPhase = currentDay.moonPhase;  //add moon phase to hourly midnight data point
+                }
             }
 
             timeSegments.add(new TimeSegment(
