@@ -10,6 +10,18 @@
     },
     "properties": [
       {
+        "name": "humidity",
+        "dot": {
+          "color": -100000,
+          "size": 40
+        },
+        "segment": {
+          "color": -10000,
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
+      {
         "name": "ozone",
         "dot": {
           "color": -60000,
@@ -118,6 +130,18 @@
     },
     "properties": [
       {
+        "name": "humidity",
+        "dot": {
+          "color": -100000,
+          "size": 60
+        },
+        "segment": {
+          "color": -10000,
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
+      {
         "name": "ozone",
         "dot": {
           "color": -60000,
@@ -145,7 +169,7 @@
         "name": "moonPhase",
         "dot": {
           "color": -50000,
-          "size": 33.3
+          "size": 222.22
         },
         "segment": {
           "color": -10000,
