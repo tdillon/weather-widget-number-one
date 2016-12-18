@@ -14,8 +14,8 @@ class ThemesClass {
 
 
     class CloudCoverage {
-        int day;
-        int night;
+        String day;
+        String night;
         CloudCoverageLocation location;
 
         CloudCoverage() {
@@ -48,7 +48,7 @@ class ThemesClass {
 
     class DotProperties {
         float size;
-        int color;
+        String color;
 
         DotProperties() {
         }
@@ -57,7 +57,7 @@ class ThemesClass {
     class SegmentProperties {
         float width;
         float padding;
-        int color;
+        String color;
 
         SegmentProperties() {
         }

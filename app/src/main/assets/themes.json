@@ -4,19 +4,19 @@
     "type": 1,
     "fontSize": 5.0,
     "cloudCoverage": {
-      "day": -16776961,
-      "night": -16777216,
+      "day": "#0099CC",
+      "night": "black",
       "location": 0
     },
     "properties": [
       {
         "name": "humidity",
         "dot": {
-          "color": -100000,
+          "color": "olive",
           "size": 40
         },
         "segment": {
-          "color": -10000,
+          "color": "olive",
           "width": 50.0,
           "padding": 2.0
         }
@@ -24,11 +24,11 @@
       {
         "name": "ozone",
         "dot": {
-          "color": -60000,
+          "color": "yellow",
           "size": 33.3
         },
         "segment": {
-          "color": -10000,
+          "color": "yellow",
           "width": 50.0,
           "padding": 2.0
         }
@@ -36,11 +36,11 @@
       {
         "name": "moonPhase",
         "dot": {
-          "color": -50000,
+          "color": "purple",
           "size": 33.3
         },
         "segment": {
-          "color": -10000,
+          "color": "purple'",
           "width": 50.0,
           "padding": 2.0
         }
@@ -48,11 +48,11 @@
       {
         "name": "visibility",
         "dot": {
-          "color": -40000,
+          "color": "silver",
           "size": 33.3
         },
         "segment": {
-          "color": -10000,
+          "color": "silver",
           "width": 50.0,
           "padding": 2.0
         }
@@ -60,11 +60,11 @@
       {
         "name": "windSpeed",
         "dot": {
-          "color": -26368,
+          "color": "#FF9900",
           "size": 33.3
         },
         "segment": {
-          "color": -10000,
+          "color": "#FF9900",
           "width": 50.0,
           "padding": 2.0
         }
@@ -72,11 +72,11 @@
       {
         "name": "apparentTemperatureMin",
         "dot": {
-          "color": -6776961,
+          "color": "lightgray",
           "size": 33.3
         },
         "segment": {
-          "color": -10000,
+          "color": "lightgray",
           "width": 50.0,
           "padding": 2.0
         }
@@ -84,11 +84,11 @@
       {
         "name": "apparentTemperatureMax",
         "dot": {
-          "color": -6776961,
+          "color": "lightgray",
           "size": 33.3
         },
         "segment": {
-          "color": -10000,
+          "color": "lightgray",
           "width": 50.0,
           "padding": 2.0
         }
@@ -96,11 +96,11 @@
       {
         "name": "temperatureMax",
         "dot": {
-          "color": -1,
+          "color": "white",
           "size": 50
         },
         "segment": {
-          "color": -1,
+          "color": "white",
           "width": 50.0,
           "padding": 2.0
         }
@@ -108,11 +108,11 @@
       {
         "name": "temperatureMin",
         "dot": {
-          "color": -1,
+          "color": "white",
           "size": 50
         },
         "segment": {
-          "color": -1,
+          "color": "white",
           "width": 50.0,
           "padding": 2.0
         }
@@ -124,19 +124,19 @@
     "type": 0,
     "fontSize": 5.0,
     "cloudCoverage": {
-      "day": -16776961,
-      "night": -16777216,
+      "day": "#0099CC",
+      "night": "black",
       "location": 1
     },
     "properties": [
       {
         "name": "humidity",
         "dot": {
-          "color": -100000,
+          "color": "olive",
           "size": 60
         },
         "segment": {
-          "color": -10000,
+          "color": "olive",
           "width": 50.0,
           "padding": 2.0
         }
@@ -144,11 +144,11 @@
       {
         "name": "ozone",
         "dot": {
-          "color": -60000,
+          "color": "yellow",
           "size": 40.0
         },
         "segment": {
-          "color": -10000,
+          "color": "yellow",
           "width": 50.0,
           "padding": 2.0
         }
@@ -156,11 +156,11 @@
       {
         "name": "visibility",
         "dot": {
-          "color": -40000,
+          "color": "silver",
           "size": 33.3
         },
         "segment": {
-          "color": -10000,
+          "color": "silver",
           "width": 50.0,
           "padding": 2.0
         }
@@ -168,11 +168,11 @@
       {
         "name": "moonPhase",
         "dot": {
-          "color": -50000,
+          "color": "purple",
           "size": 222.22
         },
         "segment": {
-          "color": -10000,
+          "color": "purple",
           "width": 50.0,
           "padding": 2.0
         }
@@ -180,11 +180,11 @@
       {
         "name": "windSpeed",
         "dot": {
-          "color": -26368,
+          "color": "#FF9900",
           "size": 50.0
         },
         "segment": {
-          "color": -1,
+          "color": "#FF9900",
           "width": 50.0,
           "padding": 2.0
         }
@@ -192,11 +192,11 @@
       {
         "name": "temperature",
         "dot": {
-          "color": -1,
+          "color": "white",
           "size": 100.0
         },
         "segment": {
-          "color": -1,
+          "color": "white",
           "width": 50.0,
           "padding": 2.0
         }
@@ -204,11 +204,11 @@
       {
         "name": "apparentTemperature",
         "dot": {
-          "color": -2324,
+          "color": "lightgray",
           "size": 75
         },
         "segment": {
-          "color": -1,
+          "color": "lightgray",
           "width": 50.0,
           "padding": 2.0
         }
