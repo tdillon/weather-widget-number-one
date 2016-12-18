@@ -164,6 +164,12 @@ class TimeSegment {
                     graphBox.getTop() + Math.abs(.5f - data.moonPhase) * graphBox.getHeight() * 2
                 );
                 break;
+            case "humidity":
+                p = new Point(
+                    graphBox.getCenter().x,
+                    graphBox.getTop() + (1 - data.humidity) * graphBox.getHeight()
+                );
+                break;
             default:
                 p = null;
         }

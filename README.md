@@ -5,6 +5,7 @@
 - Visibility. [#41][41]
 - Ozone. [#29][29]
 - Moon. [#28][28]
+- Humidity. [#27][27]
 
 #2.0.0-alpha.7
 - Hourly cloud cover. [#63][63]
@@ -49,6 +50,7 @@
 [18]: https://github.com/tdillon/weather-widget-number-one/issues/18
 [22]: https://github.com/tdillon/weather-widget-number-one/issues/22
 [23]: https://github.com/tdillon/weather-widget-number-one/issues/23
+[27]: https://github.com/tdillon/weather-widget-number-one/issues/27
 [28]: https://github.com/tdillon/weather-widget-number-one/issues/28
 [29]: https://github.com/tdillon/weather-widget-number-one/issues/29
 [35]: https://github.com/tdillon/weather-widget-number-one/issues/35
