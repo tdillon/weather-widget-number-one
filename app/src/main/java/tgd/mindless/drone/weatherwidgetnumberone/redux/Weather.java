@@ -43,6 +43,7 @@ class Weather {
         float ozone;
         float moonPhase;
         float humidity;
+        float precipAccumulation;
 
         DataPoint() {
         }
@@ -79,6 +80,8 @@ class Weather {
                     return moonPhase;
                 case "humidity":
                     return humidity;
+                case "precipAccumulation":
+                    return precipAccumulation;
                 default:  //TODO throw exception?
                     return -1;
             }

@@ -10,6 +10,18 @@
     },
     "properties": [
       {
+        "name": "precipAccumulation",
+        "dot": {
+          "color": "teal",
+          "size": 40
+        },
+        "segment": {
+          "color": "teal",
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
+      {
         "name": "humidity",
         "dot": {
           "color": "olive",
@@ -129,6 +141,18 @@
       "location": 1
     },
     "properties": [
+      {
+        "name": "precipAccumulation",
+        "dot": {
+          "color": "teal",
+          "size": 40
+        },
+        "segment": {
+          "color": "teal",
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
       {
         "name": "humidity",
         "dot": {

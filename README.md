@@ -7,6 +7,7 @@
 - Moon. [#28][28]
 - Humidity. [#27][27]
 - Theme color values. [#71][71]
+- Precipitation accumulation. [#32][32]
 
 #2.0.0-alpha.7
 - Hourly cloud cover. [#63][63]
@@ -54,6 +55,7 @@
 [27]: https://github.com/tdillon/weather-widget-number-one/issues/27
 [28]: https://github.com/tdillon/weather-widget-number-one/issues/28
 [29]: https://github.com/tdillon/weather-widget-number-one/issues/29
+[32]: https://github.com/tdillon/weather-widget-number-one/issues/32
 [35]: https://github.com/tdillon/weather-widget-number-one/issues/35
 [36]: https://github.com/tdillon/weather-widget-number-one/issues/36
 [37]: https://github.com/tdillon/weather-widget-number-one/issues/37
