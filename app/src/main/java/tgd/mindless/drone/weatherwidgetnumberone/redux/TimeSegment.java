@@ -150,12 +150,19 @@ class TimeSegment {
                             graphBox.getCenter().x,
                             graphBox.getTop() + (10 - data.visibility) * graphBox.getHeight() * .1f
                         ) : null);
+                break;
             case "ozone":
                 p = ((ranges.ozone != null) ?
                         new Point(
                                 graphBox.getCenter().x,
                                 graphBox.getTop() + (ranges.ozone.max - data.ozone) * (graphBox.getHeight() / (ranges.ozone.max - ranges.ozone.min))
                         ) : null);
+                break;
+            case "moonPhase":
+                p = new Point(
+                    graphBox.getCenter().x,
+                    graphBox.getTop() + Math.abs(.5f - data.moonPhase) * graphBox.getHeight() * 2
+                );
                 break;
             default:
                 p = null;

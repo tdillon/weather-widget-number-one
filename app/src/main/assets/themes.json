@@ -12,6 +12,18 @@
       {
         "name": "ozone",
         "dot": {
+          "color": -60000,
+          "size": 33.3
+        },
+        "segment": {
+          "color": -10000,
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
+      {
+        "name": "moonPhase",
+        "dot": {
           "color": -50000,
           "size": 33.3
         },
@@ -108,7 +120,7 @@
       {
         "name": "ozone",
         "dot": {
-          "color": -50000,
+          "color": -60000,
           "size": 40.0
         },
         "segment": {
@@ -121,6 +133,18 @@
         "name": "visibility",
         "dot": {
           "color": -40000,
+          "size": 33.3
+        },
+        "segment": {
+          "color": -10000,
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
+      {
+        "name": "moonPhase",
+        "dot": {
+          "color": -50000,
           "size": 33.3
         },
         "segment": {
