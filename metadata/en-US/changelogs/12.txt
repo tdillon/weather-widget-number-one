@@ -5,3 +5,4 @@ Ozone. #29
 Moon. #28
 Humidity. #27
 Theme color values. #71
+Precipitation accumulation. #32
