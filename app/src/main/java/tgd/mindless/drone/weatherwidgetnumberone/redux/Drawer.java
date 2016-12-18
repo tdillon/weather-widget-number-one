@@ -97,14 +97,14 @@ class Drawer {
             ThemesClass.CloudCoverageLocation x = _theme.cloudCoverage.location;
 
             for (TimeSegment ts : _pos.timeSegments) {
-                paint.setColor(_theme.cloudCoverage.day);
+                paint.setColor(Color.parseColor(_theme.cloudCoverage.day));
                 paint.setAlpha(Math.round(255 * ts.getCloudCover()));  //[0-255]
                 location = (x == ThemesClass.CloudCoverageLocation.TIME_BAR ? ts.timeBarDaytimes : ts.graphDaytimes);
                 for (Box b : location) {
                     _cvs.drawRect(b.getLeft(), b.getTop(), b.getRight(), b.getBottom(), paint);
                 }
 
-                paint.setColor(_theme.cloudCoverage.night);
+                paint.setColor(Color.parseColor(_theme.cloudCoverage.night));
                 paint.setAlpha(Math.round(255 * ts.getCloudCover()));  //[0-255]
                 location = (x == ThemesClass.CloudCoverageLocation.TIME_BAR ? ts.timeBarNighttimes : ts.graphNighttimes);
                 for (Box b : location) {
@@ -142,7 +142,7 @@ class Drawer {
         Point point;
 
         for (TimeSegment curSeg : _pos.timeSegments) {
-            paint.setColor(p.dot.color);
+            paint.setColor(Color.parseColor(p.dot.color));
             point = curSeg.getPoint(p.name);
             if (point == null) {
                 continue;

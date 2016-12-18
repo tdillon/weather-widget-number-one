@@ -6,6 +6,7 @@
 - Ozone. [#29][29]
 - Moon. [#28][28]
 - Humidity. [#27][27]
+- Theme color values. [#71][71]
 
 #2.0.0-alpha.7
 - Hourly cloud cover. [#63][63]
@@ -65,3 +66,4 @@
 [54]: https://github.com/tdillon/weather-widget-number-one/issues/54
 [63]: https://github.com/tdillon/weather-widget-number-one/issues/63
 [64]: https://github.com/tdillon/weather-widget-number-one/issues/64
+[71]: https://github.com/tdillon/weather-widget-number-one/issues/71
