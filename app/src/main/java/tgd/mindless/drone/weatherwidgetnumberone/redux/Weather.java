@@ -44,6 +44,7 @@ class Weather {
         float moonPhase;
         float humidity;
         float precipAccumulation;
+        float dewPoint;
 
         DataPoint() {
         }
@@ -82,6 +83,8 @@ class Weather {
                     return humidity;
                 case "precipAccumulation":
                     return precipAccumulation;
+                case "dewPoint":
+                    return dewPoint;
                 default:  //TODO throw exception?
                     return -1;
             }
