@@ -191,6 +191,13 @@ class TimeSegment {
                         graphBox.getTop() + (ranges.pressure.max - data.pressure) * (graphBox.getHeight() / (ranges.pressure.max - ranges.pressure.min))
                     ) : null);
                 break;
+            case "precipProbability":
+                p = ((data.precipProbability != 0) ?
+                    new Point(  //TODO add precipIntensityMax somehow for daily. and hourly?
+                        graphBox.getCenter().x,
+                        graphBox.getTop() + (1 - data.precipProbability) * graphBox.getHeight()
+                    ) : null );
+                break;
             default:
                 p = null;
         }
