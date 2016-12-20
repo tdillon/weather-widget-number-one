@@ -184,6 +184,13 @@ class TimeSegment {
                         graphBox.getTop() + (ranges.temperature.max - data.dewPoint) * unitsPerDegree
                     ) : null);
                 break;
+            case "pressure":
+                p = ((ranges.pressure != null) ?
+                    new Point(
+                        graphBox.getCenter().x,
+                        graphBox.getTop() + (ranges.pressure.max - data.pressure) * (graphBox.getHeight() / (ranges.pressure.max - ranges.pressure.min))
+                    ) : null);
+                break;
             default:
                 p = null;
         }

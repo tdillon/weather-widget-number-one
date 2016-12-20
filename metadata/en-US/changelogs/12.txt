@@ -7,3 +7,4 @@ Humidity. #27
 Theme color values. #71
 Precipitation accumulation. #32
 Dew point. #26
+Pressure. #34
