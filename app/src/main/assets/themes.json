@@ -106,6 +106,18 @@
         }
       },
       {
+        "name": "precipProbability",
+        "dot": {
+          "color": "fuchsia",
+          "size": 50
+        },
+        "segment": {
+          "color": "lightgray",
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
+      {
         "name": "apparentTemperatureMin",
         "dot": {
           "color": "lightgray",
@@ -281,6 +293,18 @@
         },
         "segment": {
           "color": "#FF9900",
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
+      {
+        "name": "precipProbability",
+        "dot": {
+          "color": "fuchsia",
+          "size": 50
+        },
+        "segment": {
+          "color": "lightgray",
           "width": 50.0,
           "padding": 2.0
         }

@@ -10,6 +10,7 @@
 - Precipitation accumulation. [#32][32]
 - Dew point. [#26][26]
 - Pressure. [#34][34]
+- Precipitation. [#30][30]
 
 #2.0.0-alpha.7
 - Hourly cloud cover. [#63][63]
@@ -58,6 +59,7 @@
 [27]: https://github.com/tdillon/weather-widget-number-one/issues/27
 [28]: https://github.com/tdillon/weather-widget-number-one/issues/28
 [29]: https://github.com/tdillon/weather-widget-number-one/issues/29
+[30]: https://github.com/tdillon/weather-widget-number-one/issues/30
 [32]: https://github.com/tdillon/weather-widget-number-one/issues/32
 [34]: https://github.com/tdillon/weather-widget-number-one/issues/34
 [35]: https://github.com/tdillon/weather-widget-number-one/issues/35
