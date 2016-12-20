@@ -10,6 +10,18 @@
     },
     "properties": [
       {
+        "name": "pressure",
+        "dot": {
+          "color": "#FF69B4",
+          "size": 22.2
+        },
+        "segment": {
+          "color": "#FF69B4",
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
+      {
         "name": "dewPoint",
         "dot": {
           "color": "red",
@@ -177,6 +189,18 @@
       "location": 1
     },
     "properties": [
+      {
+        "name": "pressure",
+        "dot": {
+          "color": "#FF69B4",
+          "size": 22.2
+        },
+        "segment": {
+          "color": "#FF69B4",
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
       {
         "name": "dewPoint",
         "dot": {

@@ -9,6 +9,7 @@
 - Theme color values. [#71][71]
 - Precipitation accumulation. [#32][32]
 - Dew point. [#26][26]
+- Pressure. [#34][34]
 
 #2.0.0-alpha.7
 - Hourly cloud cover. [#63][63]
@@ -58,6 +59,7 @@
 [28]: https://github.com/tdillon/weather-widget-number-one/issues/28
 [29]: https://github.com/tdillon/weather-widget-number-one/issues/29
 [32]: https://github.com/tdillon/weather-widget-number-one/issues/32
+[34]: https://github.com/tdillon/weather-widget-number-one/issues/34
 [35]: https://github.com/tdillon/weather-widget-number-one/issues/35
 [36]: https://github.com/tdillon/weather-widget-number-one/issues/36
 [37]: https://github.com/tdillon/weather-widget-number-one/issues/37

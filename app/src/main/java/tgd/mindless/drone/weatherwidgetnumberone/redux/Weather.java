@@ -45,6 +45,7 @@ class Weather {
         float humidity;
         float precipAccumulation;
         float dewPoint;
+        float pressure;
 
         DataPoint() {
         }
@@ -85,6 +86,8 @@ class Weather {
                     return precipAccumulation;
                 case "dewPoint":
                     return dewPoint;
+                case "pressure":
+                    return pressure;
                 default:  //TODO throw exception?
                     return -1;
             }
