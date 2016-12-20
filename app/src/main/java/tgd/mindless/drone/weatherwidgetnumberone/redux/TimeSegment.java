@@ -177,6 +177,13 @@ class TimeSegment {
                         graphBox.getTop() + (ranges.precipAccumulation.max - data.precipAccumulation) * (graphBox.getHeight() / (ranges.precipAccumulation.max - ranges.precipAccumulation.min))
                     ) : null);
                 break;
+            case "dewPoint":
+                p = ((ranges.temperature != null) ?
+                    new Point(
+                        graphBox.getCenter().x,
+                        graphBox.getTop() + (ranges.temperature.max - data.dewPoint) * unitsPerDegree
+                    ) : null);
+                break;
             default:
                 p = null;
         }

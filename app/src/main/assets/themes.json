@@ -10,10 +10,22 @@
     },
     "properties": [
       {
+        "name": "dewPoint",
+        "dot": {
+          "color": "red",
+          "size": 22.2
+        },
+        "segment": {
+          "color": "red",
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
+      {
         "name": "precipAccumulation",
         "dot": {
           "color": "teal",
-          "size": 40
+          "size": 22.2
         },
         "segment": {
           "color": "teal",
@@ -25,7 +37,7 @@
         "name": "humidity",
         "dot": {
           "color": "olive",
-          "size": 40
+          "size": 22.2
         },
         "segment": {
           "color": "olive",
@@ -37,7 +49,7 @@
         "name": "ozone",
         "dot": {
           "color": "yellow",
-          "size": 33.3
+          "size": 22.2
         },
         "segment": {
           "color": "yellow",
@@ -49,7 +61,7 @@
         "name": "moonPhase",
         "dot": {
           "color": "purple",
-          "size": 33.3
+          "size": 22.2
         },
         "segment": {
           "color": "purple'",
@@ -61,7 +73,7 @@
         "name": "visibility",
         "dot": {
           "color": "silver",
-          "size": 33.3
+          "size": 22.2
         },
         "segment": {
           "color": "silver",
@@ -73,7 +85,7 @@
         "name": "windSpeed",
         "dot": {
           "color": "#FF9900",
-          "size": 33.3
+          "size": 22.2
         },
         "segment": {
           "color": "#FF9900",
@@ -128,6 +140,30 @@
           "width": 50.0,
           "padding": 2.0
         }
+      },
+      {
+        "name": "apparentTemperatureMin",
+        "dot": {
+          "color": "lightgray",
+          "size": 33.3
+        },
+        "segment": {
+          "color": "lightgray",
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
+      {
+        "name": "apparentTemperatureMax",
+        "dot": {
+          "color": "lightgray",
+          "size": 33.3
+        },
+        "segment": {
+          "color": "lightgray",
+          "width": 50.0,
+          "padding": 2.0
+        }
       }
     ]
   },
@@ -142,10 +178,22 @@
     },
     "properties": [
       {
+        "name": "dewPoint",
+        "dot": {
+          "color": "red",
+          "size": 22.2
+        },
+        "segment": {
+          "color": "red",
+          "width": 50.0,
+          "padding": 2.0
+        }
+      },
+      {
         "name": "precipAccumulation",
         "dot": {
           "color": "teal",
-          "size": 40
+          "size": 22.2
         },
         "segment": {
           "color": "teal",
@@ -157,7 +205,7 @@
         "name": "humidity",
         "dot": {
           "color": "olive",
-          "size": 60
+          "size": 22.2
         },
         "segment": {
           "color": "olive",
@@ -169,7 +217,7 @@
         "name": "ozone",
         "dot": {
           "color": "yellow",
-          "size": 40.0
+          "size": 22.2
         },
         "segment": {
           "color": "yellow",
@@ -181,7 +229,7 @@
         "name": "visibility",
         "dot": {
           "color": "silver",
-          "size": 33.3
+          "size": 22.2
         },
         "segment": {
           "color": "silver",
@@ -193,7 +241,7 @@
         "name": "moonPhase",
         "dot": {
           "color": "purple",
-          "size": 222.22
+          "size": 44.4
         },
         "segment": {
           "color": "purple",
@@ -205,7 +253,7 @@
         "name": "windSpeed",
         "dot": {
           "color": "#FF9900",
-          "size": 50.0
+          "size": 22.2
         },
         "segment": {
           "color": "#FF9900",
