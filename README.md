@@ -1,5 +1,8 @@
 [![Build Status](https://travis-ci.org/tdillon/weather-widget-number-one.svg?branch=master)](https://travis-ci.org/tdillon/weather-widget-number-one)
 
+#2.0.0-alpha.9
+- Segments. [#19][19]
+
 #2.0.0-alpha.8
 - Wind speed. [#42][42]
 - Visibility. [#41][41]
@@ -53,6 +56,7 @@
 [16]: https://github.com/tdillon/weather-widget-number-one/issues/16
 [17]: https://github.com/tdillon/weather-widget-number-one/issues/17
 [18]: https://github.com/tdillon/weather-widget-number-one/issues/18
+[19]: https://github.com/tdillon/weather-widget-number-one/issues/19
 [22]: https://github.com/tdillon/weather-widget-number-one/issues/22
 [23]: https://github.com/tdillon/weather-widget-number-one/issues/23
 [26]: https://github.com/tdillon/weather-widget-number-one/issues/26
