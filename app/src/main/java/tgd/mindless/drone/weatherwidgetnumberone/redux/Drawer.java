@@ -163,23 +163,44 @@ class Drawer {
 
             _cvs.drawCircle(point.x, point.y, dotRadius, paint);
 
-
             //TODO don't draw segment for precip probability when prevSeg was 0%
             if (prevPoint != null) {//(s.hasSegment()) {
                 //TODO precipitation probability gradient
                 paint.setColor(Color.parseColor(p.segment.color));
-                //this.ctx.arc(s.start.point.x, s.start.point.y, DOT_RADIUS, s.start.from, s.start.to, false);
-                //this.ctx.arc(s.end.point.x, s.end.point.y, DOT_RADIUS, s.end.from, s.end.to, false);
                 Path path = new Path();
-                RectF rectF = new RectF(prevPoint.x - dotRadius - 10, prevPoint.y - dotRadius - 10, prevPoint.x + dotRadius + 10, prevPoint.y + dotRadius + 10);
 
-                path.addArc(rectF, -20, 45);
-                path.lineTo(curPoint.x,curPoint.y);
+                double padding = p.segment.padding * dotRadius * 2 / 100;
+                double theta = -Math.atan((prevPoint.y - curPoint.y) / (prevPoint.x - curPoint.x));  //radians
+                double thetaDegree = theta * 180 / Math.PI;  //degrees
+                float x = (float) (padding * Math.cos(theta));
+                float y = (float) (padding * Math.sin(theta));
+                float sweepAngle = p.segment.width * 180 / 100;  //degrees
+                float startAngle = (float) (-thetaDegree - (sweepAngle / 2));  //degrees
+
+                RectF rectF = new RectF(
+                        prevPoint.x - dotRadius + x,
+                        prevPoint.y - dotRadius - y,
+                        prevPoint.x + dotRadius + x,
+                        prevPoint.y + dotRadius - y
+                );
+
+                path.addArc(rectF, startAngle, sweepAngle);
+
+                x = -x;
+                y = -y;
+
+                rectF = new RectF(
+                        curPoint.x - dotRadius + x,
+                        curPoint.y - dotRadius - y,
+                        curPoint.x + dotRadius + x,
+                        curPoint.y + dotRadius - y
+                );
+
+                path.arcTo(rectF, startAngle + 180, sweepAngle);
                 path.close();
                 paint.setColor(Color.parseColor(p.segment.color));
                 _cvs.drawPath(path, paint);
             }
-
 
 
             prevSeg = curSeg;
