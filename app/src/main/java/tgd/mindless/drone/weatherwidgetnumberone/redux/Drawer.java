@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -163,13 +165,19 @@ class Drawer {
 
 
             //TODO don't draw segment for precip probability when prevSeg was 0%
-            if (s.hasSegment()) {
+            if (prevPoint != null) {//(s.hasSegment()) {
                 //TODO precipitation probability gradient
                 paint.setColor(Color.parseColor(p.segment.color));
                 //this.ctx.arc(s.start.point.x, s.start.point.y, DOT_RADIUS, s.start.from, s.start.to, false);
                 //this.ctx.arc(s.end.point.x, s.end.point.y, DOT_RADIUS, s.end.from, s.end.to, false);
+                Path path = new Path();
+                RectF rectF = new RectF(prevPoint.x - dotRadius - 10, prevPoint.y - dotRadius - 10, prevPoint.x + dotRadius + 10, prevPoint.y + dotRadius + 10);
 
-
+                path.addArc(rectF, -20, 45);
+                path.lineTo(curPoint.x,curPoint.y);
+                path.close();
+                paint.setColor(Color.parseColor(p.segment.color));
+                _cvs.drawPath(path, paint);
             }
 
 

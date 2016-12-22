@@ -76,7 +76,7 @@
           "size": 22.2
         },
         "segment": {
-          "color": "purple'",
+          "color": "purple",
           "width": 50.0,
           "padding": 2.0
         }
@@ -112,7 +112,7 @@
           "size": 50
         },
         "segment": {
-          "color": "lightgray",
+          "color": "fuchsia",
           "width": 50.0,
           "padding": 2.0
         }
@@ -304,7 +304,7 @@
           "size": 50
         },
         "segment": {
-          "color": "lightgray",
+          "color": "fuchsia",
           "width": 50.0,
           "padding": 2.0
         }
