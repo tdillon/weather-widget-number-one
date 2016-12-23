@@ -10,138 +10,6 @@
     },
     "properties": [
       {
-        "name": "pressure",
-        "dot": {
-          "color": "#FF69B4",
-          "size": 22.2
-        },
-        "segment": {
-          "color": "#FF69B4",
-          "width": 50.0,
-          "padding": 2.0
-        }
-      },
-      {
-        "name": "dewPoint",
-        "dot": {
-          "color": "red",
-          "size": 22.2
-        },
-        "segment": {
-          "color": "red",
-          "width": 50.0,
-          "padding": 2.0
-        }
-      },
-      {
-        "name": "precipAccumulation",
-        "dot": {
-          "color": "teal",
-          "size": 22.2
-        },
-        "segment": {
-          "color": "teal",
-          "width": 50.0,
-          "padding": 2.0
-        }
-      },
-      {
-        "name": "humidity",
-        "dot": {
-          "color": "olive",
-          "size": 22.2
-        },
-        "segment": {
-          "color": "olive",
-          "width": 50.0,
-          "padding": 2.0
-        }
-      },
-      {
-        "name": "ozone",
-        "dot": {
-          "color": "yellow",
-          "size": 22.2
-        },
-        "segment": {
-          "color": "yellow",
-          "width": 50.0,
-          "padding": 2.0
-        }
-      },
-      {
-        "name": "moonPhase",
-        "dot": {
-          "color": "purple",
-          "size": 22.2
-        },
-        "segment": {
-          "color": "purple'",
-          "width": 50.0,
-          "padding": 2.0
-        }
-      },
-      {
-        "name": "visibility",
-        "dot": {
-          "color": "silver",
-          "size": 22.2
-        },
-        "segment": {
-          "color": "silver",
-          "width": 50.0,
-          "padding": 2.0
-        }
-      },
-      {
-        "name": "windSpeed",
-        "dot": {
-          "color": "#FF9900",
-          "size": 22.2
-        },
-        "segment": {
-          "color": "#FF9900",
-          "width": 50.0,
-          "padding": 2.0
-        }
-      },
-      {
-        "name": "precipProbability",
-        "dot": {
-          "color": "fuchsia",
-          "size": 50
-        },
-        "segment": {
-          "color": "lightgray",
-          "width": 50.0,
-          "padding": 2.0
-        }
-      },
-      {
-        "name": "apparentTemperatureMin",
-        "dot": {
-          "color": "lightgray",
-          "size": 33.3
-        },
-        "segment": {
-          "color": "lightgray",
-          "width": 50.0,
-          "padding": 2.0
-        }
-      },
-      {
-        "name": "apparentTemperatureMax",
-        "dot": {
-          "color": "lightgray",
-          "size": 33.3
-        },
-        "segment": {
-          "color": "lightgray",
-          "width": 50.0,
-          "padding": 2.0
-        }
-      },
-      {
         "name": "temperatureMax",
         "dot": {
           "color": "white",
@@ -150,7 +18,7 @@
         "segment": {
           "color": "white",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
         }
       },
       {
@@ -162,7 +30,175 @@
         "segment": {
           "color": "white",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "precipProbability",
+        "dot": {
+          "color": "green",
+          "size": 25
+        },
+        "segment": {
+          "color": "green",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      }
+    ]
+  },
+  {
+    "name": "Default",
+    "type": 0,
+    "fontSize": 5.0,
+    "cloudCoverage": {
+      "day": "#0099CC",
+      "night": "black",
+      "location": 1
+    },
+    "properties": [
+      {
+        "name": "temperature",
+        "dot": {
+          "color": "white",
+          "size": 50
+        },
+        "segment": {
+          "color": "white",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "precipProbability",
+        "dot": {
+          "color": "green",
+          "size": 25
+        },
+        "segment": {
+          "color": "green",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      }
+    ]
+  },
+  {
+    "name": "Kitchen Sink",
+    "type": 1,
+    "fontSize": 5.0,
+    "cloudCoverage": {
+      "day": "#0099CC",
+      "night": "black",
+      "location": 0
+    },
+    "properties": [
+      {
+        "name": "pressure",
+        "dot": {
+          "color": "#FF69B4",
+          "size": 22.2
+        },
+        "segment": {
+          "color": "#FF69B4",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "dewPoint",
+        "dot": {
+          "color": "red",
+          "size": 22.2
+        },
+        "segment": {
+          "color": "red",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "precipAccumulation",
+        "dot": {
+          "color": "teal",
+          "size": 22.2
+        },
+        "segment": {
+          "color": "teal",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "humidity",
+        "dot": {
+          "color": "olive",
+          "size": 22.2
+        },
+        "segment": {
+          "color": "olive",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "ozone",
+        "dot": {
+          "color": "yellow",
+          "size": 22.2
+        },
+        "segment": {
+          "color": "yellow",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "moonPhase",
+        "dot": {
+          "color": "purple",
+          "size": 22.2
+        },
+        "segment": {
+          "color": "purple",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "visibility",
+        "dot": {
+          "color": "silver",
+          "size": 22.2
+        },
+        "segment": {
+          "color": "silver",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "windSpeed",
+        "dot": {
+          "color": "#FF9900",
+          "size": 22.2
+        },
+        "segment": {
+          "color": "#FF9900",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "precipProbability",
+        "dot": {
+          "color": "fuchsia",
+          "size": 50
+        },
+        "segment": {
+          "color": "fuchsia",
+          "width": 50.0,
+          "padding": 10.0
         }
       },
       {
@@ -174,7 +210,7 @@
         "segment": {
           "color": "lightgray",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
         }
       },
       {
@@ -186,13 +222,61 @@
         "segment": {
           "color": "lightgray",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "temperatureMax",
+        "dot": {
+          "color": "white",
+          "size": 50
+        },
+        "segment": {
+          "color": "white",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "temperatureMin",
+        "dot": {
+          "color": "white",
+          "size": 50
+        },
+        "segment": {
+          "color": "white",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "apparentTemperatureMin",
+        "dot": {
+          "color": "lightgray",
+          "size": 33.3
+        },
+        "segment": {
+          "color": "lightgray",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "apparentTemperatureMax",
+        "dot": {
+          "color": "lightgray",
+          "size": 33.3
+        },
+        "segment": {
+          "color": "lightgray",
+          "width": 50.0,
+          "padding": 10.0
         }
       }
     ]
   },
   {
-    "name": "Default",
+    "name": "Kitchen Sink",
     "type": 0,
     "fontSize": 5.0,
     "cloudCoverage": {
@@ -210,7 +294,7 @@
         "segment": {
           "color": "#FF69B4",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
         }
       },
       {
@@ -222,7 +306,7 @@
         "segment": {
           "color": "red",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
         }
       },
       {
@@ -234,7 +318,7 @@
         "segment": {
           "color": "teal",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
         }
       },
       {
@@ -246,7 +330,7 @@
         "segment": {
           "color": "olive",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
         }
       },
       {
@@ -258,7 +342,7 @@
         "segment": {
           "color": "yellow",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
         }
       },
       {
@@ -270,7 +354,7 @@
         "segment": {
           "color": "silver",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
         }
       },
       {
@@ -282,7 +366,7 @@
         "segment": {
           "color": "purple",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
         }
       },
       {
@@ -294,7 +378,7 @@
         "segment": {
           "color": "#FF9900",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
         }
       },
       {
@@ -304,9 +388,9 @@
           "size": 50
         },
         "segment": {
-          "color": "lightgray",
+          "color": "fuchsia",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
         }
       },
       {
@@ -318,7 +402,7 @@
         "segment": {
           "color": "white",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
         }
       },
       {
@@ -330,7 +414,7 @@
         "segment": {
           "color": "lightgray",
           "width": 50.0,
-          "padding": 2.0
+          "padding": 10.0
         }
       }
     ]

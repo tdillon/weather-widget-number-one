@@ -4,7 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -141,55 +143,68 @@ class Drawer {
     private void renderProperty(ThemesClass.Property p) {
         Point point;
 
+        TimeSegment prevSeg = null;
+        Point curPoint, prevPoint;
+        SegmentGeometry s;
+        float dotRadius;
+
         for (TimeSegment curSeg : _pos.timeSegments) {
-            paint.setColor(Color.parseColor(p.dot.color));
             point = curSeg.getPoint(p.name);
             if (point == null) {
                 continue;
             }
-            _cvs.drawCircle(point.x, point.y, p.dot.size / 200 * curSeg.graphBox.getWidth(), paint);
+            paint.setColor(Color.parseColor(p.dot.color));
+            dotRadius = p.dot.size / 200 * curSeg.graphBox.getWidth();
+
+            prevPoint = (prevSeg != null ? prevSeg.getPoint(p.name) : null);  //first time segment has no previous
+            curPoint = curSeg.getPoint(p.name);
+
+            s = new SegmentGeometry(p.segment, dotRadius, prevPoint == null ? null : prevPoint.x, prevPoint == null ? null : prevPoint.y, curPoint.x, curPoint.y);
+
+            _cvs.drawCircle(point.x, point.y, dotRadius, paint);
+
+            //TODO don't draw segment for precip probability when prevSeg was 0%
+            if (prevPoint != null) {//(s.hasSegment()) {
+                //TODO precipitation probability gradient
+                paint.setColor(Color.parseColor(p.segment.color));
+                Path path = new Path();
+
+                double padding = p.segment.padding * dotRadius * 2 / 100;
+                double theta = -Math.atan((prevPoint.y - curPoint.y) / (prevPoint.x - curPoint.x));  //radians
+                double thetaDegree = theta * 180 / Math.PI;  //degrees
+                float x = (float) (padding * Math.cos(theta));
+                float y = (float) (padding * Math.sin(theta));
+                float sweepAngle = p.segment.width * 180 / 100;  //degrees
+                float startAngle = (float) (-thetaDegree - (sweepAngle / 2));  //degrees
+
+                RectF rectF = new RectF(
+                        prevPoint.x - dotRadius + x,
+                        prevPoint.y - dotRadius - y,
+                        prevPoint.x + dotRadius + x,
+                        prevPoint.y + dotRadius - y
+                );
+
+                path.addArc(rectF, startAngle, sweepAngle);
+
+                x = -x;
+                y = -y;
+
+                rectF = new RectF(
+                        curPoint.x - dotRadius + x,
+                        curPoint.y - dotRadius - y,
+                        curPoint.x + dotRadius + x,
+                        curPoint.y + dotRadius - y
+                );
+
+                path.arcTo(rectF, startAngle + 180, sweepAngle);
+                path.close();
+                paint.setColor(Color.parseColor(p.segment.color));
+                _cvs.drawPath(path, paint);
+            }
+
+
+            prevSeg = curSeg;
         }
 
-//        let prevSeg: TimeSegment;
-//
-//        for (let curSeg of this._pos.timeSegments) {
-//
-//            if (!(c.title === 'precipProbability' && curSeg.precipProbability.y === curSeg.graphBox.bottom)) {
-//                let prevProp = (prevSeg ? prevSeg[c.title] : null);  //first time segmetn has no previous
-//                let curProp = curSeg[c.title];
-//
-//                let s = new SegmentGeometry(c, this.theme.globals, (prevSeg ? prevProp.x : null), (prevSeg ? prevProp.y : null), curProp.x, curProp.y);
-//
-//                switch (c.title) {
-//                    case 'moon':
-//                        DotDrawer.moon(this.ctx, curProp.x, curProp.y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), (c.dot.color.global ? this.theme.globals.dot.color : c.dot.color.value), curSeg.moonPhase);
-//                        break;
-//                    case 'windSpeed':
-//                        DotDrawer.wind(this.ctx, curProp.x, curProp.y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), (c.dot.color.global ? this.theme.globals.dot.color.rgba : c.dot.color.value.rgba), curSeg.windBearing);
-//                        break;
-//                    default:
-//                        DotDrawer.simple(this.ctx, curProp.x, curProp.y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), (c.title === 'precipProbability') ? (this.theme.widgetType === WidgetType.Hourly ? curSeg.precipIntensityColor.rgb : curSeg.precipIntensityMaxColor.rgb) : (c.dot.color.global ? this.theme.globals.dot.color.rgba : c.dot.color.value.rgba));
-//                }
-//
-//                //Don't draw segment for precipProbability when prevSeg was 0%.
-//                if ((c.segment.show.global ? this.theme.globals.segment.show : c.segment.show.value) && s.hasSegment && !(c.title === 'precipProbability' && prevSeg.precipProbability.y === prevSeg.graphBox.bottom)) {
-//                    if (c.title === 'precipProbability') {  //gradient
-//                        let gradient = this.ctx.createLinearGradient(prevProp.x, prevProp.y, curProp.x, curProp.y);
-//                        gradient.addColorStop(0, this.theme.widgetType === WidgetType.Hourly ? prevSeg.precipIntensityColor.rgba : prevSeg.precipIntensityMaxColor.rgba);
-//                        gradient.addColorStop(1, this.theme.widgetType === WidgetType.Hourly ? curSeg.precipIntensityColor.rgba : curSeg.precipIntensityMaxColor.rgba);
-//                        this.ctx.fillStyle = gradient;
-//                    } else {
-//                        this.ctx.fillStyle = (c.segment.color.global ? this.theme.globals.segment.color.rgba : c.segment.color.value.rgba);
-//                    }
-//                    this.ctx.beginPath();
-//                    this.ctx.arc(s.start.point.x, s.start.point.y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), s.start.from, s.start.to, false);
-//                    this.ctx.arc(s.end.point.x, s.end.point.y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), s.end.from, s.end.to, false);
-//                    this.ctx.fill();
-//                    this.ctx.closePath();
-//                }
-//            }
-//
-//            prevSeg = curSeg;
-//        }
     }
 }
