@@ -58,7 +58,7 @@ class Positionings {
         maxDotOverhang = 0;
 
         int leftScaleWidth = getMaxTextWidth(getTempScaleTexts());
-        int rightScaleWidth = getMaxTextWidth(getWindSpeedScaleTexts());  //TODO sum getWidth() of all right scales
+        int rightScaleWidth = getMaxTextWidth(getWindSpeedScaleTexts()) + getMaxTextWidth(getPrecipAccumulationScaleTexts());  //TODO sum getWidth() of all right scales
 
         padding = new Box(leftScaleWidth > maxDotOverhang ? 0 : maxDotOverhang - leftScaleWidth, rightScaleWidth > maxDotOverhang ? 0 : maxDotOverhang, maxDotOverhang, timeBarTextHeight > maxDotOverhang ? 0 : maxDotOverhang - timeBarTextHeight);  //TODO get correct paddings
         leftScale = new Box();
@@ -130,7 +130,9 @@ class Positionings {
 
         //TODO get all scales
         getTemperatureScale(); //TODO can getTemperatureScale just create leftScale since it is the only scale in the left? or does that break my scales abstraction?
-        getWindSpeedScale();
+        float rightScaleRightPos = widget.getRight();
+        rightScaleRightPos -= getWindSpeedScale(rightScaleRightPos);
+        rightScaleRightPos -= getPrecipAccumulationScale(rightScaleRightPos);
 
         timeSegments = new ArrayList<>();
 
@@ -195,10 +197,14 @@ class Positionings {
         return scaleTexts;
     }
 
-    private int getTextWidth(String txt) {
-        Rect r = new Rect();
-        paint.getTextBounds(txt, 0, txt.length(), r);
-        return r.width();
+    private List<Integer> getPrecipAccumulationScaleTexts() {
+        List<Integer> scaleTexts = new ArrayList<>();
+
+        for (int i = 1; i <= Math.floor(ranges.precipAccumulation.max); ++i) {
+            scaleTexts.add(i);
+        }
+
+        return scaleTexts;
     }
 
     private int getMaxTextWidth(List<Integer> scaleTexts) {
@@ -251,9 +257,9 @@ class Positionings {
         }
     }
 
-    private void getWindSpeedScale() {
+    private float getWindSpeedScale(float rightPos) {
         if (ranges.windSpeed == null) {
-            return;
+            return 0;
         }
 
         final float pxPerMPH = graph.getHeight() / ranges.windSpeed.max;
@@ -261,7 +267,7 @@ class Positionings {
         float maxTextWidth = getMaxTextWidth(scaleTexts);  // Integer.MIN_VALUE, tempTextWidth;
 
         //TODO right now I'm hardcoding this scale to be the rightmost, all my scale stuff needs re-thought.
-        Scale s = new Scale(ScaleType.WindSpeed, ScalePosition.Right, new Box(widget.getRight() - maxTextWidth, widget.getRight(), graph.getTop(), graph.getBottom()));
+        Scale s = new Scale(ScaleType.WindSpeed, ScalePosition.Right, new Box(rightPos - maxTextWidth, rightPos, graph.getTop(), graph.getBottom()));
 
         for (Integer i : scaleTexts) {
             s.items.add(new ScaleItem(
@@ -271,6 +277,32 @@ class Positionings {
         }
 
         scales.add(s);
+
+        return maxTextWidth;
+    }
+
+    private float getPrecipAccumulationScale(float rightPos) {
+        if (ranges.precipAccumulation == null) {
+            return 0;
+        }
+
+        final float pxPerInch = graph.getHeight() / ranges.precipAccumulation.max;
+        List<Integer> scaleTexts = getPrecipAccumulationScaleTexts();
+        float maxTextWidth = getMaxTextWidth(scaleTexts);
+
+        //TODO right now I'm hardcoding this scale to be the next to rightmost, all my scale stuff needs re-thought.
+        Scale s = new Scale(ScaleType.PrecipAccumulation, ScalePosition.Right, new Box(rightPos - maxTextWidth, rightPos, graph.getTop(), graph.getBottom()));
+
+        for (Integer i : scaleTexts) {
+            s.items.add(new ScaleItem(
+                    i.toString(),
+                    new Point(s.box.getCenter().x, s.box.getTop() + (ranges.precipAccumulation.max - i) * pxPerInch)
+            ));
+        }
+
+        scales.add(s);
+
+        return maxTextWidth;
     }
 
 }

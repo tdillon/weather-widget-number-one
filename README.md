@@ -2,6 +2,7 @@
 
 #2.0.0-alpha.10
 - Wind scale. [#24][24]
+- Precipitation accumulation scale. [#33][33]
 
 #2.0.0-alpha.9
 - Segments. [#19][19]
@@ -69,6 +70,7 @@
 [29]: https://github.com/tdillon/weather-widget-number-one/issues/29
 [30]: https://github.com/tdillon/weather-widget-number-one/issues/30
 [32]: https://github.com/tdillon/weather-widget-number-one/issues/32
+[33]: https://github.com/tdillon/weather-widget-number-one/issues/33
 [34]: https://github.com/tdillon/weather-widget-number-one/issues/34
 [35]: https://github.com/tdillon/weather-widget-number-one/issues/35
 [36]: https://github.com/tdillon/weather-widget-number-one/issues/36

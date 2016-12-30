@@ -17,7 +17,7 @@
         },
         "segment": {
           "color": "white",
-          "width": 50.0,
+          "width": 30.0,
           "padding": 10.0
         }
       },
@@ -29,7 +29,7 @@
         },
         "segment": {
           "color": "white",
-          "width": 50.0,
+          "width": 30.0,
           "padding": 10.0
         }
       },
@@ -41,7 +41,7 @@
         },
         "segment": {
           "color": "green",
-          "width": 50.0,
+          "width": 30.0,
           "padding": 10.0
         }
       },
@@ -53,6 +53,18 @@
         },
         "segment": {
           "color": "#FF9900",
+          "width": 30.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "precipAccumulation",
+        "dot": {
+          "color": "purple",
+          "size": 20
+        },
+        "segment": {
+          "color": "purple",
           "width": 30.0,
           "padding": 10.0
         }
@@ -101,6 +113,18 @@
         },
         "segment": {
           "color": "#FF9900",
+          "width": 30.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "precipAccumulation",
+        "dot": {
+          "color": "purple",
+          "size": 20
+        },
+        "segment": {
+          "color": "purple",
           "width": 30.0,
           "padding": 10.0
         }
