@@ -1,5 +1,8 @@
 [![Build Status](https://travis-ci.org/tdillon/weather-widget-number-one.svg?branch=master)](https://travis-ci.org/tdillon/weather-widget-number-one)
 
+#2.0.0-alpha.10
+- Wind scale. [#24][24]
+
 #2.0.0-alpha.9
 - Segments. [#19][19]
 
@@ -59,6 +62,7 @@
 [19]: https://github.com/tdillon/weather-widget-number-one/issues/19
 [22]: https://github.com/tdillon/weather-widget-number-one/issues/22
 [23]: https://github.com/tdillon/weather-widget-number-one/issues/23
+[24]: https://github.com/tdillon/weather-widget-number-one/issues/24
 [26]: https://github.com/tdillon/weather-widget-number-one/issues/26
 [27]: https://github.com/tdillon/weather-widget-number-one/issues/27
 [28]: https://github.com/tdillon/weather-widget-number-one/issues/28
