@@ -2,10 +2,13 @@ package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class Positionings {
     ThemesClass theme;
@@ -58,7 +61,9 @@ class Positionings {
         maxDotOverhang = 0;
 
         int leftScaleWidth = getMaxTextWidth(getTempScaleTexts());
-        int rightScaleWidth = getMaxTextWidth(getWindSpeedScaleTexts()) + getMaxTextWidth(getPrecipAccumulationScaleTexts());  //TODO sum getWidth() of all right scales
+        int rightScaleWidth = getMaxTextWidth(getWindSpeedScaleTexts()) +
+                getMaxTextWidth(getPrecipAccumulationScaleTexts()) +
+                getMaxTextWidth(getPressureScaleTexts());  //TODO sum getWidth() of all right scales
 
         padding = new Box(leftScaleWidth > maxDotOverhang ? 0 : maxDotOverhang - leftScaleWidth, rightScaleWidth > maxDotOverhang ? 0 : maxDotOverhang, maxDotOverhang, timeBarTextHeight > maxDotOverhang ? 0 : maxDotOverhang - timeBarTextHeight);  //TODO get correct paddings
         leftScale = new Box();
@@ -133,6 +138,7 @@ class Positionings {
         float rightScaleRightPos = widget.getRight();
         rightScaleRightPos -= getWindSpeedScale(rightScaleRightPos);
         rightScaleRightPos -= getPrecipAccumulationScale(rightScaleRightPos);
+        rightScaleRightPos -= getPressureScale(rightScaleRightPos);
 
         timeSegments = new ArrayList<>();
 
@@ -176,43 +182,66 @@ class Positionings {
         }
     }
 
-    private List<Integer> getTempScaleTexts() {
-        List<Integer> scaleTexts = new ArrayList<>();
+    private Map<Double, String> getTempScaleTexts() {
+        Map<Double, String> scaleTexts = new HashMap<>();
 
         //TODO see if this math is correct java math !== javascript math
         for (int i = (int) Math.ceil(ranges.temperature.min / 5d) * 5; i <= Math.floor(ranges.temperature.max / 5d) * 5; i += 5) {
-            scaleTexts.add(i);
+            scaleTexts.put((double) i, Integer.toString(i));
         }
 
         return scaleTexts;
     }
 
-    private List<Integer> getWindSpeedScaleTexts() {
-        List<Integer> scaleTexts = new ArrayList<>();
+    private Map<Double, String> getWindSpeedScaleTexts() {
+        Map<Double, String> scaleTexts = new HashMap<>();
 
         for (int i = 1; i <= Math.floor(ranges.windSpeed.max); ++i) {
-            scaleTexts.add(i);
+            scaleTexts.put((double) i, Integer.toString(i));
         }
 
         return scaleTexts;
     }
 
-    private List<Integer> getPrecipAccumulationScaleTexts() {
-        List<Integer> scaleTexts = new ArrayList<>();
+    private Map<Double, String> getPrecipAccumulationScaleTexts() {
+        Map<Double, String> scaleTexts = new HashMap<>();
 
         for (int i = 1; i <= Math.floor(ranges.precipAccumulation.max); ++i) {
-            scaleTexts.add(i);
+            scaleTexts.put((double) i, Integer.toString(i));
         }
 
         return scaleTexts;
     }
 
-    private int getMaxTextWidth(List<Integer> scaleTexts) {
+    private Map<Double, String> getPressureScaleTexts() {
+        Map<Double, String> scaleTexts = new HashMap<>();
+
+        final double mbarPERinhg = 1000.0 / 100000.0 * 101325.0 / 760.0 * 25.4;  //mb -> bar -> pascal -> atm -> torr (inches of mm) -> inches of hg
+
+        Ranges.Range p = ranges.pressure;
+
+        for (double hiBand = 30.0, lowBand = 29.9; p.max > hiBand * mbarPERinhg && p.min < lowBand * mbarPERinhg; hiBand += .1, lowBand -= .1) {
+            if (hiBand % 1 > 0) { //non-whole number
+                scaleTexts.put(hiBand, "-");
+            } else {  // == 0
+                scaleTexts.put(hiBand, Integer.toString((int) hiBand));
+            }
+            if (lowBand % 1 > 0) { //non-whole number
+                scaleTexts.put(lowBand, "-");
+            } else {  // == 0
+                scaleTexts.put(lowBand, Integer.toString((int) lowBand));
+            }
+        }
+
+        return scaleTexts;
+    }
+
+    private int getMaxTextWidth(Map<Double, String> scaleTexts) {
         int maxTextWidth = 0;
         Rect r = new Rect();
 
-        for (Integer i : scaleTexts) {
-            paint.getTextBounds(i.toString(), 0, i.toString().length(), r);
+        for (String txt : scaleTexts.values()) {
+            paint.getTextBounds(txt, 0, txt.length(), r);
             if (r.width() > maxTextWidth) {
                 maxTextWidth = r.width();
             }
@@ -222,39 +251,23 @@ class Positionings {
     }
 
     private void getTemperatureScale() {
-        if (ranges.temperature != null) {
-            float pxPerDeg = (widget.getBottom() - Math.max(timeBarTextHeight, padding.getBottom())) / (ranges.temperature.max - ranges.temperature.min);
-
-            List<Integer> scaleTexts = new ArrayList<>();
-            int maxTextWidth = Integer.MIN_VALUE;
-            Ranges.Range t = ranges.temperature;
-            Rect r = new Rect();
-
-            //TODO see if this math is correct java math !== javascript math
-            for (int i = (int) Math.ceil(t.min / 5d) * 5; i <= Math.floor(t.max / 5d) * 5; i += 5) {
-                scaleTexts.add(i);
-                paint.getTextBounds(Integer.toString(i), 0, Integer.toString(i).length(), r);
-                if (r.width() > maxTextWidth) {
-                    maxTextWidth = r.width();
-                }
-            }
-
-            Scale x = new Scale(
-                    ScaleType.Temperature,
-                    ScalePosition.Left,
-                    new Box(
-                            0,
-                            maxTextWidth,
-                            padding.getTop(),
-                            widget.getHeight() - Math.max(padding.getBottom(), theme.fontSize)
-                    ));
-
-            scales.add(x);
-
-            for (Integer i : scaleTexts) {
-                x.items.add(new ScaleItem(i.toString(), new Point(x.box.getCenter().x, x.box.getTop() + (ranges.temperature.max - i) * pxPerDeg)));
-            }
+        if (ranges.temperature == null) {
+            return;
         }
+
+        final float pxPerDeg = (widget.getBottom() - Math.max(timeBarTextHeight, padding.getBottom())) / (ranges.temperature.max - ranges.temperature.min);
+        Map<Double, String> scaleTexts = getTempScaleTexts();
+        float maxTextWidth = getMaxTextWidth(scaleTexts);
+        Ranges.Range t = ranges.temperature;
+        Rect r = new Rect();
+
+        Scale s = new Scale(ScaleType.Temperature, ScalePosition.Left, new Box(0, maxTextWidth, graph.getTop(), graph.getBottom()));
+
+        for (double key : scaleTexts.keySet()) {
+            s.items.add(new ScaleItem(scaleTexts.get(key), new Point(s.box.getCenter().x, s.box.getTop() + (ranges.temperature.max - (float) key) * pxPerDeg)));
+        }
+
+        scales.add(s);
     }
 
     private float getWindSpeedScale(float rightPos) {
@@ -263,17 +276,14 @@ class Positionings {
         }
 
         final float pxPerMPH = graph.getHeight() / ranges.windSpeed.max;
-        List<Integer> scaleTexts = getWindSpeedScaleTexts();  // new ArrayList<>();
+        Map<Double, String> scaleTexts = getWindSpeedScaleTexts();  // new ArrayList<>();
         float maxTextWidth = getMaxTextWidth(scaleTexts);  // Integer.MIN_VALUE, tempTextWidth;
 
         //TODO right now I'm hardcoding this scale to be the rightmost, all my scale stuff needs re-thought.
         Scale s = new Scale(ScaleType.WindSpeed, ScalePosition.Right, new Box(rightPos - maxTextWidth, rightPos, graph.getTop(), graph.getBottom()));
 
-        for (Integer i : scaleTexts) {
-            s.items.add(new ScaleItem(
-                    i.toString(),
-                    new Point(s.box.getCenter().x, s.box.getTop() + (ranges.windSpeed.max - i) * pxPerMPH)
-            ));
+        for (double i : scaleTexts.keySet()) {
+            s.items.add(new ScaleItem(scaleTexts.get(i), new Point(s.box.getCenter().x, s.box.getTop() + (ranges.windSpeed.max - (float) i) * pxPerMPH)));
         }
 
         scales.add(s);
@@ -287,17 +297,40 @@ class Positionings {
         }
 
         final float pxPerInch = graph.getHeight() / ranges.precipAccumulation.max;
-        List<Integer> scaleTexts = getPrecipAccumulationScaleTexts();
+        Map<Double, String> scaleTexts = getPrecipAccumulationScaleTexts();
         float maxTextWidth = getMaxTextWidth(scaleTexts);
 
         //TODO right now I'm hardcoding this scale to be the next to rightmost, all my scale stuff needs re-thought.
         Scale s = new Scale(ScaleType.PrecipAccumulation, ScalePosition.Right, new Box(rightPos - maxTextWidth, rightPos, graph.getTop(), graph.getBottom()));
 
-        for (Integer i : scaleTexts) {
+        for (double i : scaleTexts.keySet()) {
             s.items.add(new ScaleItem(
-                    i.toString(),
-                    new Point(s.box.getCenter().x, s.box.getTop() + (ranges.precipAccumulation.max - i) * pxPerInch)
+                    Double.toString(i),
+                    new Point(s.box.getCenter().x, s.box.getTop() + (ranges.precipAccumulation.max - (float) i) * pxPerInch)
             ));
+        }
+
+        scales.add(s);
+
+        return maxTextWidth;
+    }
+
+    private float getPressureScale(float rightPos) {
+        if (ranges.pressure == null) {
+            return 0;
+        }
+
+        final float pxPerMB = graph.getHeight() / (ranges.pressure.max - ranges.pressure.min);
+        Map<Double, String> scaleTexts = getPressureScaleTexts();
+        float maxTextWidth = getMaxTextWidth(scaleTexts);
+        final float ATM = 1013.25f;  //mbar
+        final float mbarPERinhg = (float) (1000.0 / 100000.0 * 101325.0 / 760.0 * 25.4);  //mb -> bar -> pascal -> atm -> torr (inches of mm) -> inches of hg
+
+        //TODO right now I'm hardcoding this scale to be the next to rightmost, all my scale stuff needs re-thought.
+        Scale s = new Scale(ScaleType.Pressure, ScalePosition.Right, new Box(rightPos - maxTextWidth, rightPos, graph.getTop(), graph.getBottom()));
+
+        for (double key : scaleTexts.keySet()) {
+            s.items.add(new ScaleItem(scaleTexts.get(key), new Point(s.box.getCenter().x, s.box.getTop() + (ranges.pressure.max - (float) key * mbarPERinhg) * pxPerMB)));
         }
 
         scales.add(s);
