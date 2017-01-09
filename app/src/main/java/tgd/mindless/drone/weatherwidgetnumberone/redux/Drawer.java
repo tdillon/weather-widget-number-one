@@ -68,7 +68,6 @@ class Drawer {
         _cvs.drawRect(_pos.widget.getLeft(), _pos.widget.getTop(), _pos.widget.getRight(), _pos.widget.getBottom(), paint);
     }
 
-
     private void renderGraphBackground() {
         paint.setColor(Color.TRANSPARENT);  //TODO pull from theme
 
@@ -116,7 +115,6 @@ class Drawer {
         }
     }
 
-
     private void renderTimeText() {
         paint.setColor(Color.WHITE);  //TODO set colors per theme
         paint.setTextAlign(Paint.Align.CENTER);
@@ -125,7 +123,6 @@ class Drawer {
             _cvs.drawText(ts.timeBarDisplay, ts.timeBarBox.getCenter().x, ts.timeBarBox.getBottom(), paint);
         }
     }
-
 
     private void renderScales() {
         paint.setColor(Color.WHITE);
@@ -161,7 +158,18 @@ class Drawer {
 
             s = new SegmentGeometry(p.segment, dotRadius, prevPoint == null ? null : prevPoint.x, prevPoint == null ? null : prevPoint.y, curPoint.x, curPoint.y);
 
-            _cvs.drawCircle(point.x, point.y, dotRadius, paint);
+            switch (p.name) {
+                case "windSpeed":
+                    paint.setColor(Color.BLACK);
+                    _cvs.drawCircle(point.x, point.y, dotRadius, paint);
+                    paint.setColor(Color.parseColor(p.dot.color));
+                    renderWindDot(point, dotRadius, curSeg.getWindBearing());
+                    //DotDrawer.wind(this.ctx, curProp.x, curProp.y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), (c.dot.color.global ? this.theme.globals.dot.color.rgba : c.dot.color.value.rgba), curSeg.windBearing);
+                    break;
+                default:
+                    _cvs.drawCircle(point.x, point.y, dotRadius, paint);
+                    break;
+            }
 
             //TODO don't draw segment for precip probability when prevSeg was 0%
             if (prevPoint != null) {//(s.hasSegment()) {
@@ -206,5 +214,58 @@ class Drawer {
             prevSeg = curSeg;
         }
 
+    }
+
+    private void renderWindDot(Point point, float radius, Integer bearing) {
+        float pointAngleDeg = (bearing + 180) % 360;
+        float pointAngle = (float) (pointAngleDeg + Math.PI / 180);
+        int tailAngle = 60;
+        float tailPercent = .6f;
+        float secondAngle = (float) (((pointAngleDeg + 90 + tailAngle) * Math.PI / 180) % (2 * Math.PI));
+        float thirdAngle = (float) (((pointAngleDeg + 270 - tailAngle) * Math.PI / 180) % (2 * Math.PI));
+        Point[] points = new Point[]{
+                new Point(point.x + radius * (float) Math.sin(pointAngle), point.y - radius * (float) Math.cos(pointAngle))                ,
+                new Point(point.x + radius * (float) Math.sin(secondAngle), point.y - radius * (float) Math.cos(secondAngle)),
+                new Point(point.x + (radius * tailPercent) * (float) Math.sin(bearing * Math.PI / 180), point.y - (radius * tailPercent) * (float) Math.cos(bearing * Math.PI / 180)),
+                new Point(point.x + radius * (float) Math.sin(thirdAngle), point.y - radius * (float) Math.cos(thirdAngle))
+        };
+
+        Path path = new Path();
+
+        path.moveTo(points[0].x, points[0].y);
+
+        for (Point p : points) {
+            path.lineTo(p.x, p.y);
+        }
+
+        path.close();
+        _cvs.drawPath(path, paint);
+
+        /*
+  static wind(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, color: string, windBearing: number) {
+    let pointAngleDeg = (windBearing + 180) % 360;
+    let pointAngle = pointAngleDeg * Math.PI / 180;
+    let tailAngle = 60;
+    let tailPercent = .6;
+    let secondAngle = ((pointAngleDeg + 90 + tailAngle) * Math.PI / 180) % (2 * Math.PI);
+    let thirdAngle = ((pointAngleDeg + 270 - tailAngle) * Math.PI / 180) % (2 * Math.PI);
+    let points = [
+      { x: x + r * Math.sin(pointAngle), y: y - r * Math.cos(pointAngle) },
+      { x: x + r * Math.sin(secondAngle), y: y - r * Math.cos(secondAngle) },
+      { x: x + (r * tailPercent) * Math.sin(windBearing * Math.PI / 180), y: y - (r * tailPercent) * Math.cos(windBearing * Math.PI / 180) },
+      { x: x + r * Math.sin(thirdAngle), y: y - r * Math.cos(thirdAngle) }
+    ];
+
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let p of points) {
+      ctx.lineTo(p.x, p.y);
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
+         */
     }
 }

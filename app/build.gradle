@@ -8,8 +8,8 @@ android {
         applicationId "tgd.mindless.drone.weatherwidgetnumberone.redux"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 14
-        versionName "2.0.0-alpha.10"
+        versionCode 15
+        versionName "2.0.0-alpha.11"
     }
     buildTypes {
         release {

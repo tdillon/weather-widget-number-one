@@ -27,6 +27,7 @@ class TimeSegment {
     private float unitsPerSecond;
     private float unitsPerDegree;
     private float _cloudCover;
+    private Integer _windBearing;
 
 
     TimeSegment(ThemesClass theme, Weather.DataPoint data, Box graphBox, Box timeBarBox, Ranges ranges) {
@@ -46,6 +47,7 @@ class TimeSegment {
         from = data.time;
         to = from + secondsPerSegment;
         _cloudCover = data.cloudCover;
+        _windBearing = data.windBearing;
         //this.windBearing = _data.windBearing;
         //this.moonPhase = _data.moonPhase;
 
@@ -208,4 +210,6 @@ class TimeSegment {
     float getCloudCover() {
         return _cloudCover;
     }
+
+    Integer getWindBearing() { return _windBearing; }
 }
