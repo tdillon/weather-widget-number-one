@@ -160,11 +160,7 @@ class Drawer {
 
             switch (p.name) {
                 case "windSpeed":
-                    paint.setColor(Color.BLACK);
-                    _cvs.drawCircle(point.x, point.y, dotRadius, paint);
-                    paint.setColor(Color.parseColor(p.dot.color));
                     renderWindDot(point, dotRadius, curSeg.getWindBearing());
-                    //DotDrawer.wind(this.ctx, curProp.x, curProp.y, (c.dot.radius.global ? this.theme.globals.dot.radius : c.dot.radius.value), (c.dot.color.global ? this.theme.globals.dot.color.rgba : c.dot.color.value.rgba), curSeg.windBearing);
                     break;
                 default:
                     _cvs.drawCircle(point.x, point.y, dotRadius, paint);
@@ -172,7 +168,7 @@ class Drawer {
             }
 
             //TODO don't draw segment for precip probability when prevSeg was 0%
-            if (prevPoint != null) {//(s.hasSegment()) {
+            if (p.segment != null && prevPoint != null) {//(s.hasSegment()) {
                 //TODO precipitation probability gradient
                 paint.setColor(Color.parseColor(p.segment.color));
                 Path path = new Path();
@@ -217,16 +213,16 @@ class Drawer {
     }
 
     private void renderWindDot(Point point, float radius, Integer bearing) {
-        float pointAngleDeg = (bearing + 180) % 360;
-        float pointAngle = (float) (pointAngleDeg + Math.PI / 180);
-        int tailAngle = 60;
-        float tailPercent = .6f;
-        float secondAngle = (float) (((pointAngleDeg + 90 + tailAngle) * Math.PI / 180) % (2 * Math.PI));
-        float thirdAngle = (float) (((pointAngleDeg + 270 - tailAngle) * Math.PI / 180) % (2 * Math.PI));
+        final float pointAngleDeg = (bearing + 180) % 360;
+        final float pointAngle = (float) (pointAngleDeg * Math.PI / 180.0);
+        final int tailAngle = 60;
+        final float tailPercent = .6f;
+        final float secondAngle = (float) (((pointAngleDeg + 90 + tailAngle) * Math.PI / 180.0) % (2.0 * Math.PI));
+        final float thirdAngle = (float) (((pointAngleDeg + 270 - tailAngle) * Math.PI / 180.0) % (2.0 * Math.PI));
         Point[] points = new Point[]{
-                new Point(point.x + radius * (float) Math.sin(pointAngle), point.y - radius * (float) Math.cos(pointAngle))                ,
+                new Point(point.x + radius * (float) Math.sin(pointAngle), point.y - radius * (float) Math.cos(pointAngle)),
                 new Point(point.x + radius * (float) Math.sin(secondAngle), point.y - radius * (float) Math.cos(secondAngle)),
-                new Point(point.x + (radius * tailPercent) * (float) Math.sin(bearing * Math.PI / 180), point.y - (radius * tailPercent) * (float) Math.cos(bearing * Math.PI / 180)),
+                new Point(point.x + (radius * tailPercent) * (float) Math.sin(bearing * Math.PI / 180.0), point.y - (radius * tailPercent) * (float) Math.cos(bearing * Math.PI / 180.0)),
                 new Point(point.x + radius * (float) Math.sin(thirdAngle), point.y - radius * (float) Math.cos(thirdAngle))
         };
 
@@ -240,32 +236,5 @@ class Drawer {
 
         path.close();
         _cvs.drawPath(path, paint);
-
-        /*
-  static wind(ctx: CanvasRenderingContext2D, x: number, y: number, r: number, color: string, windBearing: number) {
-    let pointAngleDeg = (windBearing + 180) % 360;
-    let pointAngle = pointAngleDeg * Math.PI / 180;
-    let tailAngle = 60;
-    let tailPercent = .6;
-    let secondAngle = ((pointAngleDeg + 90 + tailAngle) * Math.PI / 180) % (2 * Math.PI);
-    let thirdAngle = ((pointAngleDeg + 270 - tailAngle) * Math.PI / 180) % (2 * Math.PI);
-    let points = [
-      { x: x + r * Math.sin(pointAngle), y: y - r * Math.cos(pointAngle) },
-      { x: x + r * Math.sin(secondAngle), y: y - r * Math.cos(secondAngle) },
-      { x: x + (r * tailPercent) * Math.sin(windBearing * Math.PI / 180), y: y - (r * tailPercent) * Math.cos(windBearing * Math.PI / 180) },
-      { x: x + r * Math.sin(thirdAngle), y: y - r * Math.cos(thirdAngle) }
-    ];
-
-    ctx.beginPath();
-    ctx.fillStyle = color;
-    ctx.moveTo(points[0].x, points[0].y);
-    for (let p of points) {
-      ctx.lineTo(p.x, p.y);
-    }
-    ctx.closePath();
-    ctx.fill();
-  }
-
-         */
     }
 }
