@@ -68,7 +68,6 @@ class Drawer {
         _cvs.drawRect(_pos.widget.getLeft(), _pos.widget.getTop(), _pos.widget.getRight(), _pos.widget.getBottom(), paint);
     }
 
-
     private void renderGraphBackground() {
         paint.setColor(Color.TRANSPARENT);  //TODO pull from theme
 
@@ -116,7 +115,6 @@ class Drawer {
         }
     }
 
-
     private void renderTimeText() {
         paint.setColor(Color.WHITE);  //TODO set colors per theme
         paint.setTextAlign(Paint.Align.CENTER);
@@ -125,7 +123,6 @@ class Drawer {
             _cvs.drawText(ts.timeBarDisplay, ts.timeBarBox.getCenter().x, ts.timeBarBox.getBottom(), paint);
         }
     }
-
 
     private void renderScales() {
         paint.setColor(Color.WHITE);
@@ -161,10 +158,17 @@ class Drawer {
 
             s = new SegmentGeometry(p.segment, dotRadius, prevPoint == null ? null : prevPoint.x, prevPoint == null ? null : prevPoint.y, curPoint.x, curPoint.y);
 
-            _cvs.drawCircle(point.x, point.y, dotRadius, paint);
+            switch (p.name) {
+                case "windSpeed":
+                    renderWindDot(point, dotRadius, curSeg.getWindBearing());
+                    break;
+                default:
+                    _cvs.drawCircle(point.x, point.y, dotRadius, paint);
+                    break;
+            }
 
             //TODO don't draw segment for precip probability when prevSeg was 0%
-            if (prevPoint != null) {//(s.hasSegment()) {
+            if (p.segment != null && prevPoint != null) {//(s.hasSegment()) {
                 //TODO precipitation probability gradient
                 paint.setColor(Color.parseColor(p.segment.color));
                 Path path = new Path();
@@ -206,5 +210,31 @@ class Drawer {
             prevSeg = curSeg;
         }
 
+    }
+
+    private void renderWindDot(Point point, float radius, Integer bearing) {
+        final float pointAngleDeg = (bearing + 180) % 360;
+        final float pointAngle = (float) (pointAngleDeg * Math.PI / 180.0);
+        final int tailAngle = 60;
+        final float tailPercent = .6f;
+        final float secondAngle = (float) (((pointAngleDeg + 90 + tailAngle) * Math.PI / 180.0) % (2.0 * Math.PI));
+        final float thirdAngle = (float) (((pointAngleDeg + 270 - tailAngle) * Math.PI / 180.0) % (2.0 * Math.PI));
+        Point[] points = new Point[]{
+                new Point(point.x + radius * (float) Math.sin(pointAngle), point.y - radius * (float) Math.cos(pointAngle)),
+                new Point(point.x + radius * (float) Math.sin(secondAngle), point.y - radius * (float) Math.cos(secondAngle)),
+                new Point(point.x + (radius * tailPercent) * (float) Math.sin(bearing * Math.PI / 180.0), point.y - (radius * tailPercent) * (float) Math.cos(bearing * Math.PI / 180.0)),
+                new Point(point.x + radius * (float) Math.sin(thirdAngle), point.y - radius * (float) Math.cos(thirdAngle))
+        };
+
+        Path path = new Path();
+
+        path.moveTo(points[0].x, points[0].y);
+
+        for (Point p : points) {
+            path.lineTo(p.x, p.y);
+        }
+
+        path.close();
+        _cvs.drawPath(path, paint);
     }
 }

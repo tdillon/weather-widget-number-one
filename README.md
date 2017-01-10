@@ -1,5 +1,8 @@
 [![Build Status](https://travis-ci.org/tdillon/weather-widget-number-one.svg?branch=master)](https://travis-ci.org/tdillon/weather-widget-number-one)
 
+#2.0.0-alpha.11
+- Wind dot. [#20][20]
+
 #2.0.0-alpha.10
 - Wind scale. [#24][24]
 - Precipitation accumulation scale. [#33][33]
@@ -62,6 +65,7 @@
 [17]: https://github.com/tdillon/weather-widget-number-one/issues/17
 [18]: https://github.com/tdillon/weather-widget-number-one/issues/18
 [19]: https://github.com/tdillon/weather-widget-number-one/issues/19
+[20]: https://github.com/tdillon/weather-widget-number-one/issues/20
 [22]: https://github.com/tdillon/weather-widget-number-one/issues/22
 [23]: https://github.com/tdillon/weather-widget-number-one/issues/23
 [24]: https://github.com/tdillon/weather-widget-number-one/issues/24

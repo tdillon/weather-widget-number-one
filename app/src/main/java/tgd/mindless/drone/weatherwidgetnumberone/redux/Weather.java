@@ -39,6 +39,7 @@ class Weather {
         float apparentTemperatureMax;
         long apparentTemperatureMaxTime;
         float windSpeed;
+        Integer windBearing;
         float visibility;
         float ozone;
         float moonPhase;
