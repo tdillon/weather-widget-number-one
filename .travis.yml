@@ -1,6 +1,7 @@
 language: android
+sudo: false
 jdk:
-- oraclejdk8
+  - oraclejdk8
 android:
   components:
   - platform-tools
@@ -23,4 +24,10 @@ addons:
       secure: DdOLfk3uefxZvS3xkl3WYaJw1zIeSAxrhOu5kAoyBGYOr2m1/kIfQV5Ai3hZeuYXTqmQA8NF0bZchQgUwpR/jvA/Jw/sKCbhG0TesmKXCZbFaswVYkvi9Tjw8wqVYWPzGIIvSpK12QYSsAdzxNrnxkwqOpIZrqzJKK7abB1tJ09HiKVv5GkV54kCi0bZXcc6raWjLLGSh4ovRCHJv/Se0+6QAQQ1oDjFHqkohwkmaftujyCmR47VsZR1wLHyms/514dOKMLqbAWh5s5NRpL3eMdEuSg7cOZnZwnr2DxF+OnRhUaFUwEcq9FCETC8RYfs9CNOQs2VEkqWQvXLCvOKL3MDcVF14e/4Ouee7Z3YQlo5vpK8QzU+/cpFHXQmNEg7PxkQmoCEeVCwSQrJrzOfjvOZdfVB4ghuZC1OuNWfcIAtZ8Z/u4HFMmfMnRlJCrCAjL3N81a0AYyOoKFAzu7Kq3YBjD1ElwvqY7MEcXqFSXBeV7kknMFYX3Is6ehTWcO9YDHyCCVpBrK6bGTeJ8SgsIz+ROwOFCl/mFPPQzU7L8mYiQ66YannQEXXDPN7SeqiFwqI/6IRu53+z+XmZj6BQVGLmXnCUb5KBSpF6Rh7BAdTZecqqfYMDvtcM3oPuyl0Tjp1f5Elq2SqPEG0bv28XEnmlogYtRkHZUZlNrjjijA=
 script:
   - "./build.sh"
-  - sonar-scanner
+  - ./gradlew sonarqube
+cache:
+  directories:
+    - '$HOME/.m2/repository'
+    - '$HOME/.sonar/cache'
+    - '$HOME/.gradle'
+    - '.gradle'
