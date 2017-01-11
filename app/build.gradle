@@ -27,11 +27,15 @@ android {
 
 sonarqube {
     properties {
-        property "sonar.projectKey", "weather-widget-number-one:app"
+        property "sonar.projectKey", "weather-widget-number-one"
         property "sonar.projectName", "Weather Widget Number One"
         property "sonar.projectDescription", "The best weather widget, 48 hour and 8 day forecast in a beautiful widget."
         property "sonar.projectVersion", "${appVersionName}"
         property "sonar.language", "java"
+        property "sonar.links.homepage", "https://play.google.com/store/apps/details?id=tgd.mindless.drone.weatherwidgetnumberone.redux"
+        property "sonar.links.ci", "https://travis-ci.org/tdillon/weather-widget-number-one"
+        property "sonar.links.issue", "https://github.com/tdillon/weather-widget-number-one/issues"
+        property "sonar.links.scm", "https://github.com/tdillon/weather-widget-number-one"
     }
 }
 
