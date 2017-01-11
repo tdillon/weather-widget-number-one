@@ -39,30 +39,4 @@ public class WidgetConfigPreferences {
     public static final String DAYLIGHT_COLOR = "pref_daylight_color";
     public static final String TEMP_FONT_COLOR = "pref_temp_font_color";
     public static final String TIME_FONT_COLOR = "pref_time_font_color";
-
-
-    public static void writeToFile(String className, String method, String msg) {
-        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "WeatherWidgetNumberOne.log");
-            if (!file.exists()) {
-                try {
-                    file.createNewFile();
-                } catch (Exception e) {
-                }
-            }
-            if (file.canWrite()) {
-                BufferedWriter buf = null;
-                try {
-                    buf = new BufferedWriter(new FileWriter(file, true));
-                    buf.append(DateFormat.format("yyyy-MM-dd HH:mm:ss", new Date()) + " " + className + "." + method + " " + msg + '\n');
-                } catch (Exception e) {
-                } finally {
-                    try {
-                        buf.close();
-                    } catch (Exception e) {
-                    }
-                }
-            }
-        }
-    }
 }

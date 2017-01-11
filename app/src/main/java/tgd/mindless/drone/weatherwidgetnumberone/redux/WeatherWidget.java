@@ -62,7 +62,7 @@ public class WeatherWidget extends AppWidgetProvider {
 
         ThemesClass[] themes = ThemeDAO.getThemes(context);
         SharedPreferences sharedPref = context.getSharedPreferences(WidgetConfigPreferences.getSharedPreferenceName(appWidgetId), Context.MODE_PRIVATE);
-        int themePref = Integer.valueOf(sharedPref.getString(WeatherWidgetConfigureFragment.KEY_PREF_THEME, "0"));  //TODO what should i do if pref value doesn't exist? for now default to 0
+        int themePref = Integer.parseInt(sharedPref.getString(WeatherWidgetConfigureFragment.KEY_PREF_THEME, "0"));  //TODO what should i do if pref value doesn't exist? for now default to 0
         ThemesClass theme = themes[themePref];
         Log.i("widgetID:themePref", String.valueOf(appWidgetId) + ":" + String.valueOf(themePref));
 
