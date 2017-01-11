@@ -31,6 +31,7 @@ sonarqube {
         property "sonar.projectName", "Weather Widget Number One"
         property "sonar.projectDescription", "The best weather widget, 48 hour and 8 day forecast in a beautiful widget."
         property "sonar.projectVersion", "${appVersionName}"
+        property "sonar.language", "java"
     }
 }
 
