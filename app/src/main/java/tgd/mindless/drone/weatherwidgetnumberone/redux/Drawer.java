@@ -12,6 +12,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import java.util.List;
+import java.util.Objects;
 
 class Drawer {
     private Bitmap _bmp;
@@ -163,7 +164,14 @@ class Drawer {
                     renderWindDot(point, dotRadius, curSeg.getWindBearing());
                     break;
                 default:
-                    _cvs.drawCircle(point.x, point.y, dotRadius, paint);
+                    if (p.dot.type == ThemesClass.DotType.RING) {
+                        paint.setStyle(Paint.Style.STROKE);
+                        paint.setStrokeWidth(dotRadius * (p.dot.ringSize == null ? 50 : p.dot.ringSize) / 100f);  //TODO get defaults from somewhere
+                        _cvs.drawCircle(point.x, point.y, dotRadius - paint.getStrokeWidth() / 2, paint);
+                        paint.setStyle(Paint.Style.FILL);
+                    } else {
+                        _cvs.drawCircle(point.x, point.y, dotRadius, paint);
+                    }
                     break;
             }
 

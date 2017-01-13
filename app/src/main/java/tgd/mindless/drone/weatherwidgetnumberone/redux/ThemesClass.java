@@ -31,6 +31,13 @@ class ThemesClass {
         }
     }
 
+    enum DotType {
+        @SerializedName("0")
+        SOLID,
+        @SerializedName("1")
+        RING
+    }
+
     enum CloudCoverageLocation {
         @SerializedName("0")
         GRAPH,
@@ -49,6 +56,22 @@ class ThemesClass {
     class DotProperties {
         float size;
         String color;
+        DotType type;  //optional: default is DotType.SOLID
+        /**
+         * OPTIONAL
+         *
+         * Only needed if type == DotType.RING
+         *
+         * ringSize is the percentage of the dot's radius that is visible.
+         * - 100 would give a solid dot
+         * - 0 would give a transparent dot
+         * - 50 would give a dot where the
+         *      outer 50% of the radius was solid while the
+         *      inner 50% of the radius is transparent
+         *
+         * TODO should i give/expect a default value if ommitted?
+         */
+        Float ringSize;  //optional: only needed if type == DotType.RING
 
         DotProperties() {
         }
