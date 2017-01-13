@@ -5,6 +5,7 @@
 #2.0.0-alpha.11
 - Wind dot. [#20][20]
 - SonarQube. [#85][85]
+- Dot ring. [#50][50]
 
 #2.0.0-alpha.10
 - Wind scale. [#24][24]
@@ -90,6 +91,7 @@
 [42]: https://github.com/tdillon/weather-widget-number-one/issues/42
 [43]: https://github.com/tdillon/weather-widget-number-one/issues/43
 [45]: https://github.com/tdillon/weather-widget-number-one/issues/45
+[50]: https://github.com/tdillon/weather-widget-number-one/issues/50
 [54]: https://github.com/tdillon/weather-widget-number-one/issues/54
 [63]: https://github.com/tdillon/weather-widget-number-one/issues/63
 [64]: https://github.com/tdillon/weather-widget-number-one/issues/64

@@ -1,3 +1,4 @@
 2.0.0-alpha.11
 Wind dot. #20
 SonarQube. #85
+Dot ring. #50

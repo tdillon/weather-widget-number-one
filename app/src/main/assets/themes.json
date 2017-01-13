@@ -13,7 +13,8 @@
         "name": "temperatureMax",
         "dot": {
           "color": "white",
-          "size": 50
+          "size": 50,
+          "type": 1
         },
         "segment": {
           "color": "white",
@@ -25,12 +26,14 @@
         "name": "temperatureMin",
         "dot": {
           "color": "white",
-          "size": 50
+          "size": 50,
+          "type": 1,
+          "ringSize": 25
         },
         "segment": {
           "color": "white",
-          "width": 30.0,
-          "padding": 10.0
+          "width": 20.0,
+          "padding": 5.0
         }
       },
       {
