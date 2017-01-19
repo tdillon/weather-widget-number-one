@@ -100,14 +100,14 @@ class Drawer {
 
             for (TimeSegment ts : _pos.timeSegments) {
                 paint.setColor(Color.parseColor(_theme.cloudCoverage.day));
-                paint.setAlpha(Math.round(255 * ts.getCloudCover()));  //[0-255]
+                paint.setAlpha(Math.round(255 * (1 - ts.getCloudCover())));  //[0-255]
                 location = (x == ThemesClass.CloudCoverageLocation.TIME_BAR ? ts.timeBarDaytimes : ts.graphDaytimes);
                 for (Box b : location) {
                     _cvs.drawRect(b.getLeft(), b.getTop(), b.getRight(), b.getBottom(), paint);
                 }
 
                 paint.setColor(Color.parseColor(_theme.cloudCoverage.night));
-                paint.setAlpha(Math.round(255 * ts.getCloudCover()));  //[0-255]
+                paint.setAlpha(Math.round(255 * (1 - ts.getCloudCover())));  //[0-255]
                 location = (x == ThemesClass.CloudCoverageLocation.TIME_BAR ? ts.timeBarNighttimes : ts.graphNighttimes);
                 for (Box b : location) {
                     _cvs.drawRect(b.getLeft(), b.getTop(), b.getRight(), b.getBottom(), paint);

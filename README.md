@@ -6,6 +6,7 @@
 - Wind dot. [#20][20]
 - SonarQube. [#85][85]
 - Dot ring. [#50][50]
+- Cloud cover opacity. [#90][90]
 
 #2.0.0-alpha.10
 - Wind scale. [#24][24]
@@ -63,7 +64,8 @@
 
 
 
-[SonarQube]: https://sonarqube.com/dashboard/index?id=weather-widget-number-one:app
+[SonarQube]: https://sonarqube.com/dashboard/index?id=weather-widget-number-one
+
 [14]: https://github.com/tdillon/weather-widget-number-one/issues/14
 [16]: https://github.com/tdillon/weather-widget-number-one/issues/16
 [17]: https://github.com/tdillon/weather-widget-number-one/issues/17
@@ -97,3 +99,4 @@
 [64]: https://github.com/tdillon/weather-widget-number-one/issues/64
 [71]: https://github.com/tdillon/weather-widget-number-one/issues/71
 [85]: https://github.com/tdillon/weather-widget-number-one/issues/85
+[90]: https://github.com/tdillon/weather-widget-number-one/issues/90
