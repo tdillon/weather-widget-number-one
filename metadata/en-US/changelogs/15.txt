@@ -3,3 +3,4 @@ Wind dot. #20
 SonarQube. #85
 Dot ring. #50
 Cloud cover opacity. #90
+Coverage unit test. #92
