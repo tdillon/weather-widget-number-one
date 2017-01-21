@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/tdillon/weather-widget-number-one.svg?branch=master)](https://travis-ci.org/tdillon/weather-widget-number-one)
-
+[![codecov](https://codecov.io/gh/tdillon/weather-widget-number-one/branch/master/graph/badge.svg)](https://codecov.io/gh/tdillon/weather-widget-number-one)
 [SonarQube analysis][SonarQube]
 
 #2.0.0-alpha.11
@@ -7,6 +7,7 @@
 - SonarQube. [#85][85]
 - Dot ring. [#50][50]
 - Cloud cover opacity. [#90][90]
+- Coverage unit test. [#92][92]
 
 #2.0.0-alpha.10
 - Wind scale. [#24][24]
@@ -100,3 +101,4 @@
 [71]: https://github.com/tdillon/weather-widget-number-one/issues/71
 [85]: https://github.com/tdillon/weather-widget-number-one/issues/85
 [90]: https://github.com/tdillon/weather-widget-number-one/issues/90
+[92]: https://github.com/tdillon/weather-widget-number-one/issues/92
