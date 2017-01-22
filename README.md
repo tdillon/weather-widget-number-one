@@ -8,6 +8,7 @@
 - Dot ring. [#50][50]
 - Cloud cover opacity. [#90][90]
 - Coverage unit test. [#92][92]
+- Precipitation dot. [#31][31]
 
 #2.0.0-alpha.10
 - Wind scale. [#24][24]
@@ -82,6 +83,7 @@
 [28]: https://github.com/tdillon/weather-widget-number-one/issues/28
 [29]: https://github.com/tdillon/weather-widget-number-one/issues/29
 [30]: https://github.com/tdillon/weather-widget-number-one/issues/30
+[31]: https://github.com/tdillon/weather-widget-number-one/issues/31
 [32]: https://github.com/tdillon/weather-widget-number-one/issues/32
 [33]: https://github.com/tdillon/weather-widget-number-one/issues/33
 [34]: https://github.com/tdillon/weather-widget-number-one/issues/34

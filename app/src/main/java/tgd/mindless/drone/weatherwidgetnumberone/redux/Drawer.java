@@ -151,7 +151,18 @@ class Drawer {
             if (point == null) {
                 continue;
             }
-            paint.setColor(Color.parseColor(p.dot.color));
+
+            switch (p.name) {
+                case "precipProbability":
+                    paint.setColor(Drawer.getPrecipitationColor(curSeg.data.precipIntensity));
+                    break;
+                case "precipProbabilityMax":
+                    paint.setColor(Drawer.getPrecipitationColor(curSeg.data.precipIntensityMax));
+                    break;
+                default:
+                    paint.setColor(Color.parseColor(p.dot.color));
+            }
+
             dotRadius = p.dot.size / 200 * curSeg.graphBox.getWidth();
 
             prevPoint = (prevSeg != null ? prevSeg.getPoint(p.name) : null);  //first time segment has no previous
@@ -244,5 +255,74 @@ class Drawer {
 
         path.close();
         _cvs.drawPath(path, paint);
+    }
+
+    //https://en.wikipedia.org/wiki/DBZ_(meteorology)
+    //http://radar.weather.gov/Legend/N0R/DMX_N0R_Legend_0.gif
+    final static float DBZ_75_INTENSITY = 96.9f;
+    final static int DBZ_75_COLOR = Color.argb(255, 253, 253, 253);
+    final static float DBZ_70_INTENSITY = 34f;
+    final static int DBZ_70_COLOR = Color.argb(255, 152, 84, 198);
+    final static float DBZ_65_INTENSITY = 16.6f;
+    final static int DBZ_65_COLOR = Color.argb(255, 248, 0, 253);
+    final static float DBZ_60_INTENSITY = 8f;
+    final static int DBZ_60_COLOR = Color.argb(255, 188, 0, 0);
+    final static float DBZ_55_INTENSITY = 4f;
+    final static int DBZ_55_COLOR = Color.argb(255, 212, 0, 0);
+    final static float DBZ_50_INTENSITY = 1.9f;
+    final static int DBZ_50_COLOR = Color.argb(255, 253, 0, 0);
+    final static float DBZ_45_INTENSITY = .92f;
+    final static int DBZ_45_COLOR = Color.argb(255, 253, 149, 0);
+    final static float DBZ_40_INTENSITY = .45f;
+    final static int DBZ_40_COLOR = Color.argb(255, 229, 188, 0);
+    final static float DBZ_35_INTENSITY = .22f;
+    final static int DBZ_35_COLOR = Color.argb(255, 253, 248, 2);
+    final static float DBZ_30_INTENSITY = .1f;
+    final static int DBZ_30_COLOR = Color.argb(255, 0, 142, 0);
+    final static float DBZ_25_INTENSITY = .05f;
+    final static int DBZ_25_COLOR = Color.argb(255, 1, 197, 1);
+    final static float DBZ_20_INTENSITY = .02f;
+    final static int DBZ_20_COLOR = Color.argb(255, 2, 253, 2);
+    final static float DBZ_15_INTENSITY = .01f;
+    final static int DBZ_15_COLOR = Color.argb(255, 3, 0, 244);
+    final static float DBZ_10_INTENSITY = .006f;
+    final static int DBZ_10_COLOR = Color.argb(255, 1, 159, 244);
+    final static float DBZ_5_INTENSITY = .003f;
+    final static int DBZ_5_COLOR = Color.argb(255, 4, 233, 231);
+
+    static int getPrecipitationColor(float intensity) {
+        if (intensity >= DBZ_75_INTENSITY) {
+            return DBZ_75_COLOR;
+        } else if (intensity >= DBZ_70_INTENSITY) {
+            return DBZ_70_COLOR;
+        } else if (intensity >= DBZ_65_INTENSITY) {
+            return DBZ_65_COLOR;
+        } else if (intensity >= DBZ_60_INTENSITY) {
+            return DBZ_60_COLOR;
+        } else if (intensity >= DBZ_55_INTENSITY) {
+            return DBZ_55_COLOR;
+        } else if (intensity >= DBZ_50_INTENSITY) {
+            return DBZ_50_COLOR;
+        } else if (intensity >= DBZ_45_INTENSITY) {
+            return DBZ_45_COLOR;
+        } else if (intensity >= DBZ_40_INTENSITY) {
+            return DBZ_40_COLOR;
+        } else if (intensity >= DBZ_35_INTENSITY) {
+            return DBZ_35_COLOR;
+        } else if (intensity >= DBZ_30_INTENSITY) {
+            return DBZ_30_COLOR;
+        } else if (intensity >= DBZ_25_INTENSITY) {
+            return DBZ_25_COLOR;
+        } else if (intensity >= DBZ_20_INTENSITY) {
+            return DBZ_20_COLOR;
+        } else if (intensity >= DBZ_15_INTENSITY) {
+            return DBZ_15_COLOR;
+        } else if (intensity >= DBZ_10_INTENSITY) {
+            return DBZ_10_COLOR;
+        } else if (intensity >= DBZ_5_INTENSITY) {
+            return DBZ_5_COLOR;
+        } else {
+            return Color.TRANSPARENT;
+        }
     }
 }
