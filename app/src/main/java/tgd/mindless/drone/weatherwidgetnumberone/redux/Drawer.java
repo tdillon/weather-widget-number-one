@@ -154,10 +154,7 @@ class Drawer {
 
             switch (p.name) {
                 case "precipProbability":
-                    paint.setColor(Drawer.getPrecipitationColor(curSeg.data.precipIntensity));
-                    break;
-                case "precipProbabilityMax":
-                    paint.setColor(Drawer.getPrecipitationColor(curSeg.data.precipIntensityMax));
+                    paint.setColor(Drawer.getPrecipitationColor(curSeg.getPrecipitationType(), curSeg.data.precipIntensity));
                     break;
                 default:
                     paint.setColor(Color.parseColor(p.dot.color));
@@ -257,72 +254,251 @@ class Drawer {
         _cvs.drawPath(path, paint);
     }
 
-    //https://en.wikipedia.org/wiki/DBZ_(meteorology)
-    //http://radar.weather.gov/Legend/N0R/DMX_N0R_Legend_0.gif
-    final static float DBZ_75_INTENSITY = 96.9f;
-    final static int DBZ_75_COLOR = Color.argb(255, 253, 253, 253);
-    final static float DBZ_70_INTENSITY = 34f;
-    final static int DBZ_70_COLOR = Color.argb(255, 152, 84, 198);
-    final static float DBZ_65_INTENSITY = 16.6f;
-    final static int DBZ_65_COLOR = Color.argb(255, 248, 0, 253);
-    final static float DBZ_60_INTENSITY = 8f;
-    final static int DBZ_60_COLOR = Color.argb(255, 188, 0, 0);
-    final static float DBZ_55_INTENSITY = 4f;
-    final static int DBZ_55_COLOR = Color.argb(255, 212, 0, 0);
-    final static float DBZ_50_INTENSITY = 1.9f;
-    final static int DBZ_50_COLOR = Color.argb(255, 253, 0, 0);
-    final static float DBZ_45_INTENSITY = .92f;
-    final static int DBZ_45_COLOR = Color.argb(255, 253, 149, 0);
-    final static float DBZ_40_INTENSITY = .45f;
-    final static int DBZ_40_COLOR = Color.argb(255, 229, 188, 0);
-    final static float DBZ_35_INTENSITY = .22f;
-    final static int DBZ_35_COLOR = Color.argb(255, 253, 248, 2);
-    final static float DBZ_30_INTENSITY = .1f;
-    final static int DBZ_30_COLOR = Color.argb(255, 0, 142, 0);
-    final static float DBZ_25_INTENSITY = .05f;
-    final static int DBZ_25_COLOR = Color.argb(255, 1, 197, 1);
-    final static float DBZ_20_INTENSITY = .02f;
-    final static int DBZ_20_COLOR = Color.argb(255, 2, 253, 2);
-    final static float DBZ_15_INTENSITY = .01f;
-    final static int DBZ_15_COLOR = Color.argb(255, 3, 0, 244);
+    //Use the color palette from weather underground: http://icons-ak.wunderground.com/data/wximagenew/w/wuproductteam/9.jpg
+    //https://www.wunderground.com/blog/wuproductteam/radar-palette-improvements
+    //Calc the dBZ per: https://en.wikipedia.org/wiki/DBZ_(meteorology)
+    //JavaScript to perform calculation:
+    //getRainfallInInches = dbz => (Math.pow(Math.pow(10, (dbz / 10)) / 200, 5 / 8) / 25.4).toFixed(3)
+    final static float DBZ_85_INTENSITY = 294.797f;
+    final static float DBZ_80_INTENSITY = 143.556f;
+    final static float DBZ_75_INTENSITY = 69.907f;
+    final static float DBZ_70_INTENSITY = 34.043f;
+    final static float DBZ_65_INTENSITY = 16.578f;
+    final static float DBZ_60_INTENSITY = 8.73f;
+    final static float DBZ_55_INTENSITY = 3.931f;
+    final static float DBZ_50_INTENSITY = 1.914f;
+    final static float DBZ_45_INTENSITY = .932f;
+    final static float DBZ_40_INTENSITY = .454f;
+    final static float DBZ_35_INTENSITY = .221f;
+    final static float DBZ_30_INTENSITY = .108f;
+    final static float DBZ_25_INTENSITY = .052f;
+    final static float DBZ_20_INTENSITY = .026f;
+    final static float DBZ_15_INTENSITY = .012f;
     final static float DBZ_10_INTENSITY = .006f;
-    final static int DBZ_10_COLOR = Color.argb(255, 1, 159, 244);
     final static float DBZ_5_INTENSITY = .003f;
-    final static int DBZ_5_COLOR = Color.argb(255, 4, 233, 231);
 
-    static int getPrecipitationColor(float intensity) {
-        if (intensity >= DBZ_75_INTENSITY) {
-            return DBZ_75_COLOR;
+    final static int DBZ_85_RAIN_COLOR = Color.argb(255, 255, 255, 255);
+    final static int DBZ_80_RAIN_COLOR = Color.argb(255, 100, 0, 99);
+    final static int DBZ_75_RAIN_COLOR = Color.argb(255, 130, 2, 138);
+    final static int DBZ_70_RAIN_COLOR = Color.argb(255, 169, 0, 203);
+    final static int DBZ_65_RAIN_COLOR = Color.argb(255, 235, 0, 139);
+    final static int DBZ_60_RAIN_COLOR = Color.argb(255, 178, 0, 0);
+    final static int DBZ_55_RAIN_COLOR = Color.argb(255, 232, 0, 0);
+    final static int DBZ_50_RAIN_COLOR = Color.argb(255, 245, 99, 0);
+    final static int DBZ_45_RAIN_COLOR = Color.argb(255, 255, 138, 42);
+    final static int DBZ_40_RAIN_COLOR = Color.argb(255, 248, 184, 0);
+    final static int DBZ_35_RAIN_COLOR = Color.argb(255, 255, 236, 1);
+    final static int DBZ_30_RAIN_COLOR = Color.argb(255, 0, 94, 41);
+    final static int DBZ_25_RAIN_COLOR = Color.argb(255, 0, 108, 46);
+    final static int DBZ_20_RAIN_COLOR = Color.argb(255, 0, 137, 55);
+    final static int DBZ_15_RAIN_COLOR = Color.argb(255, 0, 165, 67);
+    final static int DBZ_10_RAIN_COLOR = Color.argb(255, 0, 198, 85);
+    final static int DBZ_5_RAIN_COLOR = Color.argb(255, 0, 225, 129);
+    final static int DBZ_0_RAIN_COLOR = Color.argb(255, 0, 252, 173);
+
+    final static int DBZ_85_SLEET_COLOR = Color.argb(255, 120, 15, 100);
+    final static int DBZ_80_SLEET_COLOR = Color.argb(255, 130, 10, 100);
+    final static int DBZ_75_SLEET_COLOR = Color.argb(255, 142, 6, 104);
+    final static int DBZ_70_SLEET_COLOR = Color.argb(255, 155, 22, 115);
+    final static int DBZ_65_SLEET_COLOR = Color.argb(255, 161, 39, 124);
+    final static int DBZ_60_SLEET_COLOR = Color.argb(255, 171, 49, 134);
+    final static int DBZ_55_SLEET_COLOR = Color.argb(255, 182, 64, 138);
+    final static int DBZ_50_SLEET_COLOR = Color.argb(255, 189, 78, 147);
+    final static int DBZ_45_SLEET_COLOR = Color.argb(255, 197, 91, 157);
+    final static int DBZ_40_SLEET_COLOR = Color.argb(255, 205, 105, 165);
+    final static int DBZ_35_SLEET_COLOR = Color.argb(255, 212, 118, 171);
+    final static int DBZ_30_SLEET_COLOR = Color.argb(255, 219, 131, 181);
+    final static int DBZ_25_SLEET_COLOR = Color.argb(255, 226, 145, 188);
+    final static int DBZ_20_SLEET_COLOR = Color.argb(255, 233, 158, 197);
+    final static int DBZ_15_SLEET_COLOR = Color.argb(255, 241, 171, 205);
+    final static int DBZ_10_SLEET_COLOR = Color.argb(255, 248, 185, 214);
+    final static int DBZ_5_SLEET_COLOR = Color.argb(255, 254, 199, 222);
+    final static int DBZ_0_SLEET_COLOR = Color.argb(255, 255, 213, 230);
+
+    final static int DBZ_85_SNOW_COLOR = Color.argb(255, 0, 0, 80);
+    final static int DBZ_80_SNOW_COLOR = Color.argb(255, 1, 1, 75);
+    final static int DBZ_75_SNOW_COLOR = Color.argb(255, 2, 0, 86);
+    final static int DBZ_70_SNOW_COLOR = Color.argb(255, 7, 18, 98);
+    final static int DBZ_65_SNOW_COLOR = Color.argb(255, 13, 35, 111);
+    final static int DBZ_60_SNOW_COLOR = Color.argb(255, 20, 52, 125);
+    final static int DBZ_55_SNOW_COLOR = Color.argb(255, 26, 71, 138);
+    final static int DBZ_50_SNOW_COLOR = Color.argb(255, 30, 88, 152);
+    final static int DBZ_45_SNOW_COLOR = Color.argb(255, 37, 106, 165);
+    final static int DBZ_40_SNOW_COLOR = Color.argb(255, 43, 122, 178);
+    final static int DBZ_35_SNOW_COLOR = Color.argb(255, 49, 141, 192);
+    final static int DBZ_30_SNOW_COLOR = Color.argb(255, 55, 158, 203);
+    final static int DBZ_25_SNOW_COLOR = Color.argb(255, 55, 174, 214);
+    final static int DBZ_20_SNOW_COLOR = Color.argb(255, 55, 190, 220);
+    final static int DBZ_15_SNOW_COLOR = Color.argb(255, 56, 206, 230);
+    final static int DBZ_10_SNOW_COLOR = Color.argb(255, 57, 222, 238);
+    final static int DBZ_5_SNOW_COLOR = Color.argb(255, 57, 238, 247);
+    final static int DBZ_0_SNOW_COLOR = Color.argb(255, 58, 254, 255);
+
+    static int getPrecipitationColor(Weather.PrecipitationType type, float intensity) {
+        if (intensity >= DBZ_85_INTENSITY) {
+            switch (type) {
+                case RAIN:
+                    return DBZ_85_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_85_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_85_SNOW_COLOR;
+            }
+        } else if (intensity >= DBZ_80_INTENSITY) {
+            switch (type) {
+                case RAIN:
+                    return DBZ_80_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_80_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_80_SNOW_COLOR;
+            }
+        } else if (intensity >= DBZ_75_INTENSITY) {
+            switch (type) {
+                case RAIN:
+                    return DBZ_75_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_75_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_75_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_70_INTENSITY) {
-            return DBZ_70_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_70_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_70_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_70_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_65_INTENSITY) {
-            return DBZ_65_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_65_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_65_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_65_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_60_INTENSITY) {
-            return DBZ_60_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_60_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_60_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_60_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_55_INTENSITY) {
-            return DBZ_55_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_55_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_55_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_55_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_50_INTENSITY) {
-            return DBZ_50_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_50_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_50_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_50_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_45_INTENSITY) {
-            return DBZ_45_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_45_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_45_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_45_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_40_INTENSITY) {
-            return DBZ_40_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_40_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_40_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_40_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_35_INTENSITY) {
-            return DBZ_35_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_35_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_35_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_35_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_30_INTENSITY) {
-            return DBZ_30_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_30_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_30_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_30_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_25_INTENSITY) {
-            return DBZ_25_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_25_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_25_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_25_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_20_INTENSITY) {
-            return DBZ_20_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_20_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_20_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_20_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_15_INTENSITY) {
-            return DBZ_15_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_15_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_15_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_15_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_10_INTENSITY) {
-            return DBZ_10_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_10_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_10_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_10_SNOW_COLOR;
+            }
         } else if (intensity >= DBZ_5_INTENSITY) {
-            return DBZ_5_COLOR;
+            switch (type) {
+                case RAIN:
+                    return DBZ_5_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_5_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_5_SNOW_COLOR;
+            }
         } else {
-            return Color.TRANSPARENT;
+            switch (type) {
+                case RAIN:
+                    return DBZ_0_RAIN_COLOR;
+                case SLEET:
+                    return DBZ_0_SLEET_COLOR;
+                case SNOW:
+                    return DBZ_0_SNOW_COLOR;
+            }
         }
+
+        return Color.BLACK;
     }
 }

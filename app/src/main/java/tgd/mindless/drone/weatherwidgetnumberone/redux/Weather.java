@@ -1,5 +1,7 @@
 package tgd.mindless.drone.weatherwidgetnumberone.redux;
 
+import com.google.gson.annotations.SerializedName;
+
 class Weather {
     float latitude;
     float longitude;
@@ -17,6 +19,15 @@ class Weather {
 
         DataBlock() {
         }
+    }
+
+    enum PrecipitationType {
+        @SerializedName("rain")
+        RAIN,
+        @SerializedName("sleet")
+        SLEET,
+        @SerializedName("snow")
+        SNOW
     }
 
     class DataPoint {
@@ -47,6 +58,7 @@ class Weather {
         float precipAccumulation;
         float dewPoint;
         float pressure;
+        PrecipitationType precipType;
 
         DataPoint() {
         }

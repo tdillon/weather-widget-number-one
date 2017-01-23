@@ -194,11 +194,17 @@ class TimeSegment {
                     ) : null);
                 break;
             case "precipProbability":
-                p = ((data.precipProbability != 0) ?
-                    new Point(  //TODO add precipIntensityMax somehow for daily. and hourly?
-                        graphBox.getCenter().x,
+                if (data.precipProbability != 0 ) {
+                    if (theme.type == ThemesClass.ThemeType.Daily) { //For daily, we don't care about 'precipIntensity', just use 'precipIntensityMax'
+                        data.precipIntensity = data.precipIntensityMax;
+                    }
+                    p = new Point(
+                        theme.type == ThemesClass.ThemeType.Hourly ? graphBox.getCenter().x : graphBox.getLeft() + (data.precipIntensityMaxTime - from) * unitsPerSecond,
                         graphBox.getTop() + (1 - data.precipProbability) * graphBox.getHeight()
-                    ) : null );
+                    );
+                } else {
+                    p = null;
+                }
                 break;
             default:
                 p = null;
@@ -212,4 +218,6 @@ class TimeSegment {
     }
 
     Integer getWindBearing() { return _windBearing; }
+
+    Weather.PrecipitationType getPrecipitationType() { return data.precipType; }
 }
