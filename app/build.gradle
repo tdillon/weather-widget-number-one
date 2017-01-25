@@ -38,7 +38,13 @@ android {
 }
 
 androidGroovy {
-    skipJavaC = true
+    sourceSets {
+        main {
+            groovy {
+                srcDirs += 'src/main/java'
+            }
+        }
+    }
 }
 
 

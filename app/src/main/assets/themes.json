@@ -9,6 +9,31 @@
       "location": 0
     },
     "properties": [
+
+      {
+        "name": "apparentTemperatureMin",
+        "dot": {
+          "color": "#20FFFFFF",
+          "size": 40
+        },
+        "segment": {
+          "color": "#20FFFFFF",
+          "width": 30.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "apparentTemperatureMax",
+        "dot": {
+          "color": "#20FFFFFF",
+          "size": 40
+        },
+        "segment": {
+          "color": "#20FFFFFF",
+          "width": 30.0,
+          "padding": 10.0
+        }
+      },
       {
         "name": "precipAccumulation",
         "dot": {
@@ -56,8 +81,8 @@
         },
         "segment": {
           "color": "white",
-          "width": 20.0,
-          "padding": 5.0
+          "width": 30.0,
+          "padding": 10.0
         }
       },
       {
