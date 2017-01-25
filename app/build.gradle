@@ -3,6 +3,7 @@ plugins {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'groovyx.android'
 apply plugin: 'jacoco-android'
 
 def appVersionName = "2.0.0-alpha.11"
@@ -24,7 +25,28 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
 }
+
+androidGroovy {
+    sourceSets {
+        main {
+            groovy {
+                srcDirs += 'src/main/java'
+            }
+        }
+    }
+}
+
 
 sonarqube {
     properties {
@@ -37,6 +59,10 @@ sonarqube {
         property "sonar.links.ci", "https://travis-ci.org/tdillon/weather-widget-number-one"
         property "sonar.links.issue", "https://github.com/tdillon/weather-widget-number-one/issues"
         property "sonar.links.scm", "https://github.com/tdillon/weather-widget-number-one"
+        property "sonar.junit.reportsPath", "app/build/test-results/release"
+        property "sonar.jacoco.reportPaths", "app/build/jacoco/testReleaseUnitTest.exec"
+        property "sonar.java.test.binaries", "app/build/intermediates/classes/test/release"
+        property "sonar.java.binaries", "app/build/intermediates/classes/release/tgd"
     }
 }
 
@@ -44,6 +70,9 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.google.code.gson:gson:2.8.0'
+    compile "org.codehaus.groovy:groovy:2.4.7:grooid"
+
+    testCompile 'org.codehaus.groovy:groovy-all:2.4.7'
     testCompile 'junit:junit:4.12'
-    testCompile 'org.mockito:mockito-core:1.10.19'
+    testCompile "org.robolectric:robolectric:3.2.2"
 }

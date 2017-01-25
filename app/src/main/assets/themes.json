@@ -9,41 +9,27 @@
       "location": 0
     },
     "properties": [
+
       {
-        "name": "temperatureMax",
+        "name": "apparentTemperatureMin",
         "dot": {
-          "color": "white",
-          "size": 50,
-          "type": 1
+          "color": "#20FFFFFF",
+          "size": 40
         },
         "segment": {
-          "color": "white",
+          "color": "#20FFFFFF",
           "width": 30.0,
           "padding": 10.0
         }
       },
       {
-        "name": "temperatureMin",
+        "name": "apparentTemperatureMax",
         "dot": {
-          "color": "white",
-          "size": 50,
-          "type": 1,
-          "ringSize": 25
+          "color": "#20FFFFFF",
+          "size": 40
         },
         "segment": {
-          "color": "white",
-          "width": 20.0,
-          "padding": 5.0
-        }
-      },
-      {
-        "name": "precipProbability",
-        "dot": {
-          "color": "green",
-          "size": 25
-        },
-        "segment": {
-          "color": "green",
+          "color": "#20FFFFFF",
           "width": 30.0,
           "padding": 10.0
         }
@@ -63,20 +49,54 @@
       {
         "name": "pressure",
         "dot": {
-          "color": "#FF69B4",
+          "color": "#60FF69B4",
           "size": 20
         },
         "segment": {
-          "color": "#FF69B4",
-          "width": 30.0,
+          "color": "#60FF69B4",
+          "width": 25.0,
           "padding": 10.0
         }
       },
       {
         "name": "windSpeed",
         "dot": {
-          "color": "#FF9900",
+          "color": "#80FF9900",
           "size": 55.5
+        }
+      },
+      {
+        "name": "precipProbability",
+        "dot": {
+          "size": 35
+        }
+      },
+      {
+        "name": "temperatureMin",
+        "dot": {
+          "color": "white",
+          "size": 50,
+          "type": 1,
+          "ringSize": 25
+        },
+        "segment": {
+          "color": "white",
+          "width": 30.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "temperatureMax",
+        "dot": {
+          "color": "white",
+          "size": 50,
+          "type": 1,
+          "ringSize": 25
+        },
+        "segment": {
+          "color": "white",
+          "width": 30.0,
+          "padding": 10.0
         }
       }
     ]
@@ -92,34 +112,10 @@
     },
     "properties": [
       {
-        "name": "temperature",
-        "dot": {
-          "color": "white",
-          "size": 50
-        },
-        "segment": {
-          "color": "white",
-          "width": 50.0,
-          "padding": 10.0
-        }
-      },
-      {
-        "name": "precipProbability",
-        "dot": {
-          "color": "green",
-          "size": 25
-        },
-        "segment": {
-          "color": "green",
-          "width": 50.0,
-          "padding": 10.0
-        }
-      },
-      {
         "name": "windSpeed",
         "dot": {
-          "color": "#FF9900",
-          "size": 95
+          "color": "#CCFF9900",
+          "size": 105
         }
       },
       {
@@ -137,12 +133,48 @@
       {
         "name": "pressure",
         "dot": {
-          "color": "#FF69B4",
-          "size": 20
+          "color": "#50FF69B4",
+          "size": 100
         },
         "segment": {
-          "color": "#FF69B4",
+          "color": "#50FF69B4",
           "width": 30.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "precipProbability",
+        "dot": {
+          "color": "green",
+          "size": 75
+        },
+        "segment": {
+          "color": "green",
+          "width": 50.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "apparentTemperature",
+        "dot": {
+          "color": "#40FFFFFF",
+          "size": 75
+        },
+        "segment": {
+          "color": "#40FFFFFF",
+          "width": 25.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "temperature",
+        "dot": {
+          "color": "white",
+          "size": 100
+        },
+        "segment": {
+          "color": "white",
+          "width": 25.0,
           "padding": 10.0
         }
       }

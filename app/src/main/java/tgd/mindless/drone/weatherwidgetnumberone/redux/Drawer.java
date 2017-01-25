@@ -151,7 +151,15 @@ class Drawer {
             if (point == null) {
                 continue;
             }
-            paint.setColor(Color.parseColor(p.dot.color));
+
+            switch (p.name) {
+                case "precipProbability":
+                    paint.setColor(DBZ.getPrecipitationColor(curSeg.getPrecipitationType(), curSeg.data.precipIntensity));
+                    break;
+                default:
+                    paint.setColor(Color.parseColor(p.dot.color));
+            }
+
             dotRadius = p.dot.size / 200 * curSeg.graphBox.getWidth();
 
             prevPoint = (prevSeg != null ? prevSeg.getPoint(p.name) : null);  //first time segment has no previous
