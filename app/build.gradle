@@ -6,7 +6,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'groovyx.android'
 apply plugin: 'jacoco-android'
 
-def appVersionName = "2.0.0-alpha.11"
+def appVersionName = "2.0.0-alpha.12"
 
 android {
     compileSdkVersion 23
@@ -16,7 +16,7 @@ android {
         applicationId "tgd.mindless.drone.weatherwidgetnumberone.redux"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 15
+        versionCode 16
         versionName "${appVersionName}"
     }
     buildTypes {
@@ -59,11 +59,6 @@ sonarqube {
         property "sonar.links.ci", "https://travis-ci.org/tdillon/weather-widget-number-one"
         property "sonar.links.issue", "https://github.com/tdillon/weather-widget-number-one/issues"
         property "sonar.links.scm", "https://github.com/tdillon/weather-widget-number-one"
-        //property "sonar.junit.reportsPath", "app/build/test-results/release"
-        //property "sonar.jacoco.reportPaths", "app/build/jacoco/testReleaseUnitTest.exec"
-        //property "sonar.java.test.binaries", "app/build/intermediates/classes/test/release"
-        //property "sonar.java.binaries", "app/build/intermediates/classes/release/tgd"
-        property "sonar.verbose", "true"
     }
 }
 
