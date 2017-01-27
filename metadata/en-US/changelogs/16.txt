@@ -1,2 +1,3 @@
 2.0.0-alpha.12
 Precipitation segment color. #81
+Precipitation segment. #80
