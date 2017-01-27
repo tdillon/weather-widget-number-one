@@ -3,10 +3,12 @@ package tgd.mindless.drone.weatherwidgetnumberone.redux;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -34,20 +36,19 @@ class Drawer {
         paint.setTextSize(pos.widget.getHeight() * theme.fontSize / 100);
     }
 
+    /**
+     * Render Sequence:
+     * 1) Widget background (background color w/opacity of entire widget)
+     * 2) Graph overlay (background color w/ opacity of graph region)
+     * 3) Time overlay (background color w/ opacity of time bar)
+     * 4) Left axis overlay (background color w/ opacity of left axis overlay i.e., temp scale)
+     * 5) Right axis overlay (background color w/ opacity of right axis overlay i.e., %, MPH, etc., scales)
+     * 6) Cloud cover
+     * 7) time text
+     * 8) scales
+     * 9) draw each weather property (dot&segment) for the entire time period //this will effect layering
+     */
     Bitmap render() {
-        /*
-         * Render Sequence:
-         *  1) Widget background (background color w/opacity of entire widget)
-         *  2) Graph overlay (background color w/ opacity of graph region)
-         *  3) Time overlay (background color w/ opacity of time bar)
-         *  4) Left axis overlay (background color w/ opacity of left axis overlay i.e., temp scale)
-         *  5) Right axis overlay (background color w/ opacity of right axis overlay i.e., %, MPH, etc., scales)
-         *  6) Cloud cover
-         *  7) time text
-         *  8) scales
-         *  9) draw each weather property (dot&segment) for the entire time period //this will effect layering
-         */
-
         renderWidgetBackground();       //1
         renderGraphBackground();        //2
         renderTimeBackground();         //3
@@ -139,93 +140,77 @@ class Drawer {
     }
 
     private void renderProperty(ThemesClass.Property p) {
-        Point point;
-
         TimeSegment prevSeg = null;
-        Point curPoint, prevPoint;
-        SegmentGeometry s;
-        float dotRadius;
 
         for (TimeSegment curSeg : _pos.timeSegments) {
-            point = curSeg.getPoint(p.name);
-            if (point == null) {
-                continue;
-            }
-
-            switch (p.name) {
-                case "precipProbability":
-                    paint.setColor(DBZ.getPrecipitationColor(curSeg.getPrecipitationType(), curSeg.data.precipIntensity));
-                    break;
-                default:
-                    paint.setColor(Color.parseColor(p.dot.color));
-            }
-
-            dotRadius = p.dot.size / 200 * curSeg.graphBox.getWidth();
-
-            prevPoint = (prevSeg != null ? prevSeg.getPoint(p.name) : null);  //first time segment has no previous
-            curPoint = curSeg.getPoint(p.name);
-
-            s = new SegmentGeometry(p.segment, dotRadius, prevPoint == null ? null : prevPoint.x, prevPoint == null ? null : prevPoint.y, curPoint.x, curPoint.y);
-
-            switch (p.name) {
-                case "windSpeed":
-                    renderWindDot(point, dotRadius, curSeg.getWindBearing());
-                    break;
-                default:
-                    if (p.dot.type == ThemesClass.DotType.RING) {
-                        paint.setStyle(Paint.Style.STROKE);
-                        paint.setStrokeWidth(dotRadius * (p.dot.ringSize == null ? 50 : p.dot.ringSize) / 100f);  //TODO get defaults from somewhere
-                        _cvs.drawCircle(point.x, point.y, dotRadius - paint.getStrokeWidth() / 2, paint);
-                        paint.setStyle(Paint.Style.FILL);
-                    } else {
-                        _cvs.drawCircle(point.x, point.y, dotRadius, paint);
-                    }
-                    break;
-            }
-
-            //TODO don't draw segment for precip probability when prevSeg was 0%
-            if (p.segment != null && prevPoint != null) {//(s.hasSegment()) {
-                //TODO precipitation probability gradient
-                paint.setColor(Color.parseColor(p.segment.color));
-                Path path = new Path();
-
-                double padding = p.segment.padding * dotRadius * 2 / 100;
-                double theta = -Math.atan((prevPoint.y - curPoint.y) / (prevPoint.x - curPoint.x));  //radians
-                double thetaDegree = theta * 180 / Math.PI;  //degrees
-                float x = (float) (padding * Math.cos(theta));
-                float y = (float) (padding * Math.sin(theta));
-                float sweepAngle = p.segment.width * 180 / 100;  //degrees
-                float startAngle = (float) (-thetaDegree - (sweepAngle / 2));  //degrees
-
-                RectF rectF = new RectF(
-                        prevPoint.x - dotRadius + x,
-                        prevPoint.y - dotRadius - y,
-                        prevPoint.x + dotRadius + x,
-                        prevPoint.y + dotRadius - y
-                );
-
-                path.addArc(rectF, startAngle, sweepAngle);
-
-                x = -x;
-                y = -y;
-
-                rectF = new RectF(
-                        curPoint.x - dotRadius + x,
-                        curPoint.y - dotRadius - y,
-                        curPoint.x + dotRadius + x,
-                        curPoint.y + dotRadius - y
-                );
-
-                path.arcTo(rectF, startAngle + 180, sweepAngle);
-                path.close();
-                paint.setColor(Color.parseColor(p.segment.color));
-                _cvs.drawPath(path, paint);
-            }
-
-
+            renderCurrentDot(p, curSeg);
+            renderCurrentSegment(p, curSeg, prevSeg);
             prevSeg = curSeg;
         }
+    }
 
+    private void renderCurrentDot(ThemesClass.Property p, TimeSegment curSeg) {
+        Point point = curSeg.getPoint(p.name);
+        if (point == null) {
+            return;
+        }
+
+        float dotRadius = p.dot.size / 200 * curSeg.graphBox.getWidth();
+
+        if (p.name.equals("precipProbability")) {
+            paint.setColor(DBZ.getPrecipitationColor(curSeg.getPrecipitationType(), curSeg.data.precipIntensity));
+        } else {
+            paint.setColor(Color.parseColor(p.dot.color));
+        }
+
+        if (p.name.equals("windSpeed")) {
+            renderWindDot(point, dotRadius, curSeg.getWindBearing());
+        } else if (p.dot.type == ThemesClass.DotType.RING) {
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(dotRadius * (p.dot.ringSize == null ? 50 : p.dot.ringSize) / 100f);  //TODO get defaults from somewhere
+            _cvs.drawCircle(point.x, point.y, dotRadius - paint.getStrokeWidth() / 2, paint);
+            paint.setStyle(Paint.Style.FILL);
+        } else {  //DotType.SOLID
+            _cvs.drawCircle(point.x, point.y, dotRadius, paint);
+        }
+    }
+
+    private void renderCurrentSegment(ThemesClass.Property p, TimeSegment curSeg, TimeSegment prevSeg) {
+        if (p.segment == null || prevSeg == null || curSeg.getPoint(p.name) == null || prevSeg.getPoint(p.name) == null) {
+            return;
+        }
+
+        Point prevPoint = prevSeg.getPoint(p.name);
+        Point curPoint = curSeg.getPoint(p.name);
+        float dotRadius = p.dot.size / 200 * curSeg.graphBox.getWidth();
+
+        //TODO exit if points are too close, otherwise draw the segment
+
+        Path path = new Path();
+
+        double padding = p.segment.padding * dotRadius * 2 / 100;
+        double theta = -Math.atan((prevPoint.y - curPoint.y) / (prevPoint.x - curPoint.x));  //radians
+        double thetaDegree = theta * 180 / Math.PI;  //degrees
+        float x = (float) (padding * Math.cos(theta));
+        float y = (float) (padding * Math.sin(theta));
+        float sweepAngle = p.segment.width * 180 / 100;  //degrees
+        float startAngle = (float) (-thetaDegree - (sweepAngle / 2));  //degrees
+
+        RectF rectF = new RectF(prevPoint.x - dotRadius + x, prevPoint.y - dotRadius - y, prevPoint.x + dotRadius + x, prevPoint.y + dotRadius - y);
+        path.addArc(rectF, startAngle, sweepAngle);
+        x = -x;
+        y = -y;
+        rectF = new RectF(curPoint.x - dotRadius + x, curPoint.y - dotRadius - y, curPoint.x + dotRadius + x, curPoint.y + dotRadius - y);
+        path.arcTo(rectF, startAngle + 180, sweepAngle);
+        path.close();
+
+        if (p.name.equals("precipProbability")) {
+            paint.setShader(new LinearGradient(prevPoint.x, prevPoint.y, curPoint.x, curPoint.y, DBZ.getPrecipitationColor(prevSeg.getPrecipitationType(), prevSeg.data.precipIntensity), DBZ.getPrecipitationColor(curSeg.getPrecipitationType(), curSeg.data.precipIntensity), Shader.TileMode.CLAMP));
+        } else {
+            paint.setColor(Color.parseColor(p.segment.color));
+        }
+        _cvs.drawPath(path, paint);
+        paint.setShader(null);
     }
 
     private void renderWindDot(Point point, float radius, Integer bearing) {

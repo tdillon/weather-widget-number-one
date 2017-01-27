@@ -2,6 +2,9 @@
 [![codecov](https://codecov.io/gh/tdillon/weather-widget-number-one/branch/master/graph/badge.svg)](https://codecov.io/gh/tdillon/weather-widget-number-one)
 [SonarQube analysis][SonarQube]
 
+#2.0.0-alpha.12
+- Precipitation segment color [#81][81]
+
 #2.0.0-alpha.11
 - Wind dot. [#20][20]
 - SonarQube. [#85][85]
@@ -101,6 +104,7 @@
 [63]: https://github.com/tdillon/weather-widget-number-one/issues/63
 [64]: https://github.com/tdillon/weather-widget-number-one/issues/64
 [71]: https://github.com/tdillon/weather-widget-number-one/issues/71
+[81]: https://github.com/tdillon/weather-widget-number-one/issues/81
 [85]: https://github.com/tdillon/weather-widget-number-one/issues/85
 [90]: https://github.com/tdillon/weather-widget-number-one/issues/90
 [92]: https://github.com/tdillon/weather-widget-number-one/issues/92
