@@ -183,12 +183,14 @@ class Drawer {
         Point prevPoint = prevSeg.getPoint(p.name);
         Point curPoint = curSeg.getPoint(p.name);
         float dotRadius = p.dot.size / 200 * curSeg.graphBox.getWidth();
+        double padding = p.segment.padding * dotRadius * 2 / 100;
 
-        //TODO exit if points are too close, otherwise draw the segment
+        if (Math.sqrt(Math.pow(prevPoint.x - curPoint.x, 2) + Math.pow(prevPoint.y - curPoint.y, 2)) <= 2 * (dotRadius + padding)) {
+            return;
+        }
 
         Path path = new Path();
 
-        double padding = p.segment.padding * dotRadius * 2 / 100;
         double theta = -Math.atan((prevPoint.y - curPoint.y) / (prevPoint.x - curPoint.x));  //radians
         double thetaDegree = theta * 180 / Math.PI;  //degrees
         float x = (float) (padding * Math.cos(theta));
