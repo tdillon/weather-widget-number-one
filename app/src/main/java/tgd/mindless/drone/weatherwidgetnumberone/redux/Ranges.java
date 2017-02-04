@@ -60,6 +60,11 @@ class Ranges {
         if (windSpeed.max == Integer.MIN_VALUE) windSpeed = null;
         if (precipAccumulation.max == Integer.MIN_VALUE) precipAccumulation = null;
 
+        //The precipitation accumulation scale will show a minimum of 1".
+        if (precipAccumulation != null && precipAccumulation.max < 1) {
+            precipAccumulation.max = 1;
+        }
+
         /*
          * Pressure - The pressure scale will be centered (50%) at 1ATM.
          * The scale will increase in .1" increments until the maximum deviation from 1ATM is captured.

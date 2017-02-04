@@ -5,6 +5,7 @@
 #2.0.0-alpha.12
 - Precipitation segment color [#81][81]
 - Precipitation segment [#80][80]
+- Accumulation scale. [#98][98]
 
 #2.0.0-alpha.11
 - Wind dot. [#20][20]
@@ -110,3 +111,4 @@
 [85]: https://github.com/tdillon/weather-widget-number-one/issues/85
 [90]: https://github.com/tdillon/weather-widget-number-one/issues/90
 [92]: https://github.com/tdillon/weather-widget-number-one/issues/92
+[98]: https://github.com/tdillon/weather-widget-number-one/issues/98
