@@ -119,18 +119,6 @@
         }
       },
       {
-        "name": "precipAccumulation",
-        "dot": {
-          "color": "purple",
-          "size": 20
-        },
-        "segment": {
-          "color": "purple",
-          "width": 30.0,
-          "padding": 10.0
-        }
-      },
-      {
         "name": "pressure",
         "dot": {
           "color": "#50FF69B4",
@@ -175,6 +163,18 @@
         "segment": {
           "color": "white",
           "width": 25.0,
+          "padding": 10.0
+        }
+      },
+      {
+        "name": "precipAccumulation",
+        "dot": {
+          "color": "red",
+          "size": 100
+        },
+        "segment": {
+          "color": "red",
+          "width": 30.0,
           "padding": 10.0
         }
       }

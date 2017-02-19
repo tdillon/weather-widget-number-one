@@ -137,8 +137,8 @@ class Positionings {
         getTemperatureScale(); //TODO can getTemperatureScale just create leftScale since it is the only scale in the left? or does that break my scales abstraction?
         float rightScaleRightPos = widget.getRight();
         rightScaleRightPos -= getWindSpeedScale(rightScaleRightPos);
-        rightScaleRightPos -= getPrecipAccumulationScale(rightScaleRightPos);
         rightScaleRightPos -= getPressureScale(rightScaleRightPos);
+        rightScaleRightPos -= getPrecipAccumulationScale(rightScaleRightPos);
 
         timeSegments = new ArrayList<>();
 
@@ -206,8 +206,12 @@ class Positionings {
     private Map<Double, String> getPrecipAccumulationScaleTexts() {
         Map<Double, String> scaleTexts = new HashMap<>();
 
-        for (int i = 1; i <= Math.floor(ranges.precipAccumulation.max); ++i) {
-            scaleTexts.put((double) i, Integer.toString(i));
+        for (double i = .25; i <= ranges.precipAccumulation.max; i += .25) {
+            if (i % 1 > 0) {  //non-whole number
+                scaleTexts.put(i, ".");
+            } else {  // == 0
+                scaleTexts.put(i, Integer.toString((int)i));
+            }
         }
 
         return scaleTexts;
@@ -305,7 +309,7 @@ class Positionings {
 
         for (double i : scaleTexts.keySet()) {
             s.items.add(new ScaleItem(
-                    Double.toString(i),
+                    scaleTexts.get(i),
                     new Point(s.box.getCenter().x, s.box.getTop() + (ranges.precipAccumulation.max - (float) i) * pxPerInch)
             ));
         }
