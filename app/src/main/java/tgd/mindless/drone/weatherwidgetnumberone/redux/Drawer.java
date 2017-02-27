@@ -23,7 +23,7 @@ class Drawer {
     private Paint paint;
     private ThemesClass _theme;
 
-    Drawer(ThemesClass theme, Positionings pos) {
+    Drawer(ThemesClass theme, Positionings pos, int fontSize) {
         _pos = pos;
         _theme = theme;
 
@@ -33,7 +33,7 @@ class Drawer {
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
-        paint.setTextSize(pos.widget.getHeight() * theme.fontSize / 100);
+        paint.setTextSize(fontSize);
     }
 
     /**

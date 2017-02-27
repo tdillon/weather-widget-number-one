@@ -2,7 +2,7 @@
   {
     "name": "Default",
     "type": 1,
-    "fontSize": 5.0,
+    "fontSize": 10.0,
     "cloudCoverage": {
       "day": "#0099CC",
       "night": "black",
@@ -104,7 +104,7 @@
   {
     "name": "Default",
     "type": 0,
-    "fontSize": 5.0,
+    "fontSize": 10.0,
     "cloudCoverage": {
       "day": "#0099CC",
       "night": "black",

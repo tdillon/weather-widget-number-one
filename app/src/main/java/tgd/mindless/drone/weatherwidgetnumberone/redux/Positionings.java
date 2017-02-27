@@ -27,7 +27,7 @@ class Positionings {
     //private _theme: Theme, private _data: ForecastIO, clientWidth: number, widgetRatio: number, devicePixelRatio: number, private getTextWidth: (text: string) => number
     //Theme, Data, clientWidth, Ratio, DevicePixelRatio, GetTextWidth()
     //Theme, Data, widgetWidth,WidgetHeight, DevicePixelRatio?, GetTextWidth()?
-    Positionings(ThemesClass theme, Weather data, float widgetWidth, float widgetHeight) {
+    Positionings(ThemesClass theme, Weather data, float widgetWidth, float widgetHeight, int fontSize) {
         Weather.DataBlock db = (theme.type == ThemesClass.ThemeType.Daily ? data.daily : data.hourly);
         this.theme = theme;
         ranges = new Ranges(db, theme);
@@ -39,7 +39,7 @@ class Positionings {
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
-        paint.setTextSize(widget.getHeight() * theme.fontSize / 100);
+        paint.setTextSize(fontSize);
 
         //calculate the actual height of the time bar text, i.e., not "font size", but actual rendered size
         Rect r = new Rect();
