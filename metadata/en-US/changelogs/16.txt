@@ -3,3 +3,4 @@ Precipitation segment color. #81
 Precipitation segment. #80
 Accumulation scale. #98
 Font size. #96
+Text positioning. #103
