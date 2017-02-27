@@ -78,7 +78,15 @@ public class WeatherWidget extends AppWidgetProvider {
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, width, context.getResources().getDisplayMetrics());
         float py = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, context.getResources().getDisplayMetrics());
 
-        views.setImageViewBitmap(R.id.ivGraph, (new Drawer(theme, new Positionings(theme, weather, px, py))).render());
+        /*public static int convertSpToPixels(float sp, Context context) {
+            int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.getResources().getDisplayMetrics());
+            return px;
+        }*/
+
+        /** Theme value for font size is 'DIP', we need pixels for canvas. */
+        int fontSizePx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, theme.fontSize, context.getResources().getDisplayMetrics());
+
+        views.setImageViewBitmap(R.id.ivGraph, (new Drawer(theme, new Positionings(theme, weather, px, py, fontSizePx), fontSizePx)).render());
 
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
