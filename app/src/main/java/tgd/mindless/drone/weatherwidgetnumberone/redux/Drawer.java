@@ -121,8 +121,10 @@ class Drawer {
         paint.setColor(Color.WHITE);  //TODO set colors per theme
         paint.setTextAlign(Paint.Align.CENTER);
 
+        Rect r = new Rect();
         for (TimeSegment ts : _pos.timeSegments) {
-            _cvs.drawText(ts.timeBarDisplay, ts.timeBarBox.getCenter().x, ts.timeBarBox.getBottom(), paint);
+            paint.getTextBounds(ts.timeBarDisplay, 0, ts.timeBarDisplay.length(), r);
+            _cvs.drawText(ts.timeBarDisplay, ts.timeBarBox.getCenter().x, ts.timeBarBox.getBottom() - r.bottom, paint);
         }
     }
 
@@ -134,7 +136,7 @@ class Drawer {
         for (Scale s : _pos.scales) {
             for (ScaleItem i : s.items) {
                 paint.getTextBounds(i.value, 0, i.value.length(), r);
-                _cvs.drawText(i.value, i.center.x, i.center.y + r.height() / 2f, paint);
+                _cvs.drawText(i.value, i.center.x, i.center.y - r.exactCenterY(), paint);
             }
         }
     }
