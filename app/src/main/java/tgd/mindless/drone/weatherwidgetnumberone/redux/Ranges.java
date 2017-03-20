@@ -18,8 +18,8 @@ class Ranges {
     Range temperature = new Range(Integer.MAX_VALUE, Integer.MIN_VALUE);
     Range ozone = new Range(Integer.MAX_VALUE, Integer.MIN_VALUE);
     Range pressure = new Range(Integer.MAX_VALUE, Integer.MIN_VALUE);
-    Range windSpeed = new Range(Integer.MAX_VALUE, Integer.MIN_VALUE);
-    Range precipAccumulation = new Range(Integer.MAX_VALUE, Integer.MIN_VALUE);
+    Range windSpeed = new Range(0, Integer.MIN_VALUE);
+    Range precipAccumulation = new Range(0, Integer.MIN_VALUE);
 
     Ranges(Weather.DataBlock db, ThemesClass theme) {
 
@@ -44,7 +44,11 @@ class Ranges {
             Range r = pertinentOptions.get(property.name);
 
             for (Weather.DataPoint dataPoint : db.data) {
-                float value = dataPoint.getValue(property.name);
+                Float value = dataPoint.getValue(property.name);
+
+                if (value == null) {
+                    continue;
+                }
                 if (value > r.max) {
                     r.max = value;
                 }

@@ -173,7 +173,7 @@ class TimeSegment {
                 );
                 break;
             case "precipAccumulation":
-                p = ((ranges.precipAccumulation != null && data.precipAccumulation != 0) ?
+                p = ((ranges.precipAccumulation != null && data.precipAccumulation != null) ?
                     new Point(
                         graphBox.getCenter().x,
                         graphBox.getTop() + (ranges.precipAccumulation.max - data.precipAccumulation) * (graphBox.getHeight() / (ranges.precipAccumulation.max - ranges.precipAccumulation.min))

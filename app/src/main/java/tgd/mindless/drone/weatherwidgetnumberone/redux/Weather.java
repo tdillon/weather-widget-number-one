@@ -32,38 +32,38 @@ class Weather {
 
     class DataPoint {
         long time;
-        float cloudCover;
-        float precipIntensity;
-        float precipIntensityMax;
+        Float cloudCover;
+        Float precipIntensity;
+        Float precipIntensityMax;
         long precipIntensityMaxTime;
-        float precipProbability;
+        Float precipProbability;
         long sunriseTime;
         long sunsetTime;
-        float temperature;
-        float apparentTemperature;
-        float temperatureMax;
+        Float temperature;
+        Float apparentTemperature;
+        Float temperatureMax;
         long temperatureMaxTime;
-        float temperatureMin;
+        Float temperatureMin;
         long temperatureMinTime;
-        float apparentTemperatureMin;
+        Float apparentTemperatureMin;
         long apparentTemperatureMinTime;
-        float apparentTemperatureMax;
+        Float apparentTemperatureMax;
         long apparentTemperatureMaxTime;
-        float windSpeed;
+        Float windSpeed;
         Integer windBearing;
-        float visibility;
-        float ozone;
-        float moonPhase;
-        float humidity;
-        float precipAccumulation;
-        float dewPoint;
-        float pressure;
+        Float visibility;
+        Float ozone;
+        Float moonPhase;
+        Float humidity;
+        Float precipAccumulation;
+        Float dewPoint;
+        Float pressure;
         PrecipitationType precipType;
 
         DataPoint() {
         }
 
-        float getValue(String propertyName) {
+        Float getValue(String propertyName) {
             switch (propertyName) {
                 case "cloudCover":
                     return cloudCover;
@@ -101,8 +101,8 @@ class Weather {
                     return dewPoint;
                 case "pressure":
                     return pressure;
-                default:  //TODO throw exception?
-                    return -1;
+                default:
+                    return null;
             }
         }
     }
