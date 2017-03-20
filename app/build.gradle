@@ -10,7 +10,7 @@ def appVersionName = "2.0.0-alpha.12"
 
 android {
     compileSdkVersion 23
-    buildToolsVersion '23.0.3'
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "tgd.mindless.drone.weatherwidgetnumberone.redux"

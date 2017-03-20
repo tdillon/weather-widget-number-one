@@ -206,11 +206,13 @@ class Positionings {
     private Map<Double, String> getPrecipAccumulationScaleTexts() {
         Map<Double, String> scaleTexts = new HashMap<>();
 
-        for (double i = .25; i <= ranges.precipAccumulation.max; i += .25) {
-            if (i % 1 > 0) {  //non-whole number
-                scaleTexts.put(i, ".");
-            } else {  // == 0
-                scaleTexts.put(i, Integer.toString((int)i));
+        if (ranges.precipAccumulation != null) {
+            for (double i = .25; i <= ranges.precipAccumulation.max; i += .25) {
+                if (i % 1 > 0) {  //non-whole number
+                    scaleTexts.put(i, ".");
+                } else {  // == 0
+                    scaleTexts.put(i, Integer.toString((int) i));
+                }
             }
         }
 

@@ -8,6 +8,7 @@
 - Accumulation scale. [#98][98]
 - Font size. [#96][96]
 - Text positioning. [#103][103]
+- Hide accumulation scale. [#101][101]
 
 #2.0.0-alpha.11
 - Wind dot. [#20][20]
@@ -115,4 +116,5 @@
 [92]: https://github.com/tdillon/weather-widget-number-one/issues/92
 [96]: https://github.com/tdillon/weather-widget-number-one/issues/96
 [98]: https://github.com/tdillon/weather-widget-number-one/issues/98
+[101]: https://github.com/tdillon/weather-widget-number-one/issues/101
 [103]: https://github.com/tdillon/weather-widget-number-one/issues/103
