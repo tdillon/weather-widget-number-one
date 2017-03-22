@@ -1,0 +1,54 @@
+[
+  {
+    "name": "Default",
+    "type": "DAILY",
+    "fontSize": 12.3,
+    "cloudCoverage": {
+      "day": "#0099CC",
+      "night": "black",
+      "location": "GRAPH"
+    },
+    "temperatureMax": {
+      "dot": {
+        "color": "white",
+        "size": 50,
+        "type": "RING",
+        "ringSize": 25
+      },
+      "segment": {
+        "color": "white",
+        "width": 30.0,
+        "padding": 10.0
+      }
+    },
+    "windSpeed": {
+      "dot": {
+        "color": "white",
+        "size": 50,
+        "type": "RING",
+        "ringSize": 25
+      },
+      "segment": {
+        "color": "white",
+        "width": 30.0,
+        "padding": 10.0
+      }
+    },
+    "properties": [
+      {
+        "name": "temperatureMin",
+        "dot": {
+          "color": "white",
+          "size": 50,
+          "type": "RING",
+          "ringSize": 25
+        },
+        "segment": {
+          "color": "white",
+          "width": 30.0,
+          "padding": 10.0
+        }
+      }
+    ]
+  }
+]
