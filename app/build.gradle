@@ -9,13 +9,13 @@ apply plugin: 'jacoco-android'
 def appVersionName = "2.0.0-alpha.12"
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 25
     buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "tgd.mindless.drone.weatherwidgetnumberone.redux"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 16
         versionName "${appVersionName}"
     }
@@ -34,6 +34,10 @@ android {
     }
     lintOptions {
         abortOnError false
+    }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/groovy-release-info.properties'
     }
 }
 
@@ -64,10 +68,10 @@ sonarqube {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.google.code.gson:gson:2.8.0'
-    compile "org.codehaus.groovy:groovy:2.4.7:grooid"
-    compile ('org.codehaus.groovy:groovy-json:2.4.10') {
+    compile "org.codehaus.groovy:groovy:2.4.10:grooid"
+    compile('org.codehaus.groovy:groovy-json:2.4.10') {
         exclude group: 'org.codehaus.groovy'
     }
 
