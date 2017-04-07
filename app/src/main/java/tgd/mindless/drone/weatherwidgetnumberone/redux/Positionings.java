@@ -46,26 +46,22 @@ class Positionings {
         paint.getTextBounds("SuMoTuWeThFrSa0123456789", 0, 24, r);
         timeBarTextHeight = r.height();
 
+        int leftScaleWidth = getMaxTextWidth(getTempScaleTexts());
+        int rightScaleWidth = getMaxTextWidth(getWindSpeedScaleTexts()) +
+                getMaxTextWidth(getPrecipAccumulationScaleTexts()) +
+                getMaxTextWidth(getPressureScaleTexts());
 
-        //TODO one way that may work to get correct padding is to do 2 passes, 1st pass with 0 padding, calc overhang from that pass, then set padding based on overhangs and recalculate all metrics
-        //HACK For now assume that the biggest dot is on the each perimeter of the graph when calculating padding.
+        float graphWidth = widget.getWidth() - leftScaleWidth - rightScaleWidth;
+
         float maxDotOverhang = Integer.MIN_VALUE, tempDotSize;
         for (ThemesClass.Property p : theme.properties) {
-            if ((tempDotSize = widget.getHeight() * p.dot.size / 100) > maxDotOverhang) {
+            if ((tempDotSize = graphWidth / db.data.length * p.dot.size / 100) > maxDotOverhang) {
                 maxDotOverhang = tempDotSize;
             }
         }
         maxDotOverhang /= 2;  //only radius can overhang
 
-        //HACK working on #64, for now zero out padding since it will be based on time segment width
-        maxDotOverhang = 0;
-
-        int leftScaleWidth = getMaxTextWidth(getTempScaleTexts());
-        int rightScaleWidth = getMaxTextWidth(getWindSpeedScaleTexts()) +
-                getMaxTextWidth(getPrecipAccumulationScaleTexts()) +
-                getMaxTextWidth(getPressureScaleTexts());  //TODO sum getWidth() of all right scales
-
-        padding = new Box(leftScaleWidth > maxDotOverhang ? 0 : maxDotOverhang - leftScaleWidth, rightScaleWidth > maxDotOverhang ? 0 : maxDotOverhang, maxDotOverhang, timeBarTextHeight > maxDotOverhang ? 0 : maxDotOverhang - timeBarTextHeight);  //TODO get correct paddings
+        padding = new Box(0, 0, maxDotOverhang, timeBarTextHeight > maxDotOverhang ? 0 : maxDotOverhang - timeBarTextHeight);
         leftScale = new Box();
         rightScale = new Box();
         timeBar = new Box();
