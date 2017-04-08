@@ -2,6 +2,9 @@
 [![codecov](https://codecov.io/gh/tdillon/weather-widget-number-one/branch/master/graph/badge.svg)](https://codecov.io/gh/tdillon/weather-widget-number-one)
 [SonarQube analysis][SonarQube]
 
+#2.0.0-beta.1
+- Correct padding. [#102][102]
+
 #2.0.0-alpha.12
 - Precipitation segment color [#81][81]
 - Precipitation segment [#80][80]
@@ -117,4 +120,5 @@
 [96]: https://github.com/tdillon/weather-widget-number-one/issues/96
 [98]: https://github.com/tdillon/weather-widget-number-one/issues/98
 [101]: https://github.com/tdillon/weather-widget-number-one/issues/101
+[102]: https://github.com/tdillon/weather-widget-number-one/issues/102
 [103]: https://github.com/tdillon/weather-widget-number-one/issues/103
